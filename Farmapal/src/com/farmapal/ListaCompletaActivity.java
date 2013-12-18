@@ -40,7 +40,7 @@ public class ListaCompletaActivity extends Activity {
 
 		SimpleCursorAdapter myCursorAdapter =
 				new SimpleCursorAdapter(this,
-						R.layout.item_list,
+						R.layout.item_list_farmaci,
 						cursor,
 						from, 
 						to);

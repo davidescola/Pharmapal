@@ -8,5 +8,22 @@
     <string name="lista_completa">Lista completa</string>
     <string name="cerca_farmacia">Cerca farmacia</string>
     <string name="title_activity_lista_completa">ListaCompletaActivity</string>
+    <string name="title_activity_mie_prescrizioni">MiePrescrizioniActivity</string>
+    <string name="nuova_prescrizione">Nuova prescrizione</string>
+    <string name="title_activity_nuova_prescrizione">NuovaPrescrizioneActivity</string>
+    <string name="farmaco">Farmaco</string>
+    <string name="seleziona">Seleziona</string>
+    <string name="paziente">Paziente</string>
+    <string-array name="array_nuovo_paziente">
+        <item >Nuovo paziente</item>
+    </string-array>
+    <string name="prescritto_da">Prescritto da</string>
+    <string name="data_inizio">Dal</string>
+    <string name="data_fine">Al</string>
+    <string name="giorni">giorni</string>
+    <string name="ogni">ogni</string>
+    <string name="nome_medico">nome del medico</string>
+    <string name="quantita">quantità</string>
+    <string name="numero_giorni">num giorni</string>
 
 </resources>

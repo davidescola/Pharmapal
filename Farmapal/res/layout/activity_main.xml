@@ -15,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="85dp"
-        android:text="@string/mie_prescrizioni" />
+        android:text="@string/mie_prescrizioni"
+        android:onClick="goMiePrescrizioni" />
 
      <Button
         android:id="@+id/btnListaCompleta"

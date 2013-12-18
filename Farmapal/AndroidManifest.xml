@@ -26,6 +26,14 @@
             android:name="com.farmapal.ListaCompletaActivity"
             android:label="@string/title_activity_lista_completa" >
         </activity>
+        <activity
+            android:name="com.farmapal.MiePrescrizioniActivity"
+            android:label="@string/title_activity_mie_prescrizioni" >
+        </activity>
+        <activity
+            android:name="com.farmapal.NuovaPrescrizioneActivity"
+            android:label="@string/title_activity_nuova_prescrizione" >
+        </activity>
     </application>
 
 </manifest>
