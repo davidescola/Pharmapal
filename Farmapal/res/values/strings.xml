@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Farmapal</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="mie_prescrizioni">Le mie prescrizioni</string>
+    <string name="lista_completa">Lista completa</string>
+    <string name="cerca_farmacia">Cerca farmacia</string>
+    <string name="title_activity_lista_completa">ListaCompletaActivity</string>
+
+</resources>
