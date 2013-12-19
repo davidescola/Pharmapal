@@ -27,21 +27,22 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090018;
+        public static final int action_settings=0x7f090019;
         public static final int btnCercaFarmacia=0x7f090003;
         public static final int btnListaCompleta=0x7f090002;
         public static final int btnNuovaPrescrizione=0x7f090005;
         public static final int btnPrescrizioni=0x7f090001;
+        public static final int buttonOk=0x7f090014;
         public static final int buttonSelezionaFarmaco=0x7f09000b;
         public static final int datePickerAl=0x7f090013;
         public static final int datePickerDal=0x7f090011;
         public static final int editTextFrequenza=0x7f09000e;
         public static final int editTextMedico=0x7f090009;
         public static final int editTextQuantita=0x7f09000c;
-        public static final int item_nome=0x7f090015;
-        public static final int item_peso=0x7f090016;
-        public static final int item_somministrazione=0x7f090014;
-        public static final int item_tipo=0x7f090017;
+        public static final int item_nome=0x7f090016;
+        public static final int item_peso=0x7f090017;
+        public static final int item_somministrazione=0x7f090015;
+        public static final int item_tipo=0x7f090018;
         public static final int listFarmaci=0x7f090000;
         public static final int listPrescrizioni=0x7f090004;
         public static final int spinnerPazienti=0x7f090007;
@@ -74,6 +75,7 @@ public final class R {
         public static final int data_fine=0x7f05000f;
         public static final int data_inizio=0x7f05000e;
         public static final int farmaco=0x7f05000a;
+        public static final int fatto=0x7f050015;
         public static final int giorni=0x7f050010;
         public static final int hello_world=0x7f050002;
         public static final int lista_completa=0x7f050004;

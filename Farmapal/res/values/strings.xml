@@ -25,5 +25,6 @@
     <string name="nome_medico">nome del medico</string>
     <string name="quantita">quantità</string>
     <string name="numero_giorni">num giorni</string>
+    <string name="fatto">Fatto</string>
 
 </resources>

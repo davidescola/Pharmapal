@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -88,5 +89,20 @@ public class DBHelper extends SQLiteOpenHelper{
 		  return c;
 	}
 
+	public Cursor getAllPazienti() {
+		String myPath = DB_PATH + DB_NAME;
+		  db = SQLiteDatabase.openDatabase(myPath, null,
+		    SQLiteDatabase.OPEN_READONLY);
+		  Cursor c = db.rawQuery("SELECT * FROM paziente", null);
+		   
+		  return c;
+	}
+	
+	public void insertPaziente(String paziente) {
+		String myPath = DB_PATH + DB_NAME;
+		  db = SQLiteDatabase.openDatabase(myPath, null,
+		    SQLiteDatabase.OPEN_READWRITE);
+		  db.rawQuery("insert into paziente values (1,"+ paziente + ")", null);
+	}
 }
 
