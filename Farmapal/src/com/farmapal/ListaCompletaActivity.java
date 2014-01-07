@@ -24,11 +24,6 @@ public class ListaCompletaActivity extends Activity {
 		closeDB();
 	}
 
-	private void closeDB() {
-		db.close();
-
-	}
-
 	private void populateListViewFromDB() {
 		Cursor cursor = db.getAllFarmaci();
 
@@ -60,6 +55,11 @@ public class ListaCompletaActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+	
+	private void closeDB() {
+		db.close();
 
 	}
 

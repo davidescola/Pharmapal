@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	private SQLiteDatabase db;
 	private final Context context;
 	private String DB_PATH;
-
+	
 	public DBHelper (Context context) {
 		super(context, DB_NAME, null, 1);
 		this.context = context;
@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	public void createDatabase() throws IOException {
 		boolean dbExist = checkDatabase();
-		//if(!dbExist) {
+		if(!dbExist) {
 			this.getReadableDatabase();
 			try{
 				copyDatabase();
@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			catch (IOException e) {
 				throw new Error("Errore durante la copia del db");
 			}
-		//}
+		}
 	}
 
 	private void copyDatabase() throws IOException{
@@ -47,7 +47,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		while ((length = myInput.read(buffer)) > 0 ) {
 			myOutput.write(buffer, 0, length);
 		}
-		
+
 		myOutput.flush();
 		myOutput.close();
 		myInput.close();
@@ -70,39 +70,48 @@ public class DBHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public Cursor getNomiFarmaci() {
 		String myPath = DB_PATH + DB_NAME;
-		  db = SQLiteDatabase.openDatabase(myPath, null,
-		    SQLiteDatabase.OPEN_READONLY);
-		  Cursor c = db.rawQuery("SELECT nome FROM farmaco", null);
-		   
-		  return c;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT nome FROM farmaco", null);
+	 
+		return c;
 	}
-	
+
 	public Cursor getAllFarmaci() {
 		String myPath = DB_PATH + DB_NAME;
-		  db = SQLiteDatabase.openDatabase(myPath, null,
-		    SQLiteDatabase.OPEN_READONLY);
-		  Cursor c = db.rawQuery("SELECT * FROM farmaco", null);
-		   
-		  return c;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT * FROM farmaco", null);
+		
+		return c;
 	}
 
 	public Cursor getAllPazienti() {
 		String myPath = DB_PATH + DB_NAME;
-		  db = SQLiteDatabase.openDatabase(myPath, null,
-		    SQLiteDatabase.OPEN_READONLY);
-		  Cursor c = db.rawQuery("SELECT * FROM paziente", null);
-		   
-		  return c;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT * FROM paziente", null);
+		
+		return c;
 	}
 	
-	public void insertPaziente(String paziente) {
+	
+
+	public long insertPaziente(String paziente, int index) {
 		String myPath = DB_PATH + DB_NAME;
-		  db = SQLiteDatabase.openDatabase(myPath, null,
-		    SQLiteDatabase.OPEN_READWRITE);
-		  db.rawQuery("insert into paziente values (1,"+ paziente + ")", null);
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READWRITE);
+		
+		ContentValues cvs = new ContentValues();
+		cvs.put("_id", index);
+		cvs.put("nome", paziente);
+		long check = db.insert("paziente", null, cvs);
+		
+		return check;
+
 	}
 }
 
