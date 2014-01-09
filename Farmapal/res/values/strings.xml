@@ -28,6 +28,11 @@
     <string name="quantita">quantità</string>
     <string name="numero_giorni">num giorni</string>
     <string name="fatto">Fatto</string>
+    <string name="title_activity_lista_farmacie">ListaFarmacie</string>
+    <string name="nome_farmacia">Nome Farmacia</string>
+    <string name="text_view_farmacia">Farmacia: </string>
+    <string name="text_view_indirizzo_farmacia">Indirizzo: </string>
+    <string name="condividi">Condividi</string>
 
     <string-array name="array_qta">
         <item>1</item>
@@ -54,5 +59,7 @@
     <string name="razione5">Razione 5:</string>
     <string name="razione6">Razione 6:</string>
     <string name="title_activity_lista_completa_for_result">ListaCompletaForResultActivity</string>
+    <string name="title_activity_descrizione_farmacia_dialog">DescrizioneFarmaciaDialog</string>
+    <string name="title_activity_conferma_assunzione_dialog">ConfermaAssunzioneDialog</string>
 
 </resources>

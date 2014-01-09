@@ -35,7 +35,8 @@
         android:layout_alignLeft="@+id/btnListaCompleta"
         android:layout_below="@+id/btnListaCompleta"
         android:layout_marginTop="44dp"
-        android:text="@string/cerca_farmacia" />
+        android:text="@string/cerca_farmacia"
+        android:onClick="goListaFarmacie" />
 
    
 

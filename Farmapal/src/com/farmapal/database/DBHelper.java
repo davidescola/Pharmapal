@@ -102,8 +102,6 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 		return c;
 	}
-	
-	
 
 	public long insertPaziente(String nome, int index) {
 		String myPath = DB_PATH + DB_NAME;
@@ -118,5 +116,22 @@ public class DBHelper extends SQLiteOpenHelper{
 		return check;
 
 	}
+	
+	public Cursor getAllFarmacie(){
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT * FROM farmacia", null);
+		   
+		return c;
+	}
+	
+	public Cursor getDatiFarmacia(int id_farmacia){
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT * FROM farmacia WHERE _id=" + id_farmacia, null);
+		   
+		return c;
+	}
+
 }
 

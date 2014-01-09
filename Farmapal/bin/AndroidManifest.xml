@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <application
@@ -37,6 +37,18 @@
         <activity
             android:name="com.farmapal.ListaCompletaForResultActivity"
             android:label="@string/title_activity_lista_completa_for_result" >
+        </activity>
+        <activity
+            android:name="com.farmapal.ListaFarmacie"
+            android:label="@string/title_activity_lista_farmacie" >
+        </activity>
+        <activity
+            android:name="com.farmapal.DescrizioneFarmaciaDialog"
+            android:label="@string/title_activity_descrizione_farmacia_dialog" >
+        </activity>
+        <activity
+            android:name="com.farmapal.service.ConfermaAssunzioneDialog"
+            android:label="@string/title_activity_conferma_assunzione_dialog" >
         </activity>
     </application>
 
