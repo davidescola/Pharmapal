@@ -73,18 +73,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:paddingBottom="50dp" >
 
-            <EditText
-                android:id="@+id/editTextQuantita"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/spinnerQta"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/quantita"
-                android:inputType="number" >
-            </EditText>
+                android:entries="@array/array_qta" />
 
             <TextView
                 android:id="@+id/textViewOgni"
@@ -94,15 +90,11 @@
                 android:text="@string/ogni"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
-                android:id="@+id/editTextFrequenza"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/spinnerFrequenza"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/numero_giorni"
-                android:inputType="number" >
-            </EditText>
+                android:entries="@array/array_frequenza" />
 
             <TextView
                 android:id="@+id/textViewGiorni"
@@ -110,6 +102,126 @@
                 android:layout_height="wrap_content"
                 android:text="@string/giorni"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone" 
+            android:id="@+id/layoutRazione1">
+
+            <TextView
+                android:id="@+id/textViewRazione1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/razione1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TimePicker
+                android:id="@+id/timePicker1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/layoutRazione2"> >
+
+            <TextView
+                android:id="@+id/textViewRazione2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/razione2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TimePicker
+                android:id="@+id/timePicker2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/layoutRazione3"> >
+
+            <TextView
+                android:id="@+id/textViewRazione3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/razione3"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TimePicker
+                android:id="@+id/timePicker3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/layoutRazione4"> >
+
+            <TextView
+                android:id="@+id/textViewRazione4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/razione4"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TimePicker
+                android:id="@+id/timePicker4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/layoutRazione5"> >
+
+            <TextView
+                android:id="@+id/textViewRazione5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/razione5"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TimePicker
+                android:id="@+id/timePicker5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/layoutRazione6"> >
+
+            <TextView
+                android:id="@+id/textViewRazione6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/razione6"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TimePicker
+                android:id="@+id/timePicker6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -151,17 +263,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <Button
                 android:id="@+id/buttonOk"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="14dp"
                 android:layout_weight="1"
-                android:text="@string/fatto" 
-                android:onClick="aggiungiPaziente"/>
+                android:onClick="aggiungiPrescrizione"
+                android:text="@string/fatto" />
         </LinearLayout>
     </LinearLayout>
+
+   
 
 </ScrollView>

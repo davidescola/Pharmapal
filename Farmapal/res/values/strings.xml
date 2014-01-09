@@ -14,9 +14,11 @@
     <string name="farmaco">Farmaco</string>
     <string name="seleziona">Seleziona</string>
     <string name="paziente">Paziente</string>
+
     <string-array name="array_nuovo_paziente">
-        <item >Nuovo paziente</item>
+        <item>Nuovo paziente</item>
     </string-array>
+
     <string name="prescritto_da">Prescritto da</string>
     <string name="data_inizio">Dal</string>
     <string name="data_fine">Al</string>
@@ -26,5 +28,31 @@
     <string name="quantita">quantità</string>
     <string name="numero_giorni">num giorni</string>
     <string name="fatto">Fatto</string>
+
+    <string-array name="array_qta">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="array_frequenza">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string name="razione1">Razione 1:</string>
+    <string name="razione2">Razione 2:</string>
+    <string name="razione3">Razione 3:</string>
+    <string name="razione4">Razione 4:</string>
+    <string name="razione5">Razione 5:</string>
+    <string name="razione6">Razione 6:</string>
+    <string name="title_activity_lista_completa_for_result">ListaCompletaForResultActivity</string>
 
 </resources>

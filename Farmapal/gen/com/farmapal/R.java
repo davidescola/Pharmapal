@@ -9,7 +9,9 @@ package com.farmapal;
 
 public final class R {
     public static final class array {
+        public static final int array_frequenza=0x7f060002;
         public static final int array_nuovo_paziente=0x7f060000;
+        public static final int array_qta=0x7f060001;
     }
     public static final class attr {
     }
@@ -27,46 +29,68 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090019;
+        public static final int action_settings=0x7f09002c;
         public static final int btnCercaFarmacia=0x7f090003;
         public static final int btnListaCompleta=0x7f090002;
         public static final int btnNuovaPrescrizione=0x7f090005;
         public static final int btnPrescrizioni=0x7f090001;
-        public static final int buttonOk=0x7f090014;
+        public static final int buttonOk=0x7f090026;
         public static final int buttonSelezionaFarmaco=0x7f09000b;
-        public static final int datePickerAl=0x7f090013;
-        public static final int datePickerDal=0x7f090011;
-        public static final int editTextFrequenza=0x7f09000e;
+        public static final int datePickerAl=0x7f090025;
+        public static final int datePickerDal=0x7f090023;
         public static final int editTextMedico=0x7f090009;
-        public static final int editTextQuantita=0x7f09000c;
-        public static final int item_nome=0x7f090016;
-        public static final int item_peso=0x7f090017;
-        public static final int item_somministrazione=0x7f090015;
-        public static final int item_tipo=0x7f090018;
+        public static final int item_nome=0x7f090028;
+        public static final int item_nome_check=0x7f09002b;
+        public static final int item_peso=0x7f090029;
+        public static final int item_somministrazione=0x7f090027;
+        public static final int item_tipo=0x7f09002a;
+        public static final int layoutRazione1=0x7f090010;
+        public static final int layoutRazione2=0x7f090013;
+        public static final int layoutRazione3=0x7f090016;
+        public static final int layoutRazione4=0x7f090019;
+        public static final int layoutRazione5=0x7f09001c;
+        public static final int layoutRazione6=0x7f09001f;
         public static final int listFarmaci=0x7f090000;
         public static final int listPrescrizioni=0x7f090004;
+        public static final int spinnerFrequenza=0x7f09000e;
         public static final int spinnerPazienti=0x7f090007;
-        public static final int textViewAl=0x7f090012;
-        public static final int textViewDa=0x7f090010;
+        public static final int spinnerQta=0x7f09000c;
+        public static final int textViewAl=0x7f090024;
+        public static final int textViewDa=0x7f090022;
         public static final int textViewFarmaco=0x7f09000a;
         public static final int textViewGiorni=0x7f09000f;
         public static final int textViewMedico=0x7f090008;
         public static final int textViewOgni=0x7f09000d;
         public static final int textViewPazienze=0x7f090006;
+        public static final int textViewRazione1=0x7f090011;
+        public static final int textViewRazione2=0x7f090014;
+        public static final int textViewRazione3=0x7f090017;
+        public static final int textViewRazione4=0x7f09001a;
+        public static final int textViewRazione5=0x7f09001d;
+        public static final int textViewRazione6=0x7f090020;
+        public static final int timePicker1=0x7f090012;
+        public static final int timePicker2=0x7f090015;
+        public static final int timePicker3=0x7f090018;
+        public static final int timePicker4=0x7f09001b;
+        public static final int timePicker5=0x7f09001e;
+        public static final int timePicker6=0x7f090021;
     }
     public static final class layout {
         public static final int activity_lista_completa=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int activity_mie_prescrizioni=0x7f030002;
-        public static final int activity_nuova_prescrizione=0x7f030003;
-        public static final int item_list_farmaci=0x7f030004;
-        public static final int item_list_prescrizioni=0x7f030005;
+        public static final int activity_lista_completa_for_result=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int activity_mie_prescrizioni=0x7f030003;
+        public static final int activity_nuova_prescrizione=0x7f030004;
+        public static final int item_list_farmaci=0x7f030005;
+        public static final int item_list_farmaci_for_result=0x7f030006;
+        public static final int item_list_prescrizioni=0x7f030007;
     }
     public static final class menu {
         public static final int lista_completa=0x7f080000;
-        public static final int main=0x7f080001;
-        public static final int mie_prescrizioni=0x7f080002;
-        public static final int nuova_prescrizione=0x7f080003;
+        public static final int lista_completa_for_result=0x7f080001;
+        public static final int main=0x7f080002;
+        public static final int mie_prescrizioni=0x7f080003;
+        public static final int nuova_prescrizione=0x7f080004;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -87,8 +111,15 @@ public final class R {
         public static final int paziente=0x7f05000c;
         public static final int prescritto_da=0x7f05000d;
         public static final int quantita=0x7f050013;
+        public static final int razione1=0x7f050016;
+        public static final int razione2=0x7f050017;
+        public static final int razione3=0x7f050018;
+        public static final int razione4=0x7f050019;
+        public static final int razione5=0x7f05001a;
+        public static final int razione6=0x7f05001b;
         public static final int seleziona=0x7f05000b;
         public static final int title_activity_lista_completa=0x7f050006;
+        public static final int title_activity_lista_completa_for_result=0x7f05001c;
         public static final int title_activity_mie_prescrizioni=0x7f050007;
         public static final int title_activity_nuova_prescrizione=0x7f050009;
     }

@@ -34,6 +34,10 @@
             android:name="com.farmapal.NuovaPrescrizioneActivity"
             android:label="@string/title_activity_nuova_prescrizione" >
         </activity>
+        <activity
+            android:name="com.farmapal.ListaCompletaForResultActivity"
+            android:label="@string/title_activity_lista_completa_for_result" >
+        </activity>
     </application>
 
 </manifest>

@@ -100,14 +100,14 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	
 
-	public long insertPaziente(String paziente, int index) {
+	public long insertPaziente(String nome, int index) {
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READWRITE);
 		
 		ContentValues cvs = new ContentValues();
 		cvs.put("_id", index);
-		cvs.put("nome", paziente);
+		cvs.put("nome", nome);
 		long check = db.insert("paziente", null, cvs);
 		
 		return check;
