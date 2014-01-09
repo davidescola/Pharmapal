@@ -35,12 +35,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nuova_prescrizione);
-		openDB();
+		//openDB();
 		db = new DBHelper(this);
 		populateSpinnerPazienti();
 		addListenerSpinnerQta();
 		addListenerbtnSelezionaFarmaco();
-		closeDB();
+		//closeDB(); TODO pensare a quando fare la close
 	}
 	private void addListenerbtnSelezionaFarmaco() {
 		Button btnSelezionaFarmaco = (Button) findViewById(R.id.buttonSelezionaFarmaco);
@@ -208,6 +208,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			});
 
 			alert.show();
+			//db.close();
 		}
 
 

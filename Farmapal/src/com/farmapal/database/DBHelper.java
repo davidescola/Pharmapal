@@ -61,7 +61,12 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
+		try {
+			createDatabase();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -76,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT nome FROM farmaco", null);
-	 
+	
 		return c;
 	}
 

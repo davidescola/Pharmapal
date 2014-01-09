@@ -19,7 +19,8 @@ public class ListaCompletaActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_completa);
-		openDB();
+		db = new DBHelper(this);
+		//openDB();
 		populateListViewFromDB();
 		closeDB();
 	}
