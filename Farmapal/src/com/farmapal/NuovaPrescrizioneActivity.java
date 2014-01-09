@@ -150,7 +150,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 		}
 		countPazienti = pazienti.getCount();
-		pazienti.close();
+		
 
 		listPazienti.add("nuovo paziente");
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPazienti);
@@ -190,6 +190,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			alert.setView(input);
 
 			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int whichButton) {
 					String nome = input.getText().toString();
 					long check = db.insertPaziente(nome, ++countPazienti);
@@ -202,6 +203,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			});
 
 			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int whichButton) {
 					//TODO annulla
 				}

@@ -27,7 +27,7 @@ public class NotificaAssunzione extends Service {
 		// Facciamo partire il BackgroundThread
 		backgroundThread = new BackgroundThread();
 		backgroundThread.start();
-		
+
 	}
 
 	@Override
@@ -44,53 +44,53 @@ public class NotificaAssunzione extends Service {
 
 	public void checkAssumption() {
 		// prendere dal DB il num
-		
+
 		//All'ora X mandare la notifica
 		if(true){
 			sendNotification();
 		}
-		
+
 	}
-	
+
 	private void sendNotification(){
 		String msgText = "Jeally Bean Notification example!! "
-                + "where you will see three different kind of notification. "
-                + "you can even put the very long string here.";
+				+ "where you will see three different kind of notification. "
+				+ "you can even put the very long string here.";
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        
-        //Intent all'Activity di destinazione
-        //BISOGNA METTERE UN PARAMETRO NEL DB: PRESA NON PRESA (TRUE,FALSE)
-        intent = new Intent(this, ConfermaAssunzioneDialog.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Big text Notofication")
-                .setContentText("Big text Notification")
-                .setSmallIcon(android.R.drawable.sym_def_app_icon)
-                .setAutoCancel(true)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .addAction(android.R.drawable.ic_menu_recent_history,
-                        "Conferma Assunzione", pi);
-        //msgText da sistemare con i rispettivi valori
-        Notification notification = new Notification.BigTextStyle(builder)
-                .bigText(msgText).build();
+		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0, notification);
+		//Intent all'Activity di destinazione
+		//BISOGNA METTERE UN PARAMETRO NEL DB: PRESA NON PRESA (TRUE,FALSE)
+		intent = new Intent(this, ConfermaAssunzioneDialog.class);
+		PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
+		Notification.Builder builder = new Notification.Builder(this);
+		builder.setContentTitle("Big text Notofication")
+		.setContentText("Big text Notification")
+		.setSmallIcon(android.R.drawable.sym_def_app_icon)
+		.setAutoCancel(true)
+		.setPriority(Notification.PRIORITY_HIGH)
+		.addAction(android.R.drawable.ic_menu_recent_history,
+				"Conferma Assunzione", pi);
+		//msgText da sistemare con i rispettivi valori
+		Notification notification = new Notification.BigTextStyle(builder)
+		.bigText(msgText).build();
+
+		notificationManager.notify(0, notification);
 	}
-	
+
 	public final class BackgroundThread extends Thread {
-		
+
 		public boolean running= true;
 		private String TAG="BackgroundThread";
-		
+
 		// ********************************************************		
 		@Override
 		public void run() {
 			Log.i(TAG, "BackgroundThread Started");			
 			while(running && !medicineTaken){
-				
+
 				checkAssumption();
-				
+
 			}
 			// Al termine del metodo run terminiamo il servizio
 			stopSelf();

@@ -22,7 +22,14 @@ public class DBHelper extends SQLiteOpenHelper{
 	public DBHelper (Context context) {
 		super(context, DB_NAME, null, 1);
 		this.context = context;
-		DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/"; 
+		DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
+		try {
+			createDatabase();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void createDatabase() throws IOException {
@@ -61,12 +68,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		try {
-			createDatabase();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 	}
 

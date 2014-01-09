@@ -18,7 +18,7 @@ public class ListaCompletaForResultActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lista_completa);
+		setContentView(R.layout.activity_lista_completa_for_result);
 		db = new DBHelper(this);
 		//openDB();
 		populateListViewFromDB();
@@ -33,7 +33,7 @@ public class ListaCompletaForResultActivity extends Activity {
 
 		String[] from = new String[] {"nome", "tipo", "peso", "somministrazione"};
 
-		int[] to = new int[] {R.id.item_nome,R.id.item_tipo,R.id.item_peso,R.id.item_somministrazione };
+		int[] to = new int[] {R.id.checkBoxFarmaco,R.id.item_tipo_for_result,R.id.item_peso_for_result,R.id.item_somministrazione_for_result };
 
 		SimpleCursorAdapter myCursorAdapter =
 				new SimpleCursorAdapter(this,
@@ -44,7 +44,7 @@ public class ListaCompletaForResultActivity extends Activity {
 
 
 		//set the adapter for the listview
-		ListView myList = (ListView)findViewById(R.id.listFarmaci);
+		ListView myList = (ListView)findViewById(R.id.listFarmaciForResult);
 		myList.setAdapter(myCursorAdapter);
 
 	}

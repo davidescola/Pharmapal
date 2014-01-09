@@ -1,9 +1,6 @@
 package com.farmapal.service;
 
 import com.farmapal.R;
-import com.farmapal.R.layout;
-import com.farmapal.R.menu;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

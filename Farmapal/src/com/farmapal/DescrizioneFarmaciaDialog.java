@@ -1,11 +1,7 @@
 package com.farmapal;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -70,7 +66,6 @@ public class DescrizioneFarmaciaDialog extends Activity {
 	private void ottieniDati(){
 		//Ottengo l'id dell'intent da ListaFarmacie
 		Bundle extras = getIntent().getExtras();
-		Intent i = getIntent();
 		id_farmacia_selezionata=extras.getInt("id", defaultValue);
 		Log.w(tag, ""+id_farmacia_selezionata);
 		//Istanzio il DB
@@ -221,7 +216,7 @@ public class DescrizioneFarmaciaDialog extends Activity {
         /* Inflate dell'activity con il menu: res/menu/items.xml */
         getMenuInflater().inflate(R.menu.items, menu);
  
-        /* ottengo l'actionProivder il cui Item e' "condividi"
+        /* ottengo l'actionProivder il cui Item e' "condividi" */
         mShareActionProvider = (ShareActionProvider) menu.findItem(R.id.condividi).getActionProvider();
  
         /** Metto l'intent di Condivisione come Impostazione */
