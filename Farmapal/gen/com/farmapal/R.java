@@ -36,11 +36,11 @@ public final class R {
         public static final int btnPrescrizioni=0x7f090001;
         public static final int buttonOk=0x7f090026;
         public static final int buttonSelezionaFarmaco=0x7f09000b;
+        public static final int checkBoxFarmaco=0x7f09002b;
         public static final int datePickerAl=0x7f090025;
         public static final int datePickerDal=0x7f090023;
         public static final int editTextMedico=0x7f090009;
         public static final int item_nome=0x7f090028;
-        public static final int item_nome_check=0x7f09002b;
         public static final int item_peso=0x7f090029;
         public static final int item_somministrazione=0x7f090027;
         public static final int item_tipo=0x7f09002a;
