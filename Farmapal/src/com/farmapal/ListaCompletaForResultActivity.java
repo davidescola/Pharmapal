@@ -2,28 +2,39 @@ package com.farmapal;
 
 import java.io.IOException;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.farmapal.adapters.FarmaciAdapter;
 import com.farmapal.database.DBHelper;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.database.Cursor;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.Menu;
-import android.widget.ListView;
-
-public class ListaCompletaForResultActivity extends Activity {
+public class ListaCompletaForResultActivity extends Activity implements OnClickListener{
 
 	DBHelper db;
+	Button btnFatto;
+	FarmaciAdapter myCursorAdapter;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_completa_for_result);
 		db = new DBHelper(this);
-		//openDB();
+		openDB();
 		populateListViewFromDB();
+		btnFatto = (Button) findViewById(R.id.btnFattoFarmaciForResult);
+		btnFatto.setOnClickListener(this);
 		closeDB();
-		
+
+
 	}
 
 	private void populateListViewFromDB() {
@@ -31,18 +42,7 @@ public class ListaCompletaForResultActivity extends Activity {
 
 		startManagingCursor(cursor);
 
-		String[] from = new String[] {"nome", "tipo", "peso", "somministrazione"};
-
-		int[] to = new int[] {R.id.checkBoxFarmaco,R.id.item_tipo_for_result,R.id.item_peso_for_result,R.id.item_somministrazione_for_result };
-
-		SimpleCursorAdapter myCursorAdapter =
-				new SimpleCursorAdapter(this,
-						R.layout.item_list_farmaci_for_result,
-						cursor,
-						from, 
-						to);
-
-
+		myCursorAdapter = new FarmaciAdapter(this, cursor, 0);
 		//set the adapter for the listview
 		ListView myList = (ListView)findViewById(R.id.listFarmaciForResult);
 		myList.setAdapter(myCursorAdapter);
@@ -72,5 +72,23 @@ public class ListaCompletaForResultActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public void onClick(View v) {
+		Intent returnIntent = new Intent();
+		String retFarmaco = myCursorAdapter.getRetFarmaco();
+		String retSomministrazione = myCursorAdapter.getRetSomministrazione();
+		String retPeso = myCursorAdapter.getRetPeso();
+		String retTipo = myCursorAdapter.getRetTipo();
+		
+		if(myCursorAdapter.itemIsChecked()) {
+		Toast.makeText(v.getContext(), "farmaco: " + retFarmaco 
+				+ " somministrazione: " + retSomministrazione
+				+ " peso: " + retPeso
+				+ " tipo: " + retTipo, Toast.LENGTH_LONG).show();
+		}
+		
+		else
+			Toast.makeText(v.getContext(), "nessun elemento selezionato", Toast.LENGTH_LONG).show();
+	}
 
 }

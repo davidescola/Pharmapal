@@ -39,7 +39,7 @@ public class ListaCompletaActivity extends Activity {
 						R.layout.item_list_farmaci,
 						cursor,
 						from, 
-						to);
+						to,0);
 
 
 		//set the adapter for the listview

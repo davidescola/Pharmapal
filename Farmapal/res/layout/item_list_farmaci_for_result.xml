@@ -10,7 +10,7 @@
         android:orientation="horizontal" >
 
         <CheckBox
-            android:id="@+id/checkBoxFarmaco"
+            android:id="@+id/checkFarmaco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="14dp"
             android:layout_weight="1"
+            android:gravity="right"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
@@ -43,7 +44,9 @@
             android:id="@+id/item_tipo_for_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="14dp"
             android:layout_weight="1"
+            android:gravity="right"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
         
