@@ -89,12 +89,12 @@ public class FarmaciAdapter extends CursorAdapter {
 			@Override
 			public void onClick(View v) {
 				CheckBox cb = (CheckBox) v.findViewById(R.id.checkFarmaco);
-//				Toast.makeText(v.getContext(), "cliccata checkbox " + cb.getText() 
-//						+ " somm: " + listTextSomministrazione.get((Integer)cb.getTag()).getText()
-//						+ " tipo: " + listTextTipo.get((Integer)cb.getTag()).getText()
-//						+ " peso: " + listTextPeso.get((Integer)cb.getTag()).getText(),
-//						Toast.LENGTH_SHORT).show();
-				
+				//				Toast.makeText(v.getContext(), "cliccata checkbox " + cb.getText() 
+				//						+ " somm: " + listTextSomministrazione.get((Integer)cb.getTag()).getText()
+				//						+ " tipo: " + listTextTipo.get((Integer)cb.getTag()).getText()
+				//						+ " peso: " + listTextPeso.get((Integer)cb.getTag()).getText(),
+				//						Toast.LENGTH_SHORT).show();
+
 				if(!cb.isChecked()) {
 					itemChecked.set((Integer)cb.getTag(), false);
 					cb.setChecked(false);
@@ -102,7 +102,7 @@ public class FarmaciAdapter extends CursorAdapter {
 					retSomministrazione = "";
 					retTipo = "";
 					retPeso = "";
-					
+
 				}
 				else {
 					itemChecked.set((Integer)cb.getTag(), true);
@@ -113,8 +113,8 @@ public class FarmaciAdapter extends CursorAdapter {
 					retPeso = listTextPeso.get((Integer)cb.getTag()).getText().toString();
 					resetOtherCheckbox((Integer)cb.getTag());
 				}
-				
-				
+
+
 			}
 		});
 
@@ -138,49 +138,9 @@ public class FarmaciAdapter extends CursorAdapter {
 
 		return retView;
 	}
-	
+
 	public boolean itemIsChecked() {
 		return (!retFarmaco.equals("") && !retSomministrazione.equals("") && !retPeso.equals("") && !retTipo.equals(""));
 	}
-
-	//	@Override
-	//	public View getView(int position, View inView, ViewGroup parent) {
-	//		
-	//		final int pos = position;
-	//		if (inView == null) {
-	//	        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	//	        inView = inflater.inflate(R.layout.item_list_farmaci_for_result, null);
-	//	    }
-	//
-	//	    final CheckBox cBox = (CheckBox) inView.findViewById(R.id.checkFarmaco); 
-	//	    cBox.setOnClickListener(new OnClickListener() {
-	//
-	//	        public void onClick(View v) {
-	//
-	//	            CheckBox cb = (CheckBox) v.findViewById(R.id.checkFarmaco);
-	//
-	//	            if (cb.isChecked()) {
-	//	                itemChecked.set(pos, true);
-	//	                for(int i = 0; i < itemChecked.size(); i++) {
-	//	                	if(itemChecked.get(i) && i != pos)
-	//	                		itemChecked.set(i, false);
-	//	                }
-	//	                
-	//	            } else if (!cb.isChecked()) {
-	//	                itemChecked.set(pos, false);
-	//	                
-	//	            }
-	//	        }
-	//	    });
-	//	    cBox.setChecked(itemChecked.get(pos)); // this will Check or Uncheck the
-	//	    // CheckBox in ListView
-	//	    // according to their original
-	//	    // position and CheckBox never
-	//	    // loss his State when you
-	//	    // Scroll the List Items.
-	//	    return inView;
-	//	}
-
-
 
 }

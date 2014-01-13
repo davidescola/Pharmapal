@@ -85,11 +85,8 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 			returnIntent.putExtra("retSomministrazione", retSomministrazione);
 			returnIntent.putExtra("retPeso", retPeso);
 			returnIntent.putExtra("retTipo", retTipo);
-			Toast.makeText(v.getContext(), "farmaco: " + retFarmaco 
-					+ " somministrazione: " + retSomministrazione
-					+ " peso: " + retPeso
-					+ " tipo: " + retTipo, Toast.LENGTH_LONG).show();
 			setResult(RESULT_OK, returnIntent);
+			finish();
 		}
 
 		else

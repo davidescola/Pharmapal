@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmapal.database.DBHelper;
@@ -45,15 +46,15 @@ public class NuovaPrescrizioneActivity extends Activity {
 	private void addListenerbtnSelezionaFarmaco() {
 		Button btnSelezionaFarmaco = (Button) findViewById(R.id.buttonSelezionaFarmaco);
 		btnSelezionaFarmaco.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ListaCompletaForResultActivity.class);
 				startActivityForResult(intent, 1);
-				
+
 			}
 		});
-		
+
 	}
 
 	private void addListenerSpinnerQta() {
@@ -150,7 +151,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 		}
 		countPazienti = pazienti.getCount();
-		
+
 
 		listPazienti.add("nuovo paziente");
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPazienti);
@@ -196,7 +197,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					long check = db.insertPaziente(nome, ++countPazienti);
 					if (check == -1) 
 						Toast.makeText(getApplicationContext(), "paziente esistente! scegliere un altro nome", Toast.LENGTH_LONG).show();
-					
+
 					else
 						Toast.makeText(getApplicationContext(), "paziente " + nome + " creato", Toast.LENGTH_SHORT).show();
 				}
@@ -250,6 +251,27 @@ public class NuovaPrescrizioneActivity extends Activity {
 	private void closeDB() {
 		db.close();
 
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				TextView farmaco = (TextView) findViewById(R.id.textViewResultNomeFarmaco);
+				TextView somministrazione = (TextView) findViewById(R.id.textViewResultSomministrazione);
+				TextView peso = (TextView) findViewById(R.id.textViewResultPeso);
+				TextView tipo = (TextView) findViewById(R.id.textViewResultTipo);
+				
+				farmaco.setText(data.getStringExtra("retFarmaco"));
+				somministrazione.setText(data.getStringExtra("retSomministrazione"));
+				peso.setText(data.getStringExtra("retPeso"));
+				tipo.setText(data.getStringExtra("retTipo"));
+				
+				LinearLayout layout = (LinearLayout) findViewById(R.id.layoutResultFarmaco);
+				layout.setVisibility(View.VISIBLE);
+			}
+		}
+		
+		
 	}
 
 
