@@ -89,6 +89,7 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 					+ " somministrazione: " + retSomministrazione
 					+ " peso: " + retPeso
 					+ " tipo: " + retTipo, Toast.LENGTH_LONG).show();
+			setResult(RESULT_OK, returnIntent);
 		}
 
 		else
