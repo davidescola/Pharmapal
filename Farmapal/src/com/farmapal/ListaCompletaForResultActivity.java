@@ -79,14 +79,18 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 		String retSomministrazione = myCursorAdapter.getRetSomministrazione();
 		String retPeso = myCursorAdapter.getRetPeso();
 		String retTipo = myCursorAdapter.getRetTipo();
-		
+
 		if(myCursorAdapter.itemIsChecked()) {
-		Toast.makeText(v.getContext(), "farmaco: " + retFarmaco 
-				+ " somministrazione: " + retSomministrazione
-				+ " peso: " + retPeso
-				+ " tipo: " + retTipo, Toast.LENGTH_LONG).show();
+			returnIntent.putExtra("retFarmaco", retFarmaco);
+			returnIntent.putExtra("retSomministrazione", retSomministrazione);
+			returnIntent.putExtra("retPeso", retPeso);
+			returnIntent.putExtra("retTipo", retTipo);
+			Toast.makeText(v.getContext(), "farmaco: " + retFarmaco 
+					+ " somministrazione: " + retSomministrazione
+					+ " peso: " + retPeso
+					+ " tipo: " + retTipo, Toast.LENGTH_LONG).show();
 		}
-		
+
 		else
 			Toast.makeText(v.getContext(), "nessun elemento selezionato", Toast.LENGTH_LONG).show();
 	}

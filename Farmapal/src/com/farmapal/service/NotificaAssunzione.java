@@ -26,7 +26,7 @@ public class NotificaAssunzione extends Service {
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		// Facciamo partire il BackgroundThread
 		backgroundThread = new BackgroundThread();
-		backgroundThread.start();;
+		backgroundThread.start();
 
 	}
 
