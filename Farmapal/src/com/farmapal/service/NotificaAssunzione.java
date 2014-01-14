@@ -27,6 +27,7 @@ public class NotificaAssunzione extends Service {
 		// Facciamo partire il BackgroundThread
 		backgroundThread = new BackgroundThread();
 		backgroundThread.start();
+		//test
 
 	}
 
