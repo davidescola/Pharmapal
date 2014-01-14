@@ -1,9 +1,6 @@
 package com.farmapal;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -219,6 +216,11 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 					else
 						Toast.makeText(getApplicationContext(), "paziente " + nome + " creato", Toast.LENGTH_SHORT).show();
+					
+					Intent returnIntent = new Intent();
+					setResult(RESULT_OK, returnIntent);
+					db.close();
+					finish();
 				}
 			});
 
@@ -236,8 +238,8 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 		String nomeMedico = editTextMedico.getText().toString();
 		String nomePaziente = spinnerPazienti.getSelectedItem().toString();
-		String stringDataInizio = "" + pickerDal.getYear() + "-" + pickerDal.getMonth() + "-" + pickerDal.getDayOfMonth();
-		String stringDataFine = "" + pickerAl.getYear() + "-" + pickerAl.getMonth() + "-" + pickerAl.getDayOfMonth();
+		String stringDataInizio = "" + pickerDal.getYear() + "-" + pickerDal.getMonth() + 1 + "-" + pickerDal.getDayOfMonth();
+		String stringDataFine = "" + pickerAl.getYear() + "-" + pickerAl.getMonth() + 1 + "-" + pickerAl.getDayOfMonth();
 		int qta = Integer.parseInt(spinnerQta.getSelectedItem().toString());
 		int freq = Integer.parseInt(spinnerFrequenza.getSelectedItem().toString());
 		String farmaco = textFarmaco.getText().toString();
@@ -283,6 +285,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 		Cursor cursorPrescrizioni = db.getAllPrescrizioni();
 		countPrescrizioni = cursorPrescrizioni.getCount();
+		cursorPrescrizioni.close();
 		long check;
 
 		switch(qta) {
@@ -402,7 +405,13 @@ public class NuovaPrescrizioneActivity extends Activity {
 			break;
 		}
 		
-		finish();
+		if(!(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente"))) {
+			Intent returnIntent = new Intent();
+			setResult(RESULT_OK, returnIntent);
+			db.close();
+			finish();
+		}
+			
 		
 	}
 
@@ -412,22 +421,6 @@ public class NuovaPrescrizioneActivity extends Activity {
 		return string;
 	}
 
-
-	private void openDB() {
-		db = new DBHelper(this);
-		try {
-			db.createDatabase();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	private void closeDB() {
-		db.close();
-
-	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {

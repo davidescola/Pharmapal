@@ -89,11 +89,6 @@ public class FarmaciAdapter extends CursorAdapter {
 			@Override
 			public void onClick(View v) {
 				CheckBox cb = (CheckBox) v.findViewById(R.id.checkFarmaco);
-				//				Toast.makeText(v.getContext(), "cliccata checkbox " + cb.getText() 
-				//						+ " somm: " + listTextSomministrazione.get((Integer)cb.getTag()).getText()
-				//						+ " tipo: " + listTextTipo.get((Integer)cb.getTag()).getText()
-				//						+ " peso: " + listTextPeso.get((Integer)cb.getTag()).getText(),
-				//						Toast.LENGTH_SHORT).show();
 
 				if(!cb.isChecked()) {
 					itemChecked.set((Integer)cb.getTag(), false);

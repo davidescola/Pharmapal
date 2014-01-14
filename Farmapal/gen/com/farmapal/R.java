@@ -29,7 +29,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f09004b;
+        public static final int action_settings=0x7f090052;
         public static final int btnCercaFarmacia=0x7f090019;
         public static final int btnFattoFarmaciForResult=0x7f090015;
         public static final int btnListaCompleta=0x7f090018;
@@ -40,7 +40,7 @@ public final class R {
         public static final int buttonOk=0x7f090041;
         public static final int buttonSelezionaFarmaco=0x7f090021;
         public static final int checkFarmaco=0x7f090046;
-        public static final int condividi=0x7f09004c;
+        public static final int condividi=0x7f090053;
         public static final int datePickerAl=0x7f090040;
         public static final int datePickerDal=0x7f09003e;
         public static final int editTextMedico=0x7f09001f;
@@ -59,10 +59,17 @@ public final class R {
         public static final int layoutRazione6=0x7f09003a;
         public static final int layoutResultFarmaco=0x7f090022;
         public static final int layout_lista_completa_for_result=0x7f090013;
+        public static final int linearLayoutPrescrizioni=0x7f09004b;
         public static final int listFarmaci=0x7f090012;
         public static final int listFarmaciForResult=0x7f090014;
         public static final int listFarmacie=0x7f090016;
         public static final int listPrescrizioni=0x7f09001a;
+        public static final int miePrescrizioniData=0x7f09004d;
+        public static final int miePrescrizioniFarmaco=0x7f09004c;
+        public static final int miePrescrizioniMedico=0x7f090051;
+        public static final int miePrescrizioniPaziente=0x7f090050;
+        public static final int miePrescrizioniPeso=0x7f09004f;
+        public static final int miePrescrizioniTipo=0x7f09004e;
         public static final int nome_farmacia=0x7f09004a;
         public static final int spinnerFrequenza=0x7f090029;
         public static final int spinnerPazienti=0x7f09001d;
