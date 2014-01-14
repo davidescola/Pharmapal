@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	private SQLiteDatabase db;
 	private final Context context;
 	private String DB_PATH;
-	
+
 	public DBHelper (Context context) {
 		super(context, DB_NAME, null, 1);
 		this.context = context;
@@ -29,7 +29,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void createDatabase() throws IOException {
@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		
+
 
 	}
 
@@ -83,7 +83,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT nome FROM farmaco", null);
-	
+
 		return c;
 	}
 
@@ -92,7 +92,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmaco", null);
-		
+
 		return c;
 	}
 
@@ -101,7 +101,16 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM paziente", null);
-		
+
+		return c;
+	}
+	
+	public Cursor getAllPrescrizioni () {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione", null);
+
 		return c;
 	}
 
@@ -109,29 +118,76 @@ public class DBHelper extends SQLiteOpenHelper{
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READWRITE);
-		
+
 		ContentValues cvs = new ContentValues();
 		cvs.put("_id", index);
 		cvs.put("nome", nome);
 		long check = db.insert("paziente", null, cvs);
-		
+
 		return check;
 
 	}
 	
+	public long insertPrescrizione(int index, String medico, String data_inizio, String data_fine, int quantita, int frequenza, int id_farmaco, int id_paziente, String[] razioni) {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READWRITE);
+		
+		ContentValues cvs = new ContentValues();
+		cvs.put("_id", index);
+		cvs.put("medico", medico);
+		cvs.put("data_inizio", data_inizio);
+		cvs.put("data_fine", data_fine);
+		cvs.put("quantita", quantita);
+		cvs.put("frequenza", frequenza);
+		cvs.put("id_farmaco", id_farmaco);
+		cvs.put("id_paziente", id_paziente);
+		
+		if(razioni.length > 6)
+			return -1;
+		for(int i = 1; i <= razioni.length; i++) {
+			cvs.put("ora" + i, razioni[i-1]);
+		}
+		
+		long check = db.insert("prescrizione", null, cvs);
+		
+		return check;
+	}
+
 	public Cursor getAllFarmacie(){
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmacia", null);
-		   
+
 		return c;
 	}
-	
+
 	public Cursor getDatiFarmacia(int id_farmacia){
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmacia WHERE _id=" + id_farmacia, null);
-		   
+
+		return c;
+	}
+
+	public Cursor getIDFarmaco(String nome, String tipo, String peso, String somministrazione) {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT _id FROM farmaco WHERE" +
+				" nome = '" + nome + "' AND" +
+				" tipo = '" + tipo + "' AND" +
+				" peso = '" + peso + "' AND" +
+				" somministrazione = '" + somministrazione + "'",null);
+
+		return c;
+	}
+
+	public Cursor getIDPaziente(String nome) {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT _id FROM paziente WHERE" +
+				" nome = '" + nome + "'", null);
+		
 		return c;
 	}
 
