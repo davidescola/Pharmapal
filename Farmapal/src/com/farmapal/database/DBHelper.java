@@ -165,6 +165,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			return -1;
 		for(int i = 1; i <= razioni.length; i++) {
 			cvs.put("ora" + i, razioni[i-1]);
+			cvs.put("razione_presa" + i, 0);
 		}
 		
 		long check = db.insert("prescrizione", null, cvs);
@@ -205,6 +206,22 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT _id FROM paziente WHERE" +
 				" nome = '" + nome + "'", null);
+		
+		return c;
+	}
+	
+	public Cursor getMaxIDPaziente() {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT MAX(_id) FROM paziente", null);
+		
+		return c;
+	}
+	
+	public Cursor getMaxIDPrescrizione() {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT MAX(_id) FROM prescrizione", null);
 		
 		return c;
 	}

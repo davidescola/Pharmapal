@@ -50,8 +50,10 @@ public class MiePrescrizioniActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == 2) {
-			if (resultCode == RESULT_OK)
+			if (resultCode == RESULT_OK) {
+				finish();
 				recreate();
+			}
 		}
 	}
 
