@@ -62,5 +62,6 @@
     <string name="title_activity_descrizione_farmacia_dialog">DescrizioneFarmaciaDialog</string>
     <string name="title_activity_conferma_assunzione_dialog">ConfermaAssunzioneDialog</string>
     <string name="nome_paziente">nome paziente</string>
+    <string name="title_activity_dettaglio_prescrizione">DettaglioPrescrizioneActivity</string>
 
 </resources>

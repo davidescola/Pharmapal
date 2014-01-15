@@ -4,9 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farmapal.R;
 import com.farmapal.database.DBHelper;
@@ -17,7 +19,6 @@ public class PrescrizioniAdapter extends CursorAdapter {
 	
 	public PrescrizioniAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -53,10 +54,18 @@ public class PrescrizioniAdapter extends CursorAdapter {
 	}
 
 	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+	public View newView(final Context context, Cursor cursor, ViewGroup parent) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 		View retView = inflater.inflate(R.layout.item_list_prescrizioni, parent, false);
-
+		retView.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
+		retView.setOnClickListener(new OnClickListener() {
+		
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(context, "cliccata box numero " + v.getTag().toString(), Toast.LENGTH_LONG).show();
+				
+			}
+		});
 		return retView;
 	}
 
