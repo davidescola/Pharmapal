@@ -30,7 +30,7 @@ public class MiePrescrizioniActivity extends Activity {
 		myCursorAdapter = new PrescrizioniAdapter(this, cursor, 0);
 		ListView list = (ListView)findViewById(R.id.listPrescrizioni);
 		list.setAdapter(myCursorAdapter);
-		
+
 	}
 
 	@Override
@@ -44,17 +44,18 @@ public class MiePrescrizioniActivity extends Activity {
 		Intent intent = new Intent(this, NuovaPrescrizioneActivity.class);
 		startActivityForResult(intent, 2);
 	}
-	
-	
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == 2) {
-			if (resultCode == RESULT_OK) {
+		if (requestCode == 2) {
+			if(resultCode == RESULT_OK) {
 				finish();
-				recreate();
+				startActivity(getIntent());
 			}
+				
 		}
 	}
+	
+	
 
 }

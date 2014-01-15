@@ -26,6 +26,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <EditText
+            android:id="@+id/editTextNuovoPaziente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:visibility="gone"
+            android:hint="@string/nome_paziente"
+            android:singleLine="true" >
+
+<!--             <requestFocus /> -->
+        </EditText>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/nome_medico" >
+                android:hint="@string/nome_medico"
+                android:singleLine="true" >
             </EditText>
         </LinearLayout>
 
@@ -184,7 +197,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone"
-            android:id="@+id/layoutRazione2"> >
+            android:id="@+id/layoutRazione2"> 
 
             <TextView
                 android:id="@+id/textViewRazione2"

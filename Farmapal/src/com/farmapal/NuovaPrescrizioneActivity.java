@@ -1,6 +1,10 @@
 package com.farmapal;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +21,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -25,7 +31,7 @@ import android.widget.Toast;
 
 import com.farmapal.database.DBHelper;
 
-public class NuovaPrescrizioneActivity extends Activity {
+public class NuovaPrescrizioneActivity extends Activity implements OnDateChangedListener{
 
 	DBHelper db;
 	int countPazienti;
@@ -43,6 +49,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 		addListenerbtnSelezionaFarmaco();
 		//closeDB(); TODO pensare a quando fare la close
 	}
+
 	private void setTimePickers() {
 		TimePicker tp1 = (TimePicker) findViewById(R.id.timePicker1);
 		TimePicker tp2 = (TimePicker) findViewById(R.id.timePicker2);
@@ -168,8 +175,27 @@ public class NuovaPrescrizioneActivity extends Activity {
 		countPazienti = maxIDPaziente.getInt(0);
 		listPazienti.add("nuovo paziente");
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPazienti);
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerPazienti);
+		final Spinner spinner = (Spinner) findViewById(R.id.spinnerPazienti);
 		spinner.setAdapter(adapter);
+
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				EditText nuovoPaziente = (EditText)findViewById(R.id.editTextNuovoPaziente);
+				if(spinner.getSelectedItem().toString().equals("nuovo paziente"))
+					nuovoPaziente.setVisibility(View.VISIBLE);
+				else
+					nuovoPaziente.setVisibility(View.GONE);
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				//non fare nulla
+			}
+		});
 
 
 	}
@@ -184,6 +210,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 	public void aggiungiPrescrizione(View view) {
 		Spinner spinnerPazienti = (Spinner) findViewById(R.id.spinnerPazienti);
 		EditText editTextMedico = (EditText) findViewById(R.id.editTextMedico);
+		EditText editTextNuovoPaziente = (EditText) findViewById(R.id.editTextNuovoPaziente);
 		Spinner spinnerQta = (Spinner) findViewById(R.id.spinnerQta);
 		Spinner spinnerFrequenza = (Spinner) findViewById(R.id.spinnerFrequenza);
 		final DatePicker pickerDal = (DatePicker) findViewById(R.id.datePickerDal);
@@ -198,70 +225,76 @@ public class NuovaPrescrizioneActivity extends Activity {
 		TimePicker tp4 = (TimePicker) findViewById(R.id.timePicker4);
 		TimePicker tp5 = (TimePicker) findViewById(R.id.timePicker5);
 		TimePicker tp6 = (TimePicker) findViewById(R.id.timePicker6);
+		LinearLayout layoutFarmaco = (LinearLayout) findViewById(R.id.layoutResultFarmaco);
+		Calendar cal = Calendar.getInstance();
+		int curYear = cal.get(Calendar.YEAR);
+		int curMonth = cal.get(Calendar.MONTH);
+		int curDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 
-		//pickerAl.setMinDate(Date.)
-		//TODO settare min e max per i datepicker
-		
-		if(editTextMedico.getText().toString().equals(""))
+
+		pickerDal.init(curYear, curMonth, curDayOfMonth, this);
+
+		pickerAl.init(curYear, curMonth, curDayOfMonth, this);
+
+
+		if(editTextNuovoPaziente.getVisibility() == View.VISIBLE && editTextNuovoPaziente.getText().toString().equals("")) {
+			AlertDialog.Builder noNuovoPaziente = new AlertDialog.Builder(this);
+			noNuovoPaziente.setTitle("Attenzione");
+			noNuovoPaziente.setMessage("Non hai inserito il nome del nuovo paziente");
+			noNuovoPaziente.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//non fare nulla
+
+				}
+			});
+
+			noNuovoPaziente.show();
+		}
+		else if(editTextMedico.getText().toString().equals(""))
 		{
 			AlertDialog.Builder noMedico = new AlertDialog.Builder(this);
 			noMedico.setTitle("Attenzione");
 			noMedico.setMessage("Non hai inserito il nome del medico");
 			noMedico.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					
+					//non fare nulla
 				}
 			});
-			
+
 			noMedico.show();
 		}
-		
+		else if(layoutFarmaco.getVisibility() == View.GONE) {
+			AlertDialog.Builder noFarmaco = new AlertDialog.Builder(this);
+			noFarmaco.setTitle("Attenzione");
+			noFarmaco.setMessage("Non hai selezionato alcun farmaco");
+			noFarmaco.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//non fare nulla
+				}
+			});
+
+			noFarmaco.show();
+		}
+
 		else{
 			if(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente")) {
 				++countPazienti;
-				AlertDialog.Builder alert = new AlertDialog.Builder(this);
-				alert.setTitle("Paziente");
-				alert.setMessage("inserisci il nome del paziente: ");
-
-				// Set an EditText view to get user input 
-				final EditText input = new EditText(this);
-				alert.setView(input);
-
-				alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int whichButton) {
-						String nome = input.getText().toString();
-						long check = db.insertPaziente(nome, countPazienti);
-						if (check == -1) 
-							Toast.makeText(getApplicationContext(), "paziente esistente! scegliere un altro nome", Toast.LENGTH_LONG).show();
-
-						else
-							Toast.makeText(getApplicationContext(), "paziente " + nome + " creato", Toast.LENGTH_SHORT).show();
-
-						Intent returnIntent = new Intent();
-						setResult(RESULT_OK, returnIntent);
-						db.close();
-						finish();
-					}
-				});
-
-				alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int whichButton) {
-						--countPazienti;
-					}
-				});
-
-				alert.show();
-				//db.close();
+				String nomePaziente = editTextNuovoPaziente.getText().toString();
+				long checkPazienti = db.insertPaziente(nomePaziente, countPazienti);
+				if (checkPazienti == -1) {
+					Toast.makeText(getApplicationContext(), "paziente esistente! aggiungo la prescrizione al paziente " + nomePaziente, Toast.LENGTH_LONG).show();
+					--countPazienti;
+				}
+				else
+					Toast.makeText(getApplicationContext(), "paziente " + nomePaziente + " creato", Toast.LENGTH_SHORT).show();
 			}
-
-
 			String nomeMedico = editTextMedico.getText().toString();
-			String nomePaziente = spinnerPazienti.getSelectedItem().toString();
 			String stringDataInizio = "" + pickerDal.getYear() + "-" + pickerDal.getMonth() + 1 + "-" + pickerDal.getDayOfMonth();
 			String stringDataFine = "" + pickerAl.getYear() + "-" + pickerAl.getMonth() + 1 + "-" + pickerAl.getDayOfMonth();
 			int qta = Integer.parseInt(spinnerQta.getSelectedItem().toString());
@@ -278,6 +311,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 				cursorIDFarmaco.moveToFirst();
 				idFarmaco = cursorIDFarmaco.getInt(cursorIDFarmaco.getColumnIndex("_id"));
 			}
+
+			String nomePaziente;
+			if(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente"))
+				nomePaziente = editTextNuovoPaziente.getText().toString();
+			else
+				nomePaziente = spinnerPazienti.getSelectedItem().toString();
 
 			Cursor cursorIDPaziente = db.getIDPaziente(nomePaziente);
 			startManagingCursor(cursorIDPaziente);
@@ -311,7 +350,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			startManagingCursor(cursorMaxIDPrescrizioni);
 			cursorMaxIDPrescrizioni.moveToFirst();
 			countPrescrizioni = cursorMaxIDPrescrizioni.getInt(0);
-			long check;
+			long checkPrescrizioni;
 
 			switch(qta) {
 
@@ -319,12 +358,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 				hour1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
 				minute1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
 				razione1 = hour1 + ":" + minute1 + ":00.000";
-				check = db.insertPrescrizione(++countPrescrizioni, 
+				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
 						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1});
-				if (check == -1)
-					Toast.makeText(this, "errore", Toast.LENGTH_LONG).show();
+				if (checkPrescrizioni == -1)
+					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(this, "successo", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "prescrizione salvata", Toast.LENGTH_LONG).show();
 				break;
 			case 2:
 				hour1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -333,12 +372,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 				hour2 = NuovaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
 				minute2 = NuovaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
 				razione2 = hour2 + ":" + minute2 + ":00.000";
-				check = db.insertPrescrizione(++countPrescrizioni, 
+				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
 						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2});
-				if (check == -1)
-					Toast.makeText(this, "errore", Toast.LENGTH_LONG).show();
+				if (checkPrescrizioni == -1)
+					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(this, "successo", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "prescrizione salvata", Toast.LENGTH_LONG).show();
 				break;
 			case 3:
 				hour1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -350,12 +389,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 				hour3 = NuovaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
 				minute3 = NuovaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
 				razione3 = hour3 + ":" + minute3 + ":00.000";
-				check = db.insertPrescrizione(++countPrescrizioni, 
+				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
 						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3});
-				if (check == -1)
-					Toast.makeText(this, "errore", Toast.LENGTH_LONG).show();
+				if (checkPrescrizioni == -1)
+					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(this, "successo", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "prescrizione salvata", Toast.LENGTH_LONG).show();
 				break;
 			case 4:
 				hour1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -370,12 +409,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 				hour4 = NuovaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
 				minute4 = NuovaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
 				razione4 = hour4 + ":" + minute4 + ":00.000";
-				check = db.insertPrescrizione(++countPrescrizioni, 
+				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
 						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4});
-				if (check == -1)
-					Toast.makeText(this, "errore", Toast.LENGTH_LONG).show();
+				if (checkPrescrizioni == -1)
+					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(this, "successo", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "prescrizione salvata", Toast.LENGTH_LONG).show();
 				break;
 			case 5:
 				hour1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -393,12 +432,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 				hour5 = NuovaPrescrizioneActivity.adjustTime(tp5.getCurrentHour().toString());
 				minute5 = NuovaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
 				razione5 = hour5 + ":" + minute5 + ":00.000";
-				check = db.insertPrescrizione(++countPrescrizioni, 
+				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
 						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5});
-				if (check == -1)
-					Toast.makeText(this, "errore", Toast.LENGTH_LONG).show();
+				if (checkPrescrizioni == -1)
+					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(this, "successo", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "prescrizione salvata", Toast.LENGTH_LONG).show();
 				break;
 			case 6:
 				hour1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -419,26 +458,23 @@ public class NuovaPrescrizioneActivity extends Activity {
 				hour6 = NuovaPrescrizioneActivity.adjustTime(tp6.getCurrentHour().toString());
 				minute6 = NuovaPrescrizioneActivity.adjustTime(tp6.getCurrentMinute().toString());
 				razione6 = hour6 + ":" + minute6 + ":00.000";
-				check = db.insertPrescrizione(++countPrescrizioni, 
+				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
 						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
-				if (check == -1)
-					Toast.makeText(this, "errore", Toast.LENGTH_LONG).show();
+				if (checkPrescrizioni == -1)
+					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(this, "successo", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "prescrizione salvata", Toast.LENGTH_LONG).show();
 				break;
 			default:
 				break;
 			}
-
-			if(!(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente"))) {
-				Intent returnIntent = new Intent();
-				setResult(RESULT_OK, returnIntent);
-				db.close();
-				finish();
-			}
-
+			db.close();
+			Intent returnIntent = new Intent();
+			setResult(RESULT_OK, returnIntent	);
+			finish();
 		}
 	}
+
 
 	private static String adjustTime(String string) {
 		if(string.length() == 1)
@@ -464,9 +500,36 @@ public class NuovaPrescrizioneActivity extends Activity {
 				layout.setVisibility(View.VISIBLE);
 			}
 		}
-
-
 	}
 
-
+	@Override
+	public void onDateChanged(DatePicker view, int year, int monthOfYear,
+			int dayOfMonth) {
+		//NON PARTE IL LISTENER!!!! PERCHE?????
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		formatter.setLenient(false);
+//		if(view.getId() == R.id.datePickerDal) {
+//			DatePicker pickerAl = (DatePicker) findViewById(R.id.datePickerAl);
+//			String dalString = "" + year + "-" + monthOfYear+1 + "-" + dayOfMonth;
+//			try {
+//				Date dalDate = formatter.parse(dalString);
+//				long dalMillis = dalDate.getTime();
+//				pickerAl.setMinDate(dalMillis);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		if(view.getId() == R.id.datePickerAl) {
+//			DatePicker pickerDal = (DatePicker) findViewById(R.id.datePickerDal);
+//			String alString = "" + year + "-" + monthOfYear+1 + "-" + dayOfMonth;
+//			try {
+//				Date alDate = formatter.parse(alString);
+//				long alMillis = alDate.getTime();
+//				pickerDal.setMaxDate(alMillis);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+		Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_LONG).show();
+	}
 }
