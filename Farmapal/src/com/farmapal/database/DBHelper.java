@@ -92,7 +92,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmaco", null);
-
+		
 		return c;
 	}
 
@@ -101,7 +101,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM paziente", null);
-
+		
 		return c;
 	}
 	
@@ -119,6 +119,15 @@ public class DBHelper extends SQLiteOpenHelper{
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmaco WHERE _id = '" + id + "'", null);
+		
+		return c;
+	}
+	
+	public Cursor getPrescrizioneFromID(int id) {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE _id = '" + id + "'", null);
 		
 		return c;
 	}
@@ -141,7 +150,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		cvs.put("_id", index);
 		cvs.put("nome", nome);
 		long check = db.insert("paziente", null, cvs);
-
+		
 		return check;
 
 	}
@@ -177,7 +186,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmacia", null);
-
+		
 		return c;
 	}
 
@@ -185,7 +194,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 		Cursor c = db.rawQuery("SELECT * FROM farmacia WHERE _id=" + id_farmacia, null);
-
+		
 		return c;
 	}
 

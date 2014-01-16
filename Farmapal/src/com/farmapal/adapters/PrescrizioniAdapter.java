@@ -1,7 +1,10 @@
 package com.farmapal.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,6 +13,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.farmapal.DettaglioPrescrizioneActivity;
 import com.farmapal.R;
 import com.farmapal.database.DBHelper;
 
@@ -62,7 +66,12 @@ public class PrescrizioniAdapter extends CursorAdapter {
 		
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(context, "cliccata box numero " + v.getTag().toString(), Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(v.getContext(), DettaglioPrescrizioneActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("id", v.getTag().toString());
+				//Toast.makeText(context, "cliccata box numero " + v.getTag().toString(), Toast.LENGTH_LONG).show();
+				intent.putExtras(bundle);
+				v.getContext().startActivity(intent);
 				
 			}
 		});

@@ -10,4 +10,76 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".DettaglioPrescrizioneActivity" >
 
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneNomePaziente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneFarmaco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneFrequenza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneValidita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneMedico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneRazione1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="TextView" />
+    
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneRazione2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneRazione3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneRazione4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneRazione5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/DettaglioPrescrizioneRazione6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="gone" />
+
 </LinearLayout>
