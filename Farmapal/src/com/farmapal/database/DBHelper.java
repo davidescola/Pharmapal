@@ -252,6 +252,12 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 		return c;
 	}
+	
+	public boolean deletePrescrizioneFromID(int id) {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+		return db.delete("prescrizione", "_id=" + id, null) > 0;
+	}
 
 }
 

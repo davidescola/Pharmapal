@@ -6,6 +6,9 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.farmapal.database.DBHelper;
@@ -26,12 +29,28 @@ public class DettaglioPrescrizioneActivity extends Activity {
 	private TextView razione6;
 	private String[] giorni;
 	private ArrayList<String> giorniRazioni;
+	private Button btnElimina;
+	private int idPrescrizione;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dettaglio_prescrizione);
 		db = new DBHelper(this);
 		populateActivity();
+		addListeners();
+	}
+
+	private void addListeners() {
+		btnElimina = (Button) findViewById(R.id.DettaglioPrescrizioneElimina);
+		btnElimina.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				db.deletePrescrizioneFromID(idPrescrizione);
+				finish();
+			}
+		});
+		
 	}
 
 	private void populateActivity() {
@@ -48,8 +67,10 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		razione6 = (TextView) findViewById(R.id.DettaglioPrescrizioneRazione6);
 		giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
 		giorniRazioni = new ArrayList<String>();
+		
 		Bundle b = getIntent().getExtras();
-		Cursor c = db.getPrescrizioneFromID(Integer.parseInt(b.getString("id")));
+		idPrescrizione = Integer.parseInt(b.getString("id"));
+		Cursor c = db.getPrescrizioneFromID(idPrescrizione);
 		startManagingCursor(c);
 		c.moveToFirst();
 
@@ -81,6 +102,68 @@ public class DettaglioPrescrizioneActivity extends Activity {
 
 		editTextGiorni.setText("da assumere " + c.getInt(c.getColumnIndex("quantita")) + " volta/e nei giorni di " + s);
 		validita.setText("dal " + c.getString(c.getColumnIndex("data_inizio")) + " al " + c.getString(c.getColumnIndex("data_fine")));
+		nomeMedico.setText("Prescritto da: " + c.getString(c.getColumnIndex("medico")));
+
+		switch(giorniRazioni.size()) {
+
+		case 0:
+			break;
+		case 1:
+			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
+			razione1.setVisibility(View.VISIBLE);
+			break;
+		case 2:
+			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
+			razione1.setVisibility(View.VISIBLE);
+			razione2.setText("Razione 2 da assumere alle ore " + c.getString(c.getColumnIndex("ora2")));
+			razione2.setVisibility(View.VISIBLE);
+			break;
+		case 3:
+			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
+			razione1.setVisibility(View.VISIBLE);
+			razione2.setText("Razione 2 da assumere alle ore " + c.getString(c.getColumnIndex("ora2")));
+			razione2.setVisibility(View.VISIBLE);
+			razione3.setText("Razione 3 da assumere alle ore " + c.getString(c.getColumnIndex("ora3")));
+			razione3.setVisibility(View.VISIBLE);
+			break;
+		case 4:
+			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
+			razione1.setVisibility(View.VISIBLE);
+			razione2.setText("Razione 2 da assumere alle ore " + c.getString(c.getColumnIndex("ora2")));
+			razione2.setVisibility(View.VISIBLE);
+			razione3.setText("Razione 3 da assumere alle ore " + c.getString(c.getColumnIndex("ora3")));
+			razione3.setVisibility(View.VISIBLE);
+			razione4.setText("Razione 4 da assumere alle ore " + c.getString(c.getColumnIndex("ora4")));
+			razione4.setVisibility(View.VISIBLE);
+			break;
+		case 5:
+			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
+			razione1.setVisibility(View.VISIBLE);
+			razione2.setText("Razione 2 da assumere alle ore " + c.getString(c.getColumnIndex("ora2")));
+			razione2.setVisibility(View.VISIBLE);
+			razione3.setText("Razione 3 da assumere alle ore " + c.getString(c.getColumnIndex("ora3")));
+			razione3.setVisibility(View.VISIBLE);
+			razione4.setText("Razione 4 da assumere alle ore " + c.getString(c.getColumnIndex("ora4")));
+			razione4.setVisibility(View.VISIBLE);
+			razione5.setText("Razione 5 da assumere alle ore " + c.getString(c.getColumnIndex("ora5")));
+			razione5.setVisibility(View.VISIBLE);
+			break;
+		case 6:
+			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
+			razione1.setVisibility(View.VISIBLE);
+			razione2.setText("Razione 2 da assumere alle ore " + c.getString(c.getColumnIndex("ora2")));
+			razione2.setVisibility(View.VISIBLE);
+			razione3.setText("Razione 3 da assumere alle ore " + c.getString(c.getColumnIndex("ora3")));
+			razione3.setVisibility(View.VISIBLE);
+			razione4.setText("Razione 4 da assumere alle ore " + c.getString(c.getColumnIndex("ora4")));
+			razione4.setVisibility(View.VISIBLE);
+			razione5.setText("Razione 5 ore " + c.getString(c.getColumnIndex("ora5")));
+			razione5.setVisibility(View.VISIBLE);
+			razione6.setText("Razione 6 da assumere alle ore " + c.getString(c.getColumnIndex("ora6")));
+			razione6.setVisibility(View.VISIBLE);
+		default:
+			break;
+		}
 
 	}
 
@@ -90,5 +173,11 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		getMenuInflater().inflate(R.menu.dettaglio_prescrizione, menu);
 		return true;
 	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
+
 
 }

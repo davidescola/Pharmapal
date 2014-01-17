@@ -56,6 +56,9 @@ public class MiePrescrizioniActivity extends Activity {
 		}
 	}
 	
-	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 
 }

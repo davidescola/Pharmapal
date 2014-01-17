@@ -71,4 +71,9 @@ public class ListaCompletaActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
+	
 }

@@ -120,5 +120,9 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 		else
 			Toast.makeText(v.getContext(), "nessun elemento selezionato", Toast.LENGTH_LONG).show();
 	}
-
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 }

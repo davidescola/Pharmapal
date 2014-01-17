@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.sax.StartElementListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +44,7 @@ public class PrescrizioniAdapter extends CursorAdapter {
 		textPeso.setText(cursorIDFarmaco.getString(cursorIDFarmaco.getColumnIndex("peso")));
 		textTipo.setText(cursorIDFarmaco.getString(cursorIDFarmaco.getColumnIndex("tipo")));
 		
+		view.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
 		int idPaziente = cursor.getInt(cursor.getColumnIndex("id_paziente"));
 		Cursor cursorIDPaziente = db.getPazienteFromID(idPaziente);
 		cursorIDPaziente.moveToFirst();
@@ -61,7 +63,8 @@ public class PrescrizioniAdapter extends CursorAdapter {
 	public View newView(final Context context, Cursor cursor, ViewGroup parent) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 		View retView = inflater.inflate(R.layout.item_list_prescrizioni, parent, false);
-		retView.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
+		
+//		Log.e("prescrizioniAdapter", "setto l'id della view numero " + cursor.getPosition() + "con il tag " + retView.getTag());
 		retView.setOnClickListener(new OnClickListener() {
 		
 			@Override
@@ -69,7 +72,8 @@ public class PrescrizioniAdapter extends CursorAdapter {
 				Intent intent = new Intent(v.getContext(), DettaglioPrescrizioneActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("id", v.getTag().toString());
-				//Toast.makeText(context, "cliccata box numero " + v.getTag().toString(), Toast.LENGTH_LONG).show();
+//				Toast.makeText(context, "cliccata box numero " + v.getTag().toString(), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, "cliccata box numero " + v.getId(), Toast.LENGTH_SHORT).show();
 				intent.putExtras(bundle);
 				v.getContext().startActivity(intent);
 				

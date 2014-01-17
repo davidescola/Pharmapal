@@ -62,6 +62,11 @@ public class ListaFarmacie extends Activity {
 		});
 
 	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 
 }
 

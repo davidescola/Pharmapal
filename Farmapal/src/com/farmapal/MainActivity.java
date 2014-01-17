@@ -35,6 +35,11 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, ListaFarmacie.class);
 		startActivity(intent);
 	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 
 	
 

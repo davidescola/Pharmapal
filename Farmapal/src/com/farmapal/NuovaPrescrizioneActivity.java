@@ -40,32 +40,32 @@ public class NuovaPrescrizioneActivity extends Activity {
 	String[] giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
 	int idFarmaco = -1;
 
-	Button btnGiorni;
-	TimePicker tp1;
-	TimePicker tp2;
-	TimePicker tp3;
-	TimePicker tp4;
-	TimePicker tp5;
-	TimePicker tp6;
-	Button btnSelezionaFarmaco;
-	Spinner spinnerQta;
-	LinearLayout layout1;
-	LinearLayout layout2;
-	LinearLayout layout3;
-	LinearLayout layout4;
-	LinearLayout layout5;
-	LinearLayout layout6;
-	Spinner spinnerPazienti;
-	EditText editTextMedico;
-	EditText editTextNuovoPaziente;
-	DatePicker pickerDal;
-	DatePicker pickerAl;
-	TextView textFarmaco;
-	TextView textSomministrazione;
-	TextView textPeso;
-	TextView textTipo;
-	LinearLayout layoutFarmaco;
-	TextView textViewRiepilogo;
+	private Button btnGiorni;
+	private TimePicker tp1;
+	private TimePicker tp2;
+	private TimePicker tp3;
+	private TimePicker tp4;
+	private TimePicker tp5;
+	private TimePicker tp6;
+	private Button btnSelezionaFarmaco;
+	private Spinner spinnerQta;
+	private LinearLayout layout1;
+	private LinearLayout layout2;
+	private LinearLayout layout3;
+	private LinearLayout layout4;
+	private LinearLayout layout5;
+	private LinearLayout layout6;
+	private Spinner spinnerPazienti;
+	private EditText editTextMedico;
+	private EditText editTextNuovoPaziente;
+	private DatePicker pickerDal;
+	private DatePicker pickerAl;
+	private TextView textFarmaco;
+	private TextView textSomministrazione;
+	private TextView textPeso;
+	private TextView textTipo;
+	private LinearLayout layoutFarmaco;
+	private TextView textViewRiepilogo;
 
 
 	@Override
@@ -322,7 +322,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 			noFarmaco.show();
 		}
-		
+
 		else if(textViewRiepilogo.getText().equals("Non hai ancora selezionato i giorni")) {
 			AlertDialog.Builder noGiorni = new AlertDialog.Builder(this);
 			noGiorni.setTitle("Attenzione");
@@ -557,7 +557,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 				textTipo.setText(data.getStringExtra("retTipo"));
 				layoutFarmaco.setVisibility(View.VISIBLE);
 			}
-			
+
 			if(resultCode == RESULT_CANCELED) {
 				idFarmaco = -1;
 				layoutFarmaco.setVisibility(View.GONE);
@@ -588,15 +588,22 @@ public class NuovaPrescrizioneActivity extends Activity {
 					textViewRiepilogo.setText("Non hai ancora selezionato i giorni");
 				else {
 					for(int j = 0; j < listGiorni.size(); j++) {
-						if(j != listGiorni.size() - 1)
-							s = s + giorni[j] + ", ";
-						else 
-							s = s + giorni[j];
+						
+							if(j != listGiorni.size() - 1)
+								s = s + listGiorni.get(j) + ", ";
+							else 
+								s = s + listGiorni.get(j);
+						
 					}
 					textViewRiepilogo.setText("Da assumere nei giorni di " + s);
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
 	}
 
 	//	@Override

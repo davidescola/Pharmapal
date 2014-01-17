@@ -147,5 +147,10 @@ public class SelezioneGiorniActivity extends Activity {
 		getMenuInflater().inflate(R.menu.selezione_giorni, menu);
 		return true;
 	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 
 }
