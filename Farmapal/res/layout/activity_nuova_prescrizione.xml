@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="50dp"
-            android:paddingTop="50dp" >
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
 
             <TextView
                 android:id="@+id/textViewMedico"
@@ -67,21 +67,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/textViewFarmaco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="@string/farmaco"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
             <Button
                 android:id="@+id/buttonSelezionaFarmaco"
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="14dp"
                 android:layout_weight="1"
-                android:text="@string/seleziona" />
+                android:text="@string/seleziona_farmaco" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,40 +133,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:paddingBottom="50dp" >
+            android:orientation="horizontal"
+            android:paddingBottom="10dp" >
 
             <Spinner
                 android:id="@+id/spinnerQta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:entries="@array/array_qta" />
 
             <TextView
                 android:id="@+id/textViewOgni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="15dp"
-                android:text="@string/ogni"
+                android:paddingRight="6dp"
+                 android:paddingLeft="6dp"
+                android:text="@string/razione"
+                 android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <Spinner
-                android:id="@+id/spinnerFrequenza"
+            <Button
+                android:id="@+id/btnGiorni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/array_frequenza" />
-
-            <TextView
-                android:id="@+id/textViewGiorni"
+                 android:layout_weight="1"
+                android:text="@string/seleziona_giorni"
+                 />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+             
+             <TextView
+                android:id="@+id/textViewRiepilogoGiorni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/giorni"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="@string/riepilogo"
+                android:padding="3dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone" 
             android:id="@+id/layoutRazione1">
 
@@ -188,14 +194,15 @@
 
             <TimePicker
                 android:id="@+id/timePicker1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone"
             android:id="@+id/layoutRazione2"> 
 
@@ -215,9 +222,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone"
-            android:id="@+id/layoutRazione3"> >
+            android:id="@+id/layoutRazione3">
 
             <TextView
                 android:id="@+id/textViewRazione3"
@@ -235,9 +243,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone"
-            android:id="@+id/layoutRazione4"> >
+            android:id="@+id/layoutRazione4"> 
 
             <TextView
                 android:id="@+id/textViewRazione4"
@@ -255,9 +264,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone"
-            android:id="@+id/layoutRazione5"> >
+            android:id="@+id/layoutRazione5"> 
 
             <TextView
                 android:id="@+id/textViewRazione5"
@@ -275,9 +285,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone"
-            android:id="@+id/layoutRazione6"> >
+            android:id="@+id/layoutRazione6"> 
 
             <TextView
                 android:id="@+id/textViewRazione6"
@@ -295,11 +306,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="50dp" >
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:gravity="center" >
 
             <TextView
                 android:id="@+id/textViewDa"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/data_inizio"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -313,11 +326,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center" >
 
             <TextView
                 android:id="@+id/textViewAl"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/data_fine"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -337,8 +352,7 @@
             <Button
                 android:id="@+id/buttonOk"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="14dp"
+                android:layout_height="0dip"
                 android:layout_weight="1"
                 android:onClick="aggiungiPrescrizione"
                 android:text="@string/fatto" />

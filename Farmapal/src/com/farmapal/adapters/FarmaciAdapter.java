@@ -28,6 +28,15 @@ public class FarmaciAdapter extends CursorAdapter {
 	private String retSomministrazione;
 	private String retPeso;
 	private String retTipo;
+	private int iDFarmacoPrecedente;
+
+	public int getIDFarmacoPrecedente() {
+		return iDFarmacoPrecedente;
+	}
+
+	public void setIDFarmacoPrecedente(int iDFarmacoPrecedente) {
+		this.iDFarmacoPrecedente = iDFarmacoPrecedente;
+	}
 
 	public FarmaciAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
@@ -44,6 +53,22 @@ public class FarmaciAdapter extends CursorAdapter {
 		for (int i = 0; i < this.getCount(); i++) {
 			itemChecked.add(i, false); // initializes all items value with false
 		}
+	}
+
+	public void setRetFarmaco(String retFarmaco) {
+		this.retFarmaco = retFarmaco;
+	}
+
+	public void setRetSomministrazione(String retSomministrazione) {
+		this.retSomministrazione = retSomministrazione;
+	}
+
+	public void setRetPeso(String retPeso) {
+		this.retPeso = retPeso;
+	}
+
+	public void setRetTipo(String retTipo) {
+		this.retTipo = retTipo;
 	}
 
 	public String getRetFarmaco() {
@@ -74,15 +99,19 @@ public class FarmaciAdapter extends CursorAdapter {
 		textPeso.setText(cursor.getString(cursor.getColumnIndex("peso")));
 		textTipo.setText(cursor.getString(cursor.getColumnIndex("tipo")));
 
-		checkFarmaco.setTag(c.getPosition());
-		textSomministrazione.setTag(c.getPosition());
-		textPeso.setTag(c.getPosition());
-		textTipo.setTag(c.getPosition());
+		checkFarmaco.setTag(cursor.getPosition());
+		textSomministrazione.setTag(cursor.getPosition());
+		textPeso.setTag(cursor.getPosition());
+		textTipo.setTag(cursor.getPosition());
 		listCheckbox.add(checkFarmaco);
 		listTextSomministrazione.add(textSomministrazione);
 		listTextPeso.add(textPeso);
 		listTextTipo.add(textTipo);
 		itemChecked.add(false);
+		if(cursor.getInt(cursor.getColumnIndex("_id")) == iDFarmacoPrecedente) {
+			itemChecked.add(cursor.getPosition(), true);
+			checkFarmaco.setChecked(true);
+		}
 
 		checkFarmaco.setOnClickListener(new OnClickListener() {
 

@@ -54,6 +54,10 @@
             android:name="com.farmapal.DettaglioPrescrizioneActivity"
             android:label="@string/title_activity_dettaglio_prescrizione" >
         </activity>
+        <activity
+            android:name="com.farmapal.SelezioneGiorniActivity"
+            android:label="@string/title_activity_selezione_giorni" >
+        </activity>
     </application>
 
 </manifest>

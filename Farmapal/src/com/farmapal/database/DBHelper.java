@@ -141,6 +141,18 @@ public class DBHelper extends SQLiteOpenHelper{
 		return c;
 	}
 	
+	public Cursor getIDFarmacoFromValori(String nome, String tipo, String peso, String somministrazione) {
+		String myPath = DB_PATH + DB_NAME;
+		db = SQLiteDatabase.openDatabase(myPath, null,
+				SQLiteDatabase.OPEN_READONLY);
+		Cursor c = db.rawQuery("SELECT _id FROM farmaco WHERE nome = '" + nome + "'" +
+				"AND tipo = '" + tipo + "'" +  
+				"AND peso = '" + peso + "'" +
+				"AND somministrazione = '" + somministrazione + "'", null);
+		
+		return c;
+	}
+	
 	public long insertPaziente(String nome, int index) {
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null,
@@ -155,7 +167,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 	
-	public long insertPrescrizione(int index, String medico, String data_inizio, String data_fine, int quantita, int frequenza, int id_farmaco, int id_paziente, String[] razioni) {
+	public long insertPrescrizione(int index, String medico, String data_inizio, String data_fine, int quantita, int[] flagGiorni, int id_farmaco, int id_paziente, String[] razioni) {
 		String myPath = DB_PATH + DB_NAME;
 		db = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READWRITE);
@@ -166,7 +178,13 @@ public class DBHelper extends SQLiteOpenHelper{
 		cvs.put("data_inizio", data_inizio);
 		cvs.put("data_fine", data_fine);
 		cvs.put("quantita", quantita);
-		cvs.put("frequenza", frequenza);
+		cvs.put("lunedi", flagGiorni[0]);
+		cvs.put("martedi", flagGiorni[1]);
+		cvs.put("mercoledi", flagGiorni[2]);
+		cvs.put("giovedi", flagGiorni[3]);
+		cvs.put("venerdi", flagGiorni[4]);
+		cvs.put("sabato", flagGiorni[5]);
+		cvs.put("domenica", flagGiorni[6]);
 		cvs.put("id_farmaco", id_farmaco);
 		cvs.put("id_paziente", id_paziente);
 		

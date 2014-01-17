@@ -21,20 +21,38 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 	DBHelper db;
 	Button btnFatto;
 	FarmaciAdapter myCursorAdapter;
-
+	int IDFarmacoPrecedente;
+	String nome_precedente = "";
+	String tipo_precedente = "";
+	String peso_precedente = "";
+	String somministrazione_precedente = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_completa_for_result);
 		db = new DBHelper(this);
-		openDB();
+		IDFarmacoPrecedente = getIntent().getExtras().getInt("IDFarmacoPrecedente");
+		getFarmacoSelezionato(IDFarmacoPrecedente);
 		populateListViewFromDB();
 		btnFatto = (Button) findViewById(R.id.btnFattoFarmaciForResult);
 		btnFatto.setOnClickListener(this);
 		closeDB();
+		
 
 
+	}
+
+	private void getFarmacoSelezionato(int id) {
+		Cursor cursor = db.getFarmacoFromID(id);
+		if(cursor.moveToFirst()) {
+			nome_precedente = cursor.getString(cursor.getColumnIndex("nome"));
+			tipo_precedente = cursor.getString(cursor.getColumnIndex("tipo"));
+			peso_precedente = cursor.getString(cursor.getColumnIndex("peso"));
+			somministrazione_precedente = cursor.getString(cursor.getColumnIndex("somministrazione"));
+			
+		}
+		
 	}
 
 	private void populateListViewFromDB() {
@@ -43,7 +61,12 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 		startManagingCursor(cursor);
 
 		myCursorAdapter = new FarmaciAdapter(this, cursor, 0);
-		//set the adapter for the listview
+		int IDFarmacoPrecedente = getIntent().getExtras().getInt("IDFarmacoPrecedente");
+		myCursorAdapter.setIDFarmacoPrecedente(IDFarmacoPrecedente);
+		myCursorAdapter.setRetFarmaco(nome_precedente);
+		myCursorAdapter.setRetTipo(tipo_precedente);
+		myCursorAdapter.setRetPeso(peso_precedente);
+		myCursorAdapter.setRetSomministrazione(somministrazione_precedente);
 		ListView myList = (ListView)findViewById(R.id.listFarmaciForResult);
 		myList.setAdapter(myCursorAdapter);
 
@@ -79,12 +102,17 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 		String retSomministrazione = myCursorAdapter.getRetSomministrazione();
 		String retPeso = myCursorAdapter.getRetPeso();
 		String retTipo = myCursorAdapter.getRetTipo();
+		int retID;
 
 		if(myCursorAdapter.itemIsChecked()) {
 			returnIntent.putExtra("retFarmaco", retFarmaco);
 			returnIntent.putExtra("retSomministrazione", retSomministrazione);
 			returnIntent.putExtra("retPeso", retPeso);
 			returnIntent.putExtra("retTipo", retTipo);
+			Cursor c = db.getIDFarmacoFromValori(retFarmaco, retTipo, retPeso, retSomministrazione);
+			c.moveToFirst();
+			retID = c.getInt(c.getColumnIndex("_id"));
+			returnIntent.putExtra("retID", retID);
 			setResult(RESULT_OK, returnIntent);
 			finish();
 		}

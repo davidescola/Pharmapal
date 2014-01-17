@@ -31,33 +31,104 @@ import android.widget.Toast;
 
 import com.farmapal.database.DBHelper;
 
-public class NuovaPrescrizioneActivity extends Activity implements OnDateChangedListener{
+public class NuovaPrescrizioneActivity extends Activity {
 
 	DBHelper db;
 	int countPazienti;
 	int countPrescrizioni;
+	int[] flagGiorni = new int[] {0,0,0,0,0,0,0};
+	String[] giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
+	int idFarmaco = -1;
+
+	Button btnGiorni;
+	TimePicker tp1;
+	TimePicker tp2;
+	TimePicker tp3;
+	TimePicker tp4;
+	TimePicker tp5;
+	TimePicker tp6;
+	Button btnSelezionaFarmaco;
+	Spinner spinnerQta;
+	LinearLayout layout1;
+	LinearLayout layout2;
+	LinearLayout layout3;
+	LinearLayout layout4;
+	LinearLayout layout5;
+	LinearLayout layout6;
+	Spinner spinnerPazienti;
+	EditText editTextMedico;
+	EditText editTextNuovoPaziente;
+	DatePicker pickerDal;
+	DatePicker pickerAl;
+	TextView textFarmaco;
+	TextView textSomministrazione;
+	TextView textPeso;
+	TextView textTipo;
+	LinearLayout layoutFarmaco;
+	TextView textViewRiepilogo;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nuova_prescrizione);
-		//openDB();
+		initAttributes();
 		db = new DBHelper(this);
 		populateSpinnerPazienti();
 		addListenerSpinnerQta();
 		setTimePickers();
 		addListenerbtnSelezionaFarmaco();
-		//closeDB(); TODO pensare a quando fare la close
+		addListenerbtnSelezionaGiorni();
+		db.close(); 
+	}
+
+	private void initAttributes() {
+		btnGiorni = (Button) findViewById(R.id.btnGiorni);
+		tp1 = (TimePicker) findViewById(R.id.timePicker1);
+		tp2 = (TimePicker) findViewById(R.id.timePicker2);
+		tp3 = (TimePicker) findViewById(R.id.timePicker3);
+		tp4 = (TimePicker) findViewById(R.id.timePicker4);
+		tp5 = (TimePicker) findViewById(R.id.timePicker5);
+		tp6 = (TimePicker) findViewById(R.id.timePicker6);
+		btnSelezionaFarmaco = (Button) findViewById(R.id.buttonSelezionaFarmaco);
+		spinnerQta = (Spinner) findViewById(R.id.spinnerQta);
+		layout1 = (LinearLayout) findViewById(R.id.layoutRazione1);
+		layout2 = (LinearLayout) findViewById(R.id.layoutRazione2);
+		layout3 = (LinearLayout) findViewById(R.id.layoutRazione3);
+		layout4 = (LinearLayout) findViewById(R.id.layoutRazione4);
+		layout5 = (LinearLayout) findViewById(R.id.layoutRazione5);
+		layout6 = (LinearLayout) findViewById(R.id.layoutRazione6);
+		spinnerPazienti = (Spinner) findViewById(R.id.spinnerPazienti);
+		editTextMedico = (EditText) findViewById(R.id.editTextMedico);
+		editTextNuovoPaziente = (EditText) findViewById(R.id.editTextNuovoPaziente);
+		pickerDal = (DatePicker) findViewById(R.id.datePickerDal);
+		pickerAl = (DatePicker) findViewById(R.id.datePickerAl);
+		textFarmaco = (TextView) findViewById(R.id.textViewResultNomeFarmaco);
+		textSomministrazione = (TextView) findViewById(R.id.textViewResultSomministrazione);
+		textPeso = (TextView) findViewById(R.id.textViewResultPeso);
+		textTipo = (TextView) findViewById(R.id.textViewResultTipo);
+		layoutFarmaco = (LinearLayout) findViewById(R.id.layoutResultFarmaco);
+		textViewRiepilogo = (TextView) findViewById(R.id.textViewRiepilogoGiorni);
+
+	}
+
+	private void addListenerbtnSelezionaGiorni() {
+		btnGiorni.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SelezioneGiorniActivity.class);
+				Bundle b = new Bundle();
+				b.putIntArray("giorni_selezionati", flagGiorni);
+				intent.putExtras(b);
+				startActivityForResult(intent, 3);
+
+			}
+		});
+
 	}
 
 	private void setTimePickers() {
-		TimePicker tp1 = (TimePicker) findViewById(R.id.timePicker1);
-		TimePicker tp2 = (TimePicker) findViewById(R.id.timePicker2);
-		TimePicker tp3 = (TimePicker) findViewById(R.id.timePicker3);
-		TimePicker tp4 = (TimePicker) findViewById(R.id.timePicker4);
-		TimePicker tp5 = (TimePicker) findViewById(R.id.timePicker5);
-		TimePicker tp6 = (TimePicker) findViewById(R.id.timePicker6);
-
 		tp1.setIs24HourView(true);
 		tp2.setIs24HourView(true);
 		tp3.setIs24HourView(true);
@@ -67,12 +138,14 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 
 	}
 	private void addListenerbtnSelezionaFarmaco() {
-		Button btnSelezionaFarmaco = (Button) findViewById(R.id.buttonSelezionaFarmaco);
 		btnSelezionaFarmaco.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ListaCompletaForResultActivity.class);
+				Bundle b = new Bundle();
+				b.putInt("IDFarmacoPrecedente", idFarmaco);
+				intent.putExtras(b);
 				startActivityForResult(intent, 1);
 			}
 		});
@@ -80,7 +153,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 	}
 
 	private void addListenerSpinnerQta() {
-		final Spinner spinnerQta = (Spinner) findViewById(R.id.spinnerQta);
+
 		spinnerQta.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -88,12 +161,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 					int arg2, long arg3) {
 				String strQta = spinnerQta.getSelectedItem().toString();
 				int qta = Integer.parseInt(strQta);
-				LinearLayout layout1 = (LinearLayout) findViewById(R.id.layoutRazione1);
-				LinearLayout layout2 = (LinearLayout) findViewById(R.id.layoutRazione2);
-				LinearLayout layout3 = (LinearLayout) findViewById(R.id.layoutRazione3);
-				LinearLayout layout4 = (LinearLayout) findViewById(R.id.layoutRazione4);
-				LinearLayout layout5 = (LinearLayout) findViewById(R.id.layoutRazione5);
-				LinearLayout layout6 = (LinearLayout) findViewById(R.id.layoutRazione6);
+
 
 				switch (qta) {
 
@@ -175,16 +243,14 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 		countPazienti = maxIDPaziente.getInt(0);
 		listPazienti.add("nuovo paziente");
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPazienti);
-		final Spinner spinner = (Spinner) findViewById(R.id.spinnerPazienti);
-		spinner.setAdapter(adapter);
-
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		spinnerPazienti.setAdapter(adapter);
+		spinnerPazienti.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				EditText nuovoPaziente = (EditText)findViewById(R.id.editTextNuovoPaziente);
-				if(spinner.getSelectedItem().toString().equals("nuovo paziente"))
+				if(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente"))
 					nuovoPaziente.setVisibility(View.VISIBLE);
 				else
 					nuovoPaziente.setVisibility(View.GONE);
@@ -208,33 +274,8 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 	}
 
 	public void aggiungiPrescrizione(View view) {
-		Spinner spinnerPazienti = (Spinner) findViewById(R.id.spinnerPazienti);
-		EditText editTextMedico = (EditText) findViewById(R.id.editTextMedico);
-		EditText editTextNuovoPaziente = (EditText) findViewById(R.id.editTextNuovoPaziente);
-		Spinner spinnerQta = (Spinner) findViewById(R.id.spinnerQta);
-		Spinner spinnerFrequenza = (Spinner) findViewById(R.id.spinnerFrequenza);
-		final DatePicker pickerDal = (DatePicker) findViewById(R.id.datePickerDal);
-		final DatePicker pickerAl = (DatePicker) findViewById(R.id.datePickerAl);
-		TextView textFarmaco = (TextView) findViewById(R.id.textViewResultNomeFarmaco);
-		TextView textSomministrazione = (TextView) findViewById(R.id.textViewResultSomministrazione);
-		TextView textPeso = (TextView) findViewById(R.id.textViewResultPeso);
-		TextView textTipo = (TextView) findViewById(R.id.textViewResultTipo);
-		TimePicker tp1 = (TimePicker) findViewById(R.id.timePicker1);
-		TimePicker tp2 = (TimePicker) findViewById(R.id.timePicker2);
-		TimePicker tp3 = (TimePicker) findViewById(R.id.timePicker3);
-		TimePicker tp4 = (TimePicker) findViewById(R.id.timePicker4);
-		TimePicker tp5 = (TimePicker) findViewById(R.id.timePicker5);
-		TimePicker tp6 = (TimePicker) findViewById(R.id.timePicker6);
-		LinearLayout layoutFarmaco = (LinearLayout) findViewById(R.id.layoutResultFarmaco);
-		Calendar cal = Calendar.getInstance();
-		int curYear = cal.get(Calendar.YEAR);
-		int curMonth = cal.get(Calendar.MONTH);
-		int curDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 
 
-		pickerDal.init(curYear, curMonth, curDayOfMonth, this);
-
-		pickerAl.init(curYear, curMonth, curDayOfMonth, this);
 
 
 		if(editTextNuovoPaziente.getVisibility() == View.VISIBLE && editTextNuovoPaziente.getText().toString().equals("")) {
@@ -281,6 +322,21 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 
 			noFarmaco.show();
 		}
+		
+		else if(textViewRiepilogo.getText().equals("Non hai ancora selezionato i giorni")) {
+			AlertDialog.Builder noGiorni = new AlertDialog.Builder(this);
+			noGiorni.setTitle("Attenzione");
+			noGiorni.setMessage("Non hai selezionato alcun giorno");
+			noGiorni.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//non fare nulla
+				}
+			});
+
+			noGiorni.show();
+		}
 
 		else{
 			if(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente")) {
@@ -295,10 +351,9 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 					Toast.makeText(getApplicationContext(), "paziente " + nomePaziente + " creato", Toast.LENGTH_SHORT).show();
 			}
 			String nomeMedico = editTextMedico.getText().toString();
-			String stringDataInizio = "" + pickerDal.getYear() + "-" + pickerDal.getMonth() + 1 + "-" + pickerDal.getDayOfMonth();
-			String stringDataFine = "" + pickerAl.getYear() + "-" + pickerAl.getMonth() + 1 + "-" + pickerAl.getDayOfMonth();
+			String stringDataInizio = "" + pickerDal.getDayOfMonth() + "-" + adjustMonth(pickerDal.getMonth()) + "-" + pickerDal.getYear();
+			String stringDataFine = "" + pickerAl.getDayOfMonth() + "-" + adjustMonth(pickerAl.getMonth()) + "-" + pickerAl.getYear();
 			int qta = Integer.parseInt(spinnerQta.getSelectedItem().toString());
-			int freq = Integer.parseInt(spinnerFrequenza.getSelectedItem().toString());
 			String farmaco = textFarmaco.getText().toString();
 			String somministrazione = textSomministrazione.getText().toString();
 			String peso = textPeso.getText().toString();
@@ -359,7 +414,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 				minute1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
 				razione1 = hour1 + ":" + minute1 + ":00.000";
 				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1});
+						nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1});
 				if (checkPrescrizioni == -1)
 					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
@@ -373,7 +428,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 				minute2 = NuovaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
 				razione2 = hour2 + ":" + minute2 + ":00.000";
 				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2});
+						nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2});
 				if (checkPrescrizioni == -1)
 					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
@@ -390,7 +445,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 				minute3 = NuovaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
 				razione3 = hour3 + ":" + minute3 + ":00.000";
 				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3});
+						nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3});
 				if (checkPrescrizioni == -1)
 					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
@@ -410,7 +465,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 				minute4 = NuovaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
 				razione4 = hour4 + ":" + minute4 + ":00.000";
 				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4});
+						nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4});
 				if (checkPrescrizioni == -1)
 					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
@@ -433,7 +488,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 				minute5 = NuovaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
 				razione5 = hour5 + ":" + minute5 + ":00.000";
 				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5});
+						nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5});
 				if (checkPrescrizioni == -1)
 					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
@@ -459,7 +514,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 				minute6 = NuovaPrescrizioneActivity.adjustTime(tp6.getCurrentMinute().toString());
 				razione6 = hour6 + ":" + minute6 + ":00.000";
 				checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-						nomeMedico, stringDataInizio, stringDataFine, qta, freq, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
+						nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
 				if (checkPrescrizioni == -1)
 					Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 				else
@@ -470,7 +525,7 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 			}
 			db.close();
 			Intent returnIntent = new Intent();
-			setResult(RESULT_OK, returnIntent	);
+			setResult(RESULT_OK, returnIntent);
 			finish();
 		}
 	}
@@ -482,54 +537,96 @@ public class NuovaPrescrizioneActivity extends Activity implements OnDateChanged
 		return string;
 	}
 
+	private static String adjustMonth(int mese) {
+		mese++;
+		String string_mese = "" + mese;
+		if(string_mese.length() == 2)
+			return string_mese;
+		else
+			return "0" + string_mese;
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
-				TextView farmaco = (TextView) findViewById(R.id.textViewResultNomeFarmaco);
-				TextView somministrazione = (TextView) findViewById(R.id.textViewResultSomministrazione);
-				TextView peso = (TextView) findViewById(R.id.textViewResultPeso);
-				TextView tipo = (TextView) findViewById(R.id.textViewResultTipo);
+				idFarmaco = data.getIntExtra("retID", -1);
+				textFarmaco.setText(data.getStringExtra("retFarmaco"));
+				textSomministrazione.setText(data.getStringExtra("retSomministrazione"));
+				textPeso.setText(data.getStringExtra("retPeso"));
+				textTipo.setText(data.getStringExtra("retTipo"));
+				layoutFarmaco.setVisibility(View.VISIBLE);
+			}
+			
+			if(resultCode == RESULT_CANCELED) {
+				idFarmaco = -1;
+				layoutFarmaco.setVisibility(View.GONE);
+			}
+		}
 
-				farmaco.setText(data.getStringExtra("retFarmaco"));
-				somministrazione.setText(data.getStringExtra("retSomministrazione"));
-				peso.setText(data.getStringExtra("retPeso"));
-				tipo.setText(data.getStringExtra("retTipo"));
+		if(requestCode == 3) {
+			if(resultCode == RESULT_OK) {
+				flagGiorni[0] = data.getIntExtra("flagLun", 0);
+				flagGiorni[1] = data.getIntExtra("flagMar", 0);
+				flagGiorni[2] = data.getIntExtra("flagMer", 0);
+				flagGiorni[3] = data.getIntExtra("flagGio", 0);
+				flagGiorni[4] = data.getIntExtra("flagVen", 0);
+				flagGiorni[5] = data.getIntExtra("flagSab", 0);
+				flagGiorni[6] = data.getIntExtra("flagDom", 0);
+				boolean giorniSelezionati = false;
+				String s = "";
+				ArrayList<String> listGiorni = new ArrayList<String>();
 
-				LinearLayout layout = (LinearLayout) findViewById(R.id.layoutResultFarmaco);
-				layout.setVisibility(View.VISIBLE);
+				for(int i = 0; i < flagGiorni.length; i++) {
+					if(flagGiorni[i] == 1) {
+						giorniSelezionati = true;
+						listGiorni.add(giorni[i]);
+					}
+				}
+
+				if(!giorniSelezionati)
+					textViewRiepilogo.setText("Non hai ancora selezionato i giorni");
+				else {
+					for(int j = 0; j < listGiorni.size(); j++) {
+						if(j != listGiorni.size() - 1)
+							s = s + giorni[j] + ", ";
+						else 
+							s = s + giorni[j];
+					}
+					textViewRiepilogo.setText("Da assumere nei giorni di " + s);
+				}
 			}
 		}
 	}
 
-	@Override
-	public void onDateChanged(DatePicker view, int year, int monthOfYear,
-			int dayOfMonth) {
-		//NON PARTE IL LISTENER!!!! PERCHE?????
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		formatter.setLenient(false);
-//		if(view.getId() == R.id.datePickerDal) {
-//			DatePicker pickerAl = (DatePicker) findViewById(R.id.datePickerAl);
-//			String dalString = "" + year + "-" + monthOfYear+1 + "-" + dayOfMonth;
-//			try {
-//				Date dalDate = formatter.parse(dalString);
-//				long dalMillis = dalDate.getTime();
-//				pickerAl.setMinDate(dalMillis);
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		if(view.getId() == R.id.datePickerAl) {
-//			DatePicker pickerDal = (DatePicker) findViewById(R.id.datePickerDal);
-//			String alString = "" + year + "-" + monthOfYear+1 + "-" + dayOfMonth;
-//			try {
-//				Date alDate = formatter.parse(alString);
-//				long alMillis = alDate.getTime();
-//				pickerDal.setMaxDate(alMillis);
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_LONG).show();
-	}
+	//	@Override
+	//	public void onDateChanged(DatePicker view, int year, int monthOfYear,
+	//			int dayOfMonth) {
+	//NON PARTE IL LISTENER!!!! PERCHE?????
+	//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	//		formatter.setLenient(false);
+	//		if(view.getId() == R.id.datePickerDal) {
+	//			DatePicker pickerAl = (DatePicker) findViewById(R.id.datePickerAl);
+	//			String dalString = "" + year + "-" + monthOfYear+1 + "-" + dayOfMonth;
+	//			try {
+	//				Date dalDate = formatter.parse(dalString);
+	//				long dalMillis = dalDate.getTime();
+	//				pickerAl.setMinDate(dalMillis);
+	//			} catch (ParseException e) {
+	//				e.printStackTrace();
+	//			}
+	//		}
+	//		if(view.getId() == R.id.datePickerAl) {
+	//			DatePicker pickerDal = (DatePicker) findViewById(R.id.datePickerDal);
+	//			String alString = "" + year + "-" + monthOfYear+1 + "-" + dayOfMonth;
+	//			try {
+	//				Date alDate = formatter.parse(alString);
+	//				long alMillis = alDate.getTime();
+	//				pickerDal.setMaxDate(alMillis);
+	//			} catch (ParseException e) {
+	//				e.printStackTrace();
+	//			}
+	//		}
+	//		Toast.makeText(getApplicationContext(), "ciao", Toast.LENGTH_LONG).show();
+	//	}
 }

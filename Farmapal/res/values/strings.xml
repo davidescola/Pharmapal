@@ -12,7 +12,7 @@
     <string name="nuova_prescrizione">Nuova prescrizione</string>
     <string name="title_activity_nuova_prescrizione">NuovaPrescrizioneActivity</string>
     <string name="farmaco">Farmaco</string>
-    <string name="seleziona">Seleziona</string>
+    <string name="seleziona_farmaco">Seleziona farmaco</string>
     <string name="paziente">Paziente</string>
 
     <string-array name="array_nuovo_paziente">
@@ -20,10 +20,10 @@
     </string-array>
 
     <string name="prescritto_da">Prescritto da</string>
-    <string name="data_inizio">Dal</string>
-    <string name="data_fine">Al</string>
+    <string name="data_inizio">Data di inizio cura:</string>
+    <string name="data_fine">Data di fine cura:</string>
     <string name="giorni">giorni</string>
-    <string name="ogni">ogni</string>
+    <string name="razione">razione/i</string>
     <string name="nome_medico">nome del medico</string>
     <string name="quantita">quantità</string>
     <string name="numero_giorni">num giorni</string>
@@ -63,5 +63,17 @@
     <string name="title_activity_conferma_assunzione_dialog">ConfermaAssunzioneDialog</string>
     <string name="nome_paziente">nome paziente</string>
     <string name="title_activity_dettaglio_prescrizione">DettaglioPrescrizioneActivity</string>
+    <string name="title_activity_selezione_giorni">SelezioneGiorniActivity</string>
+    <string name="lunedi">Lunedì</string>
+    <string name="martedi">Martedì</string>
+    <string name="mercoledi">Mercoledì</string>
+    <string name="giovedi">Giovedì</string>
+    <string name="venerdi">Venerdì</string>
+    <string name="sabato">Sabato</string>
+    <string name="domenica">Domenica</string>
+    <string name="seleziona_tutto">Spunta tutti</string>
+    <string name="deseleziona_tutto">Togli tutti </string>
+    <string name="riepilogo">Non hai ancora selezionato i giorni</string>
+    <string name="seleziona_giorni">Giorni</string>
 
 </resources>
