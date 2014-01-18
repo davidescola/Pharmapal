@@ -14,30 +14,35 @@
         android:id="@+id/DettaglioPrescrizioneNomePaziente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneFarmaco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneFrequenza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneValidita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneMedico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:text="TextView" />
 
     <TextView
@@ -45,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:padding="1dp"
         android:text="TextView" />
     
     <TextView
@@ -52,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:padding="1dp"
         android:text="TextView" />
 
     <TextView
@@ -59,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:padding="1dp"
         android:visibility="gone" />
 
     <TextView
@@ -66,6 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:padding="1dp"
         android:visibility="gone" />
 
     <TextView
@@ -73,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:padding="1dp"
         android:visibility="gone" />
 
     <TextView
@@ -80,6 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:padding="1dp"
         android:visibility="gone" />
 
     <Button
@@ -87,7 +98,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/dettagli_farmaco" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,14 +110,14 @@
             android:id="@+id/DettaglioPrescrizioneModifica"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/modifica_prescrizione" />
 
         <Button
             android:id="@+id/DettaglioPrescrizioneElimina"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FF0000"
-            android:text="Button" />
+            android:text="@string/elimina_prescrizione" />
 
     </LinearLayout>
 

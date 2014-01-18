@@ -47,13 +47,14 @@ public class MiePrescrizioniActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 2) {
+		if (requestCode == 2 || requestCode == 4) {
 			if(resultCode == RESULT_OK) {
 				finish();
 				startActivity(getIntent());
 			}
 				
 		}
+		
 	}
 	
 	@Override

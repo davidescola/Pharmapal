@@ -1,18 +1,16 @@
 package com.farmapal.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.sax.StartElementListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farmapal.DettaglioPrescrizioneActivity;
 import com.farmapal.R;
@@ -21,7 +19,16 @@ import com.farmapal.database.DBHelper;
 public class PrescrizioniAdapter extends CursorAdapter {
 
 	private DBHelper db;
+	private Activity callerActivity;
 	
+	public Activity getCallerActivity() {
+		return callerActivity;
+	}
+
+	public void setCallerActivity(Activity callerActivity) {
+		this.callerActivity = callerActivity;
+	}
+
 	public PrescrizioniAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
 	}
@@ -37,6 +44,8 @@ public class PrescrizioniAdapter extends CursorAdapter {
 		TextView textTipo = (TextView) view.findViewById(R.id.miePrescrizioniTipo);
 		TextView textMedico = (TextView) view.findViewById(R.id.miePrescrizioniMedico);
 		
+		callerActivity = (Activity) context;
+		
 		int idFarmaco = cursor.getInt(cursor.getColumnIndex("id_farmaco"));
 		Cursor cursorIDFarmaco = db.getFarmacoFromID(idFarmaco);
 		cursorIDFarmaco.moveToFirst();
@@ -45,6 +54,19 @@ public class PrescrizioniAdapter extends CursorAdapter {
 		textTipo.setText(cursorIDFarmaco.getString(cursorIDFarmaco.getColumnIndex("tipo")));
 		
 		view.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
+		view.setOnClickListener(new OnClickListener() {
+		
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(callerActivity, DettaglioPrescrizioneActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("id", v.getTag().toString());
+				intent.putExtras(bundle);
+				callerActivity.startActivityForResult(intent, 4);
+				
+			}
+		});
+		
 		int idPaziente = cursor.getInt(cursor.getColumnIndex("id_paziente"));
 		Cursor cursorIDPaziente = db.getPazienteFromID(idPaziente);
 		cursorIDPaziente.moveToFirst();
@@ -63,22 +85,6 @@ public class PrescrizioniAdapter extends CursorAdapter {
 	public View newView(final Context context, Cursor cursor, ViewGroup parent) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 		View retView = inflater.inflate(R.layout.item_list_prescrizioni, parent, false);
-		
-//		Log.e("prescrizioniAdapter", "setto l'id della view numero " + cursor.getPosition() + "con il tag " + retView.getTag());
-		retView.setOnClickListener(new OnClickListener() {
-		
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(v.getContext(), DettaglioPrescrizioneActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("id", v.getTag().toString());
-//				Toast.makeText(context, "cliccata box numero " + v.getTag().toString(), Toast.LENGTH_SHORT).show();
-//				Toast.makeText(context, "cliccata box numero " + v.getId(), Toast.LENGTH_SHORT).show();
-				intent.putExtras(bundle);
-				v.getContext().startActivity(intent);
-				
-			}
-		});
 		return retView;
 	}
 

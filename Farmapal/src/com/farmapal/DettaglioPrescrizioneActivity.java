@@ -3,6 +3,7 @@ package com.farmapal;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,7 +31,9 @@ public class DettaglioPrescrizioneActivity extends Activity {
 	private String[] giorni;
 	private ArrayList<String> giorniRazioni;
 	private Button btnElimina;
+	private Button btnDettaglioFarmaco;
 	private int idPrescrizione;
+	private int idFarmaco;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,13 +44,26 @@ public class DettaglioPrescrizioneActivity extends Activity {
 	}
 
 	private void addListeners() {
-		btnElimina = (Button) findViewById(R.id.DettaglioPrescrizioneElimina);
 		btnElimina.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				db.deletePrescrizioneFromID(idPrescrizione);
+				Intent returnIntent = new Intent();
+				setResult(RESULT_OK, returnIntent);
 				finish();
+			}
+		});
+		
+		btnDettaglioFarmaco.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), DettaglioFarmacoActivity.class);
+				Bundle b = new Bundle();
+				b.putInt("id_farmaco", idFarmaco);
+				intent.putExtras(b);
+				startActivity(intent);
 			}
 		});
 		
@@ -65,6 +81,8 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		razione4 = (TextView) findViewById(R.id.DettaglioPrescrizioneRazione4);
 		razione5 = (TextView) findViewById(R.id.DettaglioPrescrizioneRazione5);
 		razione6 = (TextView) findViewById(R.id.DettaglioPrescrizioneRazione6);
+		btnElimina = (Button) findViewById(R.id.DettaglioPrescrizioneElimina);
+		btnDettaglioFarmaco = (Button) findViewById(R.id.DettaglioPrescrizioneDettaglioFarmaco);
 		giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
 		giorniRazioni = new ArrayList<String>();
 		
@@ -80,7 +98,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		startManagingCursor(cursorAccessorio);
 		cursorAccessorio.moveToFirst();
 		nomePaziente.setText("Paziente: " + cursorAccessorio.getString(cursorAccessorio.getColumnIndex("nome")));
-		int idFarmaco = c.getInt(c.getColumnIndex("id_farmaco"));
+		idFarmaco = c.getInt(c.getColumnIndex("id_farmaco"));
 		cursorAccessorio = db.getFarmacoFromID(idFarmaco);
 		cursorAccessorio.moveToFirst();
 		nomeFarmaco.setText("Farmaco: " + cursorAccessorio.getString(cursorAccessorio.getColumnIndex("nome")) +
@@ -104,7 +122,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		validita.setText("dal " + c.getString(c.getColumnIndex("data_inizio")) + " al " + c.getString(c.getColumnIndex("data_fine")));
 		nomeMedico.setText("Prescritto da: " + c.getString(c.getColumnIndex("medico")));
 
-		switch(giorniRazioni.size()) {
+		switch(c.getInt(c.getColumnIndex("quantita"))) {
 
 		case 0:
 			break;
@@ -157,7 +175,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			razione3.setVisibility(View.VISIBLE);
 			razione4.setText("Razione 4 da assumere alle ore " + c.getString(c.getColumnIndex("ora4")));
 			razione4.setVisibility(View.VISIBLE);
-			razione5.setText("Razione 5 ore " + c.getString(c.getColumnIndex("ora5")));
+			razione5.setText("Razione 5 da assumere alle ore " + c.getString(c.getColumnIndex("ora5")));
 			razione5.setVisibility(View.VISIBLE);
 			razione6.setText("Razione 6 da assumere alle ore " + c.getString(c.getColumnIndex("ora6")));
 			razione6.setVisibility(View.VISIBLE);

@@ -58,6 +58,10 @@
             android:name="com.farmapal.SelezioneGiorniActivity"
             android:label="@string/title_activity_selezione_giorni" >
         </activity>
+        <activity
+            android:name="com.farmapal.DettaglioFarmacoActivity"
+            android:label="@string/title_activity_dettaglio_farmaco" >
+        </activity>
     </application>
 
 </manifest>
