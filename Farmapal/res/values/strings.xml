@@ -79,5 +79,6 @@
     <string name="modifica_prescrizione">Modifica prescrizione</string>
     <string name="dettagli_farmaco">Dettagli farmaco</string>
     <string name="title_activity_dettaglio_farmaco">DettaglioFarmacoActivity</string>
+    <string name="title_activity_modifica_prescrizione">ModificaPrescrizioneActivity</string>
 
 </resources>

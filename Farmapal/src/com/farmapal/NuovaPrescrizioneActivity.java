@@ -162,7 +162,6 @@ public class NuovaPrescrizioneActivity extends Activity {
 				String strQta = spinnerQta.getSelectedItem().toString();
 				int qta = Integer.parseInt(strQta);
 
-
 				switch (qta) {
 
 				case 1:
@@ -274,10 +273,6 @@ public class NuovaPrescrizioneActivity extends Activity {
 	}
 
 	public void aggiungiPrescrizione(View view) {
-
-
-
-
 		if(editTextNuovoPaziente.getVisibility() == View.VISIBLE && editTextNuovoPaziente.getText().toString().equals("")) {
 			AlertDialog.Builder noNuovoPaziente = new AlertDialog.Builder(this);
 			noNuovoPaziente.setTitle("Attenzione");

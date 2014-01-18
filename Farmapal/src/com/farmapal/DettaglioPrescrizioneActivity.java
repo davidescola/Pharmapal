@@ -3,6 +3,9 @@ package com.farmapal;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farmapal.database.DBHelper;
 
@@ -32,8 +36,10 @@ public class DettaglioPrescrizioneActivity extends Activity {
 	private ArrayList<String> giorniRazioni;
 	private Button btnElimina;
 	private Button btnDettaglioFarmaco;
+	private Button btnModifica;
 	private int idPrescrizione;
 	private int idFarmaco;
+	private int qta;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,18 +51,38 @@ public class DettaglioPrescrizioneActivity extends Activity {
 
 	private void addListeners() {
 		btnElimina.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				db.deletePrescrizioneFromID(idPrescrizione);
-				Intent returnIntent = new Intent();
-				setResult(RESULT_OK, returnIntent);
-				finish();
+				AlertDialog.Builder confermaEliminazione = new AlertDialog.Builder(v.getContext());
+				confermaEliminazione.setTitle("Attenzione");
+				confermaEliminazione.setMessage("La prescrizione viene eliminata definitivamente. Confermi l'eliminazione?");
+				confermaEliminazione.setPositiveButton("Elimina", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						db.deletePrescrizioneFromID(idPrescrizione);
+						Intent returnIntent = new Intent();
+						setResult(RESULT_OK, returnIntent);
+						finish();
+
+					}
+				});
+
+				confermaEliminazione.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+
+					}
+				});
+				confermaEliminazione.show();	
 			}
 		});
-		
+
 		btnDettaglioFarmaco.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), DettaglioFarmacoActivity.class);
@@ -67,6 +93,20 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			}
 		});
 		
+		btnModifica.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ModificaPrescrizioneActivity.class);
+				Bundle b = new Bundle();
+				b.putInt("id_prescrizione", idPrescrizione);
+				b.putInt("qta_razioni", qta);
+				intent.putExtras(b);
+				startActivityForResult(intent, 6);
+				
+			}
+		});
+
 	}
 
 	private void populateActivity() {
@@ -83,9 +123,10 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		razione6 = (TextView) findViewById(R.id.DettaglioPrescrizioneRazione6);
 		btnElimina = (Button) findViewById(R.id.DettaglioPrescrizioneElimina);
 		btnDettaglioFarmaco = (Button) findViewById(R.id.DettaglioPrescrizioneDettaglioFarmaco);
+		btnModifica = (Button) findViewById(R.id.DettaglioPrescrizioneModifica);
 		giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
 		giorniRazioni = new ArrayList<String>();
-		
+
 		Bundle b = getIntent().getExtras();
 		idPrescrizione = Integer.parseInt(b.getString("id"));
 		Cursor c = db.getPrescrizioneFromID(idPrescrizione);
@@ -107,8 +148,9 @@ public class DettaglioPrescrizioneActivity extends Activity {
 
 		for(String giorno : giorni) {
 			int flag = c.getInt(c.getColumnIndex(giorno));
-			if(flag == 1)
+			if(flag == 1) 
 				giorniRazioni.add(giorno);
+			
 		}
 		String s = new String("");
 		for(int i = 0; i < giorniRazioni.size(); i++) {
@@ -129,12 +171,14 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		case 1:
 			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
 			razione1.setVisibility(View.VISIBLE);
+			qta = 1;
 			break;
 		case 2:
 			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
 			razione1.setVisibility(View.VISIBLE);
 			razione2.setText("Razione 2 da assumere alle ore " + c.getString(c.getColumnIndex("ora2")));
 			razione2.setVisibility(View.VISIBLE);
+			qta = 2;
 			break;
 		case 3:
 			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
@@ -143,6 +187,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			razione2.setVisibility(View.VISIBLE);
 			razione3.setText("Razione 3 da assumere alle ore " + c.getString(c.getColumnIndex("ora3")));
 			razione3.setVisibility(View.VISIBLE);
+			qta = 3;
 			break;
 		case 4:
 			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
@@ -153,6 +198,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			razione3.setVisibility(View.VISIBLE);
 			razione4.setText("Razione 4 da assumere alle ore " + c.getString(c.getColumnIndex("ora4")));
 			razione4.setVisibility(View.VISIBLE);
+			qta = 4;
 			break;
 		case 5:
 			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
@@ -165,6 +211,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			razione4.setVisibility(View.VISIBLE);
 			razione5.setText("Razione 5 da assumere alle ore " + c.getString(c.getColumnIndex("ora5")));
 			razione5.setVisibility(View.VISIBLE);
+			qta = 5;
 			break;
 		case 6:
 			razione1.setText("Razione 1 da assumere alle ore " + c.getString(c.getColumnIndex("ora1")));
@@ -179,6 +226,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			razione5.setVisibility(View.VISIBLE);
 			razione6.setText("Razione 6 da assumere alle ore " + c.getString(c.getColumnIndex("ora6")));
 			razione6.setVisibility(View.VISIBLE);
+			qta = 6;
 		default:
 			break;
 		}
@@ -191,11 +239,25 @@ public class DettaglioPrescrizioneActivity extends Activity {
 		getMenuInflater().inflate(R.menu.dettaglio_prescrizione, menu);
 		return true;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
+		Intent returnIntent = new Intent();
+		setResult(RESULT_OK, returnIntent);
 		finish();
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == 6) {
+			if(resultCode == RESULT_OK) {
+				finish();
+				startActivity(getIntent());
+			}
+		}
+	}
+	
+	
 
 
 }
