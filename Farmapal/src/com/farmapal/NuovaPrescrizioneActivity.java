@@ -365,8 +365,20 @@ public class NuovaPrescrizioneActivity extends Activity {
 				e.printStackTrace();
 			}
 
-			if(!dateCorrette)
-				Toast.makeText(getApplicationContext(), "errore", Toast.LENGTH_LONG).show();
+			if(!dateCorrette) {
+				AlertDialog.Builder dateSbagliate = new AlertDialog.Builder(view.getContext());
+				dateSbagliate.setTitle("Attenzione");
+				dateSbagliate.setMessage("La data di inizio della prescrizione non deve superare la data di fine");
+				dateSbagliate.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//non fare nulla
+					}
+				});
+
+				dateSbagliate.show();
+			}
 			else {
 				if(spinnerPazienti.getSelectedItem().toString().equals("nuovo paziente")) {
 					++countPazienti;

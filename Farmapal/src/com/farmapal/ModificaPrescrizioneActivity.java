@@ -195,8 +195,20 @@ public class ModificaPrescrizioneActivity extends Activity {
 						e.printStackTrace();
 					}
 
-					if(!dateCorrette)
-						Toast.makeText(getApplicationContext(), "errore", Toast.LENGTH_LONG).show();
+					if(!dateCorrette) {
+						AlertDialog.Builder dateSbagliate = new AlertDialog.Builder(v.getContext());
+						dateSbagliate.setTitle("Attenzione");
+						dateSbagliate.setMessage("La data di inizio della prescrizione non deve superare la data di fine");
+						dateSbagliate.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								//non fare nulla
+							}
+						});
+
+						dateSbagliate.show();
+					}
 					else {
 						int qta = Integer.parseInt(spinnerQta.getSelectedItem().toString());
 						String razione1;
