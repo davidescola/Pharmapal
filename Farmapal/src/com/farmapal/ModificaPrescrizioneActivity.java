@@ -1,6 +1,9 @@
 package com.farmapal;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -53,6 +56,9 @@ public class ModificaPrescrizioneActivity extends Activity {
 	private DatePicker pickerAl;
 	private Cursor c;
 	private Cursor c2;
+	private String stringDataInizio;
+	private String stringDataFine;
+	private boolean dateCorrette = true;
 
 	private String[] giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
 	private int[] flagGiorni = new int[] {0,0,0,0,0,0,0};
@@ -172,150 +178,167 @@ public class ModificaPrescrizioneActivity extends Activity {
 					noGiorni.show();
 				}
 
+
+
 				else {
 					String stringDataInizio = "" + pickerDal.getDayOfMonth() + "-" + adjustMonth(pickerDal.getMonth()) + "-" + pickerDal.getYear();
 					String stringDataFine = "" + pickerAl.getDayOfMonth() + "-" + adjustMonth(pickerAl.getMonth()) + "-" + pickerAl.getYear();
-					int qta = Integer.parseInt(spinnerQta.getSelectedItem().toString());
-					String razione1;
-					String razione2;
-					String razione3;
-					String razione4;
-					String razione5;
-					String razione6;
-					String hour1;
-					String minute1;
-					String hour2;
-					String minute2;
-					String hour3;
-					String minute3;
-					String hour4;
-					String minute4;
-					String hour5;
-					String minute5;
-					String hour6;
-					String minute6;
-					long checkPrescrizioni;
-
-					switch(qta) {
-
-					case 1:
-						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
-						minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
-						razione1 = hour1 + ":" + minute1 + ":00.000";
-						checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, 
-								stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1});
-						if (checkPrescrizioni == -1)
-							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+					try {
+						long dataInizio = formatter.parse(stringDataInizio).getTime();
+						long dataFine = formatter.parse(stringDataFine).getTime();
+						if(dataInizio > dataFine)
+							dateCorrette = false;
 						else
-							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
-						break;
-					case 2:
-						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
-						minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
-						razione1 = hour1 + ":" + minute1 + ":00.000";
-						hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
-						minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
-						razione2 = hour2 + ":" + minute2 + ":00.000";
-						checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione,	stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2});
-						if (checkPrescrizioni == -1)
-							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
-						else
-							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
-						break;
-					case 3:
-						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
-						minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
-						razione1 = hour1 + ":" + minute1 + ":00.000";
-						hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
-						minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
-						razione2 = hour2 + ":" + minute2 + ":00.000";
-						hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
-						minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
-						razione3 = hour3 + ":" + minute3 + ":00.000";
-						checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3});
-						if (checkPrescrizioni == -1)
-							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
-						else
-							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
-						break;
-					case 4:
-						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
-						minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
-						razione1 = hour1 + ":" + minute1 + ":00.000";
-						hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
-						minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
-						razione2 = hour2 + ":" + minute2 + ":00.000";
-						hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
-						minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
-						razione3 = hour3 + ":" + minute3 + ":00.000";
-						hour4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
-						minute4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
-						razione4 = hour4 + ":" + minute4 + ":00.000";
-						checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3, razione4});
-						if (checkPrescrizioni == -1)
-							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
-						else
-							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
-						break;
-					case 5:
-						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
-						minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
-						razione1 = hour1 + ":" + minute1 + ":00.000";
-						hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
-						minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
-						razione2 = hour2 + ":" + minute2 + ":00.000";
-						hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
-						minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
-						razione3 = hour3 + ":" + minute3 + ":00.000";
-						hour4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
-						minute4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
-						razione4 = hour4 + ":" + minute4 + ":00.000";
-						hour5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentHour().toString());
-						minute5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
-						razione5 = hour5 + ":" + minute5 + ":00.000";
-						checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3, razione4, razione5});
-						if (checkPrescrizioni == -1)
-							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
-						else
-							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
-						break;
-					case 6:
-						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
-						minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
-						razione1 = hour1 + ":" + minute1 + ":00.000";
-						hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
-						minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
-						razione2 = hour2 + ":" + minute2 + ":00.000";
-						hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
-						minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
-						razione3 = hour3 + ":" + minute3 + ":00.000";
-						hour4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
-						minute4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
-						razione4 = hour4 + ":" + minute4 + ":00.000";
-						hour5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentHour().toString());
-						minute5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
-						razione5 = hour5 + ":" + minute5 + ":00.000";
-						hour6 = ModificaPrescrizioneActivity.adjustTime(tp6.getCurrentHour().toString());
-						minute6 = ModificaPrescrizioneActivity.adjustTime(tp6.getCurrentMinute().toString());
-						razione6 = hour6 + ":" + minute6 + ":00.000";
-						checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
-						if (checkPrescrizioni == -1)
-							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
-						else
-							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
-						break;
-					default:
-						break;
+							dateCorrette = true;
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
 
-					Intent returnIntent = new Intent();
-					setResult(RESULT_OK, returnIntent);
-					if(c != null)
-						c.close();
-					if(c2 != null)
-						c2.close();
-					db.close();
-					finish();
+					if(!dateCorrette)
+						Toast.makeText(getApplicationContext(), "errore", Toast.LENGTH_LONG).show();
+					else {
+						int qta = Integer.parseInt(spinnerQta.getSelectedItem().toString());
+						String razione1;
+						String razione2;
+						String razione3;
+						String razione4;
+						String razione5;
+						String razione6;
+						String hour1;
+						String minute1;
+						String hour2;
+						String minute2;
+						String hour3;
+						String minute3;
+						String hour4;
+						String minute4;
+						String hour5;
+						String minute5;
+						String hour6;
+						String minute6;
+						long checkPrescrizioni;
+
+						switch(qta) {
+
+						case 1:
+							hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
+							minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
+							razione1 = hour1 + ":" + minute1 + ":00.000";
+							checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, 
+									stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1});
+							if (checkPrescrizioni == -1)
+								Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+							else
+								Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
+							break;
+						case 2:
+							hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
+							minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
+							razione1 = hour1 + ":" + minute1 + ":00.000";
+							hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
+							minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
+							razione2 = hour2 + ":" + minute2 + ":00.000";
+							checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione,	stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2});
+							if (checkPrescrizioni == -1)
+								Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+							else
+								Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
+							break;
+						case 3:
+							hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
+							minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
+							razione1 = hour1 + ":" + minute1 + ":00.000";
+							hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
+							minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
+							razione2 = hour2 + ":" + minute2 + ":00.000";
+							hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
+							minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
+							razione3 = hour3 + ":" + minute3 + ":00.000";
+							checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3});
+							if (checkPrescrizioni == -1)
+								Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+							else
+								Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
+							break;
+						case 4:
+							hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
+							minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
+							razione1 = hour1 + ":" + minute1 + ":00.000";
+							hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
+							minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
+							razione2 = hour2 + ":" + minute2 + ":00.000";
+							hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
+							minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
+							razione3 = hour3 + ":" + minute3 + ":00.000";
+							hour4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
+							minute4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
+							razione4 = hour4 + ":" + minute4 + ":00.000";
+							checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3, razione4});
+							if (checkPrescrizioni == -1)
+								Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+							else
+								Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
+							break;
+						case 5:
+							hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
+							minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
+							razione1 = hour1 + ":" + minute1 + ":00.000";
+							hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
+							minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
+							razione2 = hour2 + ":" + minute2 + ":00.000";
+							hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
+							minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
+							razione3 = hour3 + ":" + minute3 + ":00.000";
+							hour4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
+							minute4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
+							razione4 = hour4 + ":" + minute4 + ":00.000";
+							hour5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentHour().toString());
+							minute5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
+							razione5 = hour5 + ":" + minute5 + ":00.000";
+							checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3, razione4, razione5});
+							if (checkPrescrizioni == -1)
+								Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+							else
+								Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
+							break;
+						case 6:
+							hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
+							minute1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
+							razione1 = hour1 + ":" + minute1 + ":00.000";
+							hour2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentHour().toString());
+							minute2 = ModificaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
+							razione2 = hour2 + ":" + minute2 + ":00.000";
+							hour3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentHour().toString());
+							minute3 = ModificaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
+							razione3 = hour3 + ":" + minute3 + ":00.000";
+							hour4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentHour().toString());
+							minute4 = ModificaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
+							razione4 = hour4 + ":" + minute4 + ":00.000";
+							hour5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentHour().toString());
+							minute5 = ModificaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
+							razione5 = hour5 + ":" + minute5 + ":00.000";
+							hour6 = ModificaPrescrizioneActivity.adjustTime(tp6.getCurrentHour().toString());
+							minute6 = ModificaPrescrizioneActivity.adjustTime(tp6.getCurrentMinute().toString());
+							razione6 = hour6 + ":" + minute6 + ":00.000";
+							checkPrescrizioni = db.updatePrescrizioneFromID(idPrescrizione, stringDataInizio, stringDataFine, qta, flagGiorni, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
+							if (checkPrescrizioni == -1)
+								Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
+							else
+								Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
+							break;
+						default:
+							break;
+						}
+
+						Intent returnIntent = new Intent();
+						setResult(RESULT_OK, returnIntent);
+						if(c != null)
+							c.close();
+						if(c2 != null)
+							c2.close();
+						finish();
+					}
 				}
 
 			}
@@ -359,7 +382,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 	}
 
 	private void initAttributes() {
-		db = new DBHelper(getApplicationContext());
+		db = DBHelper.getInstance(getApplicationContext());
 		idPrescrizione = getIntent().getExtras().getInt("id_prescrizione");
 		textViewPaziente = (TextView) findViewById(R.id.ModificaPrescrizioneNomePaziente);
 		textViewMedico = (TextView) findViewById(R.id.ModificaPrescrizioneNomeMedico);
@@ -412,6 +435,29 @@ public class ModificaPrescrizioneActivity extends Activity {
 		tp4.setIs24HourView(true);
 		tp5.setIs24HourView(true);
 		tp6.setIs24HourView(true);
+		tp1.setIs24HourView(true);
+		tp2.setIs24HourView(true);
+		tp3.setIs24HourView(true);
+		tp4.setIs24HourView(true);
+		tp5.setIs24HourView(true);
+		tp6.setIs24HourView(true);
+		
+		Calendar cal=Calendar.getInstance();
+		int hour=cal.get(Calendar.HOUR_OF_DAY);
+		int min=cal.get(Calendar.MINUTE);
+		
+		tp1.setCurrentHour(hour);
+		tp1.setCurrentMinute(min);
+		tp2.setCurrentHour(hour);
+		tp2.setCurrentMinute(min);
+		tp3.setCurrentHour(hour);
+		tp3.setCurrentMinute(min);
+		tp4.setCurrentHour(hour);
+		tp4.setCurrentMinute(min);
+		tp5.setCurrentHour(hour);
+		tp5.setCurrentMinute(min);
+		tp6.setCurrentHour(hour);
+		tp6.setCurrentMinute(min);
 
 	}
 
@@ -484,7 +530,6 @@ public class ModificaPrescrizioneActivity extends Activity {
 			c.close();
 		if(c2 != null)
 			c2.close();
-		db.close();
 		finish();
 	}
 

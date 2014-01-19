@@ -69,7 +69,7 @@ public class DescrizioneFarmaciaDialog extends Activity {
 		id_farmacia_selezionata=extras.getInt("id", defaultValue);
 		Log.w(tag, ""+id_farmacia_selezionata);
 		//Istanzio il DB
-		db = new DBHelper(this);
+		db = DBHelper.getInstance(getApplicationContext());
 		//Ottengo Dati Farmacia selezionata
 		c=db.getDatiFarmacia(id_farmacia_selezionata);
 		c.moveToFirst();

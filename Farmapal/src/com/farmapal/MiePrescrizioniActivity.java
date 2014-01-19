@@ -21,7 +21,7 @@ public class MiePrescrizioniActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mie_prescrizioni);
-		db = new DBHelper(this);
+		db = DBHelper.getInstance(getApplicationContext());
 		populateListviewFromDB();
 	}
 
@@ -50,7 +50,6 @@ public class MiePrescrizioniActivity extends Activity {
 			if(resultCode == RESULT_OK) {
 				if(cursor != null)
 					cursor.close();
-				db.close();
 				finish();
 				startActivity(getIntent());
 			}
@@ -63,7 +62,6 @@ public class MiePrescrizioniActivity extends Activity {
 	public void onBackPressed() {
 		if(cursor != null)
 			cursor.close();
-		db.close();
 		finish();
 	}
 

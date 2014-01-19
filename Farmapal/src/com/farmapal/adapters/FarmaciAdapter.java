@@ -18,8 +18,6 @@ import com.farmapal.R;
 public class FarmaciAdapter extends CursorAdapter {
 
 	private ArrayList<Boolean> itemChecked = new ArrayList<Boolean>();
-//	private Cursor c;
-//	private Context context;
 	private ArrayList<CheckBox> listCheckbox;
 	private ArrayList<TextView> listTextSomministrazione;
 	private ArrayList<TextView> listTextPeso;
@@ -40,8 +38,6 @@ public class FarmaciAdapter extends CursorAdapter {
 
 	public FarmaciAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
-//		this.c = c;
-//		this.context = context;
 		listCheckbox = new ArrayList<CheckBox>();
 		listTextSomministrazione = new ArrayList<TextView>();
 		listTextPeso = new ArrayList<TextView>();

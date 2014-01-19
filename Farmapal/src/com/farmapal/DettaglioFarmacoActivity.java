@@ -23,7 +23,7 @@ public class DettaglioFarmacoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dettaglio_farmaco);
-		db = new DBHelper(getApplicationContext());
+		db = DBHelper.getInstance(getApplicationContext());
 		initAttributes();
 		setDatiFarmaco(id_farmaco);
 	}
@@ -70,7 +70,7 @@ public class DettaglioFarmacoActivity extends Activity {
 	public void onBackPressed() {
 		if(c != null)
 			c.close();
-		db.close();
+		
 		finish();
 	}
 	

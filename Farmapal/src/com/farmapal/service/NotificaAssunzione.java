@@ -30,7 +30,7 @@ public class NotificaAssunzione extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		db = new DBHelper(this);
+		db = DBHelper.getInstance(getApplicationContext());
 		// Otteniamo il riferimento al NotificationManager
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		// Facciamo partire il BackgroundThread

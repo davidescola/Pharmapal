@@ -44,7 +44,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dettaglio_prescrizione);
-		db = new DBHelper(this);
+		db = DBHelper.getInstance(getApplicationContext());
 		populateActivity();
 		addListeners();
 	}
@@ -247,7 +247,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			c.close();
 		if(cursorAccessorio != null)
 			cursorAccessorio.close();
-		db.close();
+		
 		finish();
 		startActivity(returnIntent);
 	}
@@ -258,7 +258,6 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			if(resultCode == RESULT_OK) {
 				c.close();
 				cursorAccessorio.close();
-				db.close();
 				finish();
 				startActivity(getIntent());
 			}

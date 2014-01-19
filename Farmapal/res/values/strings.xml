@@ -74,7 +74,7 @@
     <string name="seleziona_tutto">Spunta tutti</string>
     <string name="deseleziona_tutto">Togli tutti </string>
     <string name="riepilogo">Non hai ancora selezionato i giorni</string>
-    <string name="seleziona_giorni">Giorni</string>
+    <string name="seleziona_giorni">Selezione giorni</string>
     <string name="elimina_prescrizione">Elimina prescrizione</string>
     <string name="modifica_prescrizione">Modifica prescrizione</string>
     <string name="dettagli_farmaco">Dettagli farmaco</string>

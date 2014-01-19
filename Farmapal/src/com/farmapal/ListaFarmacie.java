@@ -21,13 +21,8 @@ public class ListaFarmacie extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_farmacie);
-		//openDB();
-		db = new DBHelper(this);
-		populateListViewFromDB();		
-		
-		//Va fatta al BACK o al finish() dell'activity
-		//db.close();
-		
+		db = DBHelper.getInstance(getApplicationContext());
+		populateListViewFromDB();				
 	}
 
 	private void populateListViewFromDB() {

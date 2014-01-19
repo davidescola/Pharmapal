@@ -31,7 +31,7 @@ public class ListaCompletaForResultActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_completa_for_result);
-		db = new DBHelper(this);
+		db = DBHelper.getInstance(getApplicationContext());
 		IDFarmacoPrecedente = getIntent().getExtras().getInt("IDFarmacoPrecedente");
 		getFarmacoSelezionato(IDFarmacoPrecedente);
 		populateListViewFromDB();
@@ -59,7 +59,6 @@ public class ListaCompletaForResultActivity extends Activity{
 					setResult(RESULT_OK, returnIntent);
 					c.close();
 					cursor.close();
-					db.close();
 					finish();
 				}
 
@@ -107,7 +106,6 @@ public class ListaCompletaForResultActivity extends Activity{
 			c.close();
 		if(cursor != null)
 			cursor.close();
-		db.close();
 		finish();
 	}
 }

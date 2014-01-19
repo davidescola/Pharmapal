@@ -49,62 +49,63 @@
         android:id="@+id/DettaglioPrescrizioneRazione1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:padding="1dp"
-        android:text="TextView" />
-    
+        android:text="TextView"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/DettaglioPrescrizioneRazione2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:padding="1dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneRazione3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:padding="1dp"
+        android:text="TextView"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneRazione4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:padding="1dp"
+        android:text="TextView"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneRazione5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:padding="1dp"
+        android:text="TextView"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/DettaglioPrescrizioneRazione6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:padding="1dp"
+        android:text="TextView"
         android:visibility="gone" />
 
     <Button
         android:id="@+id/DettaglioPrescrizioneDettaglioFarmaco"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:text="@string/dettagli_farmaco" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/DettaglioPrescrizioneModifica"
@@ -116,9 +117,8 @@
             android:id="@+id/DettaglioPrescrizioneElimina"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#FF0000"
             android:text="@string/elimina_prescrizione" />
-
+        
     </LinearLayout>
 
 </LinearLayout>
