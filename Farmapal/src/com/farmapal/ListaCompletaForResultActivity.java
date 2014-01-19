@@ -1,7 +1,5 @@
 package com.farmapal;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,16 +14,18 @@ import android.widget.Toast;
 import com.farmapal.adapters.FarmaciAdapter;
 import com.farmapal.database.DBHelper;
 
-public class ListaCompletaForResultActivity extends Activity implements OnClickListener{
+public class ListaCompletaForResultActivity extends Activity{
 
-	DBHelper db;
-	Button btnFatto;
-	FarmaciAdapter myCursorAdapter;
-	int IDFarmacoPrecedente;
-	String nome_precedente = "";
-	String tipo_precedente = "";
-	String peso_precedente = "";
-	String somministrazione_precedente = "";
+	private DBHelper db;
+	private Button btnFatto;
+	private FarmaciAdapter myCursorAdapter;
+	private int IDFarmacoPrecedente;
+	private String nome_precedente = "";
+	private String tipo_precedente = "";
+	private String peso_precedente = "";
+	private String somministrazione_precedente = "";
+	private Cursor cursor;
+	private Cursor c;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +36,53 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 		getFarmacoSelezionato(IDFarmacoPrecedente);
 		populateListViewFromDB();
 		btnFatto = (Button) findViewById(R.id.btnFattoFarmaciForResult);
-		btnFatto.setOnClickListener(this);
-		closeDB();
-		
+		btnFatto.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				Intent returnIntent = new Intent();
+				String retFarmaco = myCursorAdapter.getRetFarmaco();
+				String retSomministrazione = myCursorAdapter.getRetSomministrazione();
+				String retPeso = myCursorAdapter.getRetPeso();
+				String retTipo = myCursorAdapter.getRetTipo();
+				int retID;
 
+				if(myCursorAdapter.itemIsChecked()) {
+					returnIntent.putExtra("retFarmaco", retFarmaco);
+					returnIntent.putExtra("retSomministrazione", retSomministrazione);
+					returnIntent.putExtra("retPeso", retPeso);
+					returnIntent.putExtra("retTipo", retTipo);
+					c = db.getIDFarmacoFromValori(retFarmaco, retTipo, retPeso, retSomministrazione);
+					c.moveToFirst();
+					retID = c.getInt(c.getColumnIndex("_id"));
+					returnIntent.putExtra("retID", retID);
+					setResult(RESULT_OK, returnIntent);
+					c.close();
+					cursor.close();
+					db.close();
+					finish();
+				}
+
+				else
+					Toast.makeText(v.getContext(), "nessun elemento selezionato", Toast.LENGTH_LONG).show();
+
+			}
+		});
 	}
 
 	private void getFarmacoSelezionato(int id) {
-		Cursor cursor = db.getFarmacoFromID(id);
+		cursor = db.getFarmacoFromID(id);
 		if(cursor.moveToFirst()) {
 			nome_precedente = cursor.getString(cursor.getColumnIndex("nome"));
 			tipo_precedente = cursor.getString(cursor.getColumnIndex("tipo"));
 			peso_precedente = cursor.getString(cursor.getColumnIndex("peso"));
 			somministrazione_precedente = cursor.getString(cursor.getColumnIndex("somministrazione"));
-			
 		}
-		
+
 	}
 
 	private void populateListViewFromDB() {
-		Cursor cursor = db.getAllFarmaci();
-
-		startManagingCursor(cursor);
-
+		cursor = db.getAllFarmaci();
 		myCursorAdapter = new FarmaciAdapter(this, cursor, 0);
 		int IDFarmacoPrecedente = getIntent().getExtras().getInt("IDFarmacoPrecedente");
 		myCursorAdapter.setIDFarmacoPrecedente(IDFarmacoPrecedente);
@@ -69,23 +92,6 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 		myCursorAdapter.setRetSomministrazione(somministrazione_precedente);
 		ListView myList = (ListView)findViewById(R.id.listFarmaciForResult);
 		myList.setAdapter(myCursorAdapter);
-
-	}
-
-	private void openDB() {
-		db = new DBHelper(this);
-		try {
-			db.createDatabase();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	private void closeDB() {
-		db.close();
-
 	}
 
 	@Override
@@ -96,33 +102,12 @@ public class ListaCompletaForResultActivity extends Activity implements OnClickL
 	}
 
 	@Override
-	public void onClick(View v) {
-		Intent returnIntent = new Intent();
-		String retFarmaco = myCursorAdapter.getRetFarmaco();
-		String retSomministrazione = myCursorAdapter.getRetSomministrazione();
-		String retPeso = myCursorAdapter.getRetPeso();
-		String retTipo = myCursorAdapter.getRetTipo();
-		int retID;
-
-		if(myCursorAdapter.itemIsChecked()) {
-			returnIntent.putExtra("retFarmaco", retFarmaco);
-			returnIntent.putExtra("retSomministrazione", retSomministrazione);
-			returnIntent.putExtra("retPeso", retPeso);
-			returnIntent.putExtra("retTipo", retTipo);
-			Cursor c = db.getIDFarmacoFromValori(retFarmaco, retTipo, retPeso, retSomministrazione);
-			c.moveToFirst();
-			retID = c.getInt(c.getColumnIndex("_id"));
-			returnIntent.putExtra("retID", retID);
-			setResult(RESULT_OK, returnIntent);
-			finish();
-		}
-
-		else
-			Toast.makeText(v.getContext(), "nessun elemento selezionato", Toast.LENGTH_LONG).show();
-	}
-	
-	@Override
 	public void onBackPressed() {
+		if(c != null)
+			c.close();
+		if(cursor != null)
+			cursor.close();
+		db.close();
 		finish();
 	}
 }

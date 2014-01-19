@@ -1,10 +1,6 @@
 package com.farmapal;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +16,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -66,6 +60,9 @@ public class NuovaPrescrizioneActivity extends Activity {
 	private TextView textTipo;
 	private LinearLayout layoutFarmaco;
 	private TextView textViewRiepilogo;
+	private Cursor cursorIDFarmaco;
+	private Cursor cursorIDPaziente;
+	private Cursor cursorMaxIDPrescrizioni;
 
 
 	@Override
@@ -79,7 +76,6 @@ public class NuovaPrescrizioneActivity extends Activity {
 		setTimePickers();
 		addListenerbtnSelezionaFarmaco();
 		addListenerbtnSelezionaGiorni();
-		db.close(); 
 	}
 
 	private void initAttributes() {
@@ -230,9 +226,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 
 		ArrayList<String> listPazienti = new ArrayList<String>();
 		Cursor pazienti = db.getAllPazienti();
-		startManagingCursor(pazienti);
 		Cursor maxIDPaziente = db.getMaxIDPaziente();
-		startManagingCursor(maxIDPaziente);
 
 		while(pazienti.moveToNext()) {
 			listPazienti.add(pazienti.getString(pazienti.getColumnIndex("nome")));
@@ -261,6 +255,9 @@ public class NuovaPrescrizioneActivity extends Activity {
 				//non fare nulla
 			}
 		});
+
+		pazienti.close();
+		maxIDPaziente.close();
 
 
 	}
@@ -355,8 +352,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			String tipo = textTipo.getText().toString();
 			int idFarmaco = 0;
 			int idPaziente = 0;
-			Cursor cursorIDFarmaco = db.getIDFarmaco(farmaco, tipo, peso, somministrazione);
-			startManagingCursor(cursorIDFarmaco);
+			cursorIDFarmaco = db.getIDFarmaco(farmaco, tipo, peso, somministrazione);
 			if(cursorIDFarmaco.getCount() == 1) {
 				cursorIDFarmaco.moveToFirst();
 				idFarmaco = cursorIDFarmaco.getInt(cursorIDFarmaco.getColumnIndex("_id"));
@@ -368,8 +364,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			else
 				nomePaziente = spinnerPazienti.getSelectedItem().toString();
 
-			Cursor cursorIDPaziente = db.getIDPaziente(nomePaziente);
-			startManagingCursor(cursorIDPaziente);
+			cursorIDPaziente = db.getIDPaziente(nomePaziente);
 			if(cursorIDPaziente.getCount() == 1) {
 				cursorIDPaziente.moveToFirst();
 				idPaziente = cursorIDPaziente.getInt(cursorIDPaziente.getColumnIndex("_id"));
@@ -396,8 +391,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 			String hour6;
 			String minute6;
 
-			Cursor cursorMaxIDPrescrizioni = db.getMaxIDPrescrizione();
-			startManagingCursor(cursorMaxIDPrescrizioni);
+			cursorMaxIDPrescrizioni = db.getMaxIDPrescrizione();
 			cursorMaxIDPrescrizioni.moveToFirst();
 			countPrescrizioni = cursorMaxIDPrescrizioni.getInt(0);
 			long checkPrescrizioni;
@@ -518,6 +512,12 @@ public class NuovaPrescrizioneActivity extends Activity {
 			default:
 				break;
 			}
+			if(cursorIDFarmaco != null)
+				cursorIDFarmaco.close();
+			if(cursorIDPaziente != null)
+				cursorIDPaziente.close();
+			if(cursorMaxIDPrescrizioni != null)
+				cursorMaxIDPrescrizioni.close();
 			db.close();
 			Intent returnIntent = new Intent();
 			setResult(RESULT_OK, returnIntent);
@@ -583,21 +583,28 @@ public class NuovaPrescrizioneActivity extends Activity {
 					textViewRiepilogo.setText("Non hai ancora selezionato i giorni");
 				else {
 					for(int j = 0; j < listGiorni.size(); j++) {
-						
-							if(j != listGiorni.size() - 1)
-								s = s + listGiorni.get(j) + ", ";
-							else 
-								s = s + listGiorni.get(j);
-						
+
+						if(j != listGiorni.size() - 1)
+							s = s + listGiorni.get(j) + ", ";
+						else 
+							s = s + listGiorni.get(j);
+
 					}
 					textViewRiepilogo.setText("Da assumere nei giorni di " + s);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
+		if(cursorIDFarmaco != null)
+			cursorIDFarmaco.close();
+		if(cursorIDPaziente != null)
+			cursorIDPaziente.close();
+		if(cursorMaxIDPrescrizioni != null)
+			cursorMaxIDPrescrizioni.close();
+		db.close();
 		finish();
 	}
 

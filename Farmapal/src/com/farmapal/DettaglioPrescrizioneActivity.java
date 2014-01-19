@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farmapal.database.DBHelper;
 
@@ -40,6 +38,8 @@ public class DettaglioPrescrizioneActivity extends Activity {
 	private int idPrescrizione;
 	private int idFarmaco;
 	private int qta;
+	private Cursor c;
+	private Cursor cursorAccessorio;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,9 +62,10 @@ public class DettaglioPrescrizioneActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						db.deletePrescrizioneFromID(idPrescrizione);
-						Intent returnIntent = new Intent();
-						setResult(RESULT_OK, returnIntent);
+						Intent returnIntent = new Intent(getApplicationContext(), MiePrescrizioniActivity.class);
+						//setResult(RESULT_OK, returnIntent);
 						finish();
+						startActivity(returnIntent);
 
 					}
 				});
@@ -92,9 +93,9 @@ public class DettaglioPrescrizioneActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 		btnModifica.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ModificaPrescrizioneActivity.class);
@@ -103,7 +104,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 				b.putInt("qta_razioni", qta);
 				intent.putExtras(b);
 				startActivityForResult(intent, 6);
-				
+
 			}
 		});
 
@@ -129,14 +130,12 @@ public class DettaglioPrescrizioneActivity extends Activity {
 
 		Bundle b = getIntent().getExtras();
 		idPrescrizione = Integer.parseInt(b.getString("id"));
-		Cursor c = db.getPrescrizioneFromID(idPrescrizione);
-		startManagingCursor(c);
+		c = db.getPrescrizioneFromID(idPrescrizione);
 		c.moveToFirst();
 
 
 		int idPaziente = c.getInt(c.getColumnIndex("id_paziente"));
-		Cursor cursorAccessorio = db.getPazienteFromID(idPaziente);
-		startManagingCursor(cursorAccessorio);
+		cursorAccessorio = db.getPazienteFromID(idPaziente);
 		cursorAccessorio.moveToFirst();
 		nomePaziente.setText("Paziente: " + cursorAccessorio.getString(cursorAccessorio.getColumnIndex("nome")));
 		idFarmaco = c.getInt(c.getColumnIndex("id_farmaco"));
@@ -150,7 +149,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 			int flag = c.getInt(c.getColumnIndex(giorno));
 			if(flag == 1) 
 				giorniRazioni.add(giorno);
-			
+
 		}
 		String s = new String("");
 		for(int i = 0; i < giorniRazioni.size(); i++) {
@@ -242,22 +241,31 @@ public class DettaglioPrescrizioneActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		Intent returnIntent = new Intent();
-		setResult(RESULT_OK, returnIntent);
+		Intent returnIntent = new Intent(getApplicationContext(), MiePrescrizioniActivity.class);
+		//setResult(RESULT_OK, returnIntent);
+		if(c != null)
+			c.close();
+		if(cursorAccessorio != null)
+			cursorAccessorio.close();
+		db.close();
 		finish();
+		startActivity(returnIntent);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == 6) {
 			if(resultCode == RESULT_OK) {
+				c.close();
+				cursorAccessorio.close();
+				db.close();
 				finish();
 				startActivity(getIntent());
 			}
 		}
 	}
-	
-	
+
+
 
 
 }

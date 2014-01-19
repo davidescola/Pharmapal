@@ -282,6 +282,11 @@ public class DBHelper extends SQLiteOpenHelper{
 			cvs.put("razione_presa" + i, 0);
 		}
 		
+		for(int i = razioni.length + 1; i <= 6; i++) {
+			cvs.putNull("ora" + i);
+			cvs.putNull("razione_presa" + i);
+		}
+		
 		return db.update("prescrizione", cvs, "_id = " + index, null);
 		
 	}

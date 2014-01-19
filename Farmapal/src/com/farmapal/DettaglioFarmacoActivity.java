@@ -18,6 +18,7 @@ public class DettaglioFarmacoActivity extends Activity {
 	private TextView textViewControindicazioni;
 	private TextView textViewEffettiCollaterali;
 	private int id_farmaco;
+	private Cursor c;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class DettaglioFarmacoActivity extends Activity {
 	}
 
 	private void setDatiFarmaco(int id_farmaco) {
-		Cursor c = db.getFarmacoFromID(id_farmaco);
+		c = db.getFarmacoFromID(id_farmaco);
 		if(c.moveToFirst()) {
 			textViewFarmaco.setText("Nome: " + c.getString(c.getColumnIndex("nome")));
 			String descrizione = 
@@ -41,7 +42,6 @@ public class DettaglioFarmacoActivity extends Activity {
 			textViewIndicazioni.setText("Indicazioni: " + c.getString(c.getColumnIndex("indicazioni")));
 			textViewControindicazioni.setText("Controindicazioni: " + c.getString(c.getColumnIndex("controindicazioni")));
 			textViewEffettiCollaterali.setText("Effetti collaterali: " + c.getString(c.getColumnIndex("effetti_indesiderati")));
-
 		}
 
 	}
@@ -65,5 +65,15 @@ public class DettaglioFarmacoActivity extends Activity {
 		getMenuInflater().inflate(R.menu.dettaglio_farmaco, menu);
 		return true;
 	}
+
+	@Override
+	public void onBackPressed() {
+		if(c != null)
+			c.close();
+		db.close();
+		finish();
+	}
+	
+	
 
 }

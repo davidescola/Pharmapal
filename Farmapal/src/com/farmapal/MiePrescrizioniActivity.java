@@ -13,24 +13,23 @@ import com.farmapal.database.DBHelper;
 
 public class MiePrescrizioniActivity extends Activity {
 
-	DBHelper db;
-	PrescrizioniAdapter myCursorAdapter;
+	private DBHelper db;
+	private PrescrizioniAdapter myCursorAdapter;
+	private Cursor cursor;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mie_prescrizioni);
 		db = new DBHelper(this);
 		populateListviewFromDB();
-		db.close();
 	}
 
 	private void populateListviewFromDB() {
-		Cursor cursor = db.getAllPrescrizioni();
-		startManagingCursor(cursor);
+		cursor = db.getAllPrescrizioni();
 		myCursorAdapter = new PrescrizioniAdapter(this, cursor, 0);
 		ListView list = (ListView)findViewById(R.id.listPrescrizioni);
 		list.setAdapter(myCursorAdapter);
-
 	}
 
 	@Override
@@ -47,18 +46,24 @@ public class MiePrescrizioniActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 2 || requestCode == 4) {
+		if (requestCode == 2 || requestCode == 4 || requestCode == 6) {
 			if(resultCode == RESULT_OK) {
+				if(cursor != null)
+					cursor.close();
+				db.close();
 				finish();
 				startActivity(getIntent());
 			}
-				
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onBackPressed() {
+		if(cursor != null)
+			cursor.close();
+		db.close();
 		finish();
 	}
 

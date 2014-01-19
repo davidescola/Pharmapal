@@ -62,7 +62,9 @@ public class PrescrizioniAdapter extends CursorAdapter {
 				Bundle bundle = new Bundle();
 				bundle.putString("id", v.getTag().toString());
 				intent.putExtras(bundle);
-				callerActivity.startActivityForResult(intent, 4);
+				//callerActivity.startActivityForResult(intent, 4);
+				callerActivity.startActivity(intent);
+				callerActivity.finish();
 				
 			}
 		});

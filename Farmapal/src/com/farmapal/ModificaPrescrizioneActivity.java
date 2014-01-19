@@ -51,6 +51,8 @@ public class ModificaPrescrizioneActivity extends Activity {
 	private Button btnFatto;
 	private DatePicker pickerDal;
 	private DatePicker pickerAl;
+	private Cursor c;
+	private Cursor c2;
 
 	private String[] giorni = new String[] {"lunedi","martedi","mercoledi","giovedi","venerdi","sabato","domenica"};
 	private int[] flagGiorni = new int[] {0,0,0,0,0,0,0};
@@ -133,7 +135,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
+				//non fare nulla
 
 			}
 		});
@@ -150,9 +152,9 @@ public class ModificaPrescrizioneActivity extends Activity {
 
 			}
 		});
-		
+
 		btnFatto.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if(textViewRiepilogoGiorni.getText().equals("Non hai ancora selezionato i giorni")) {
@@ -169,7 +171,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 
 					noGiorni.show();
 				}
-				
+
 				else {
 					String stringDataInizio = "" + pickerDal.getDayOfMonth() + "-" + adjustMonth(pickerDal.getMonth()) + "-" + pickerDal.getYear();
 					String stringDataFine = "" + pickerAl.getDayOfMonth() + "-" + adjustMonth(pickerAl.getMonth()) + "-" + pickerAl.getYear();
@@ -193,7 +195,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 					String hour6;
 					String minute6;
 					long checkPrescrizioni;
-					
+
 					switch(qta) {
 
 					case 1:
@@ -205,7 +207,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 						if (checkPrescrizioni == -1)
 							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 						else
-							Toast.makeText(v.getContext(), "prescrizione salvata", Toast.LENGTH_LONG).show();
+							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
 						break;
 					case 2:
 						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -218,7 +220,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 						if (checkPrescrizioni == -1)
 							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 						else
-							Toast.makeText(v.getContext(), "prescrizione salvata", Toast.LENGTH_LONG).show();
+							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
 						break;
 					case 3:
 						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -234,7 +236,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 						if (checkPrescrizioni == -1)
 							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 						else
-							Toast.makeText(v.getContext(), "prescrizione salvata", Toast.LENGTH_LONG).show();
+							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
 						break;
 					case 4:
 						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -253,7 +255,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 						if (checkPrescrizioni == -1)
 							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 						else
-							Toast.makeText(v.getContext(), "prescrizione salvata", Toast.LENGTH_LONG).show();
+							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
 						break;
 					case 5:
 						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -275,7 +277,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 						if (checkPrescrizioni == -1)
 							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 						else
-							Toast.makeText(v.getContext(), "prescrizione salvata", Toast.LENGTH_LONG).show();
+							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
 						break;
 					case 6:
 						hour1 = ModificaPrescrizioneActivity.adjustTime(tp1.getCurrentHour().toString());
@@ -300,27 +302,32 @@ public class ModificaPrescrizioneActivity extends Activity {
 						if (checkPrescrizioni == -1)
 							Toast.makeText(v.getContext(), "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 						else
-							Toast.makeText(v.getContext(), "prescrizione salvata", Toast.LENGTH_LONG).show();
+							Toast.makeText(v.getContext(), "prescrizione modificata", Toast.LENGTH_LONG).show();
 						break;
 					default:
 						break;
 					}
-					
+
 					Intent returnIntent = new Intent();
 					setResult(RESULT_OK, returnIntent);
+					if(c != null)
+						c.close();
+					if(c2 != null)
+						c2.close();
+					db.close();
 					finish();
 				}
-				
+
 			}
 		});
 
 	}
 
 	private void setContents() {
-		Cursor c = db.getPrescrizioneFromID(idPrescrizione);
+		c = db.getPrescrizioneFromID(idPrescrizione);
 		if(c.moveToFirst()) {
 			int IDPaziente = c.getInt(c.getColumnIndex("id_paziente"));
-			Cursor c2 = db.getPazienteFromID(IDPaziente);
+			c2 = db.getPazienteFromID(IDPaziente);
 			if(c2.moveToFirst())
 				textViewPaziente.setText("Paziente: " + c2.getString(c2.getColumnIndex("nome")));
 			textViewMedico.setText("Prescritto da: " + c.getString(c.getColumnIndex("medico")));
@@ -332,15 +339,17 @@ public class ModificaPrescrizioneActivity extends Activity {
 				textViewSomministrazione.setText(c2.getString(c2.getColumnIndex("somministrazione")));
 				textViewTipo.setText(c2.getString(c2.getColumnIndex("tipo")));
 			}
+
 		}
-		
+
+
 		String s = "";
 		for(int i = 0; i < giorniRazioni.size(); i++) {
 			if(i != giorniRazioni.size() - 1)
 				s = s + giorniRazioni.get(i) + ", ";
 			else
 				s = s + giorniRazioni.get(i);
-			
+
 			textViewRiepilogoGiorni.setText("da assumere nei giorni di " + s);
 		}
 
@@ -378,7 +387,7 @@ public class ModificaPrescrizioneActivity extends Activity {
 		pickerAl = (DatePicker) findViewById(R.id.ModificaPrescrizionedatePickerAl);
 		setTimePickers();
 
-		Cursor c = db.getPrescrizioneFromID(idPrescrizione);
+		c = db.getPrescrizioneFromID(idPrescrizione);
 		if(c.moveToFirst())
 			for(int i = 0; i < giorni.length; i++) {
 				int flag = c.getInt(c.getColumnIndex(giorni[i]));
@@ -393,8 +402,9 @@ public class ModificaPrescrizioneActivity extends Activity {
 				giorniRazioni.add(giorni[j]);
 		}
 
+
 	}
-	
+
 	private void setTimePickers() {
 		tp1.setIs24HourView(true);
 		tp2.setIs24HourView(true);
@@ -439,20 +449,20 @@ public class ModificaPrescrizioneActivity extends Activity {
 					textViewRiepilogoGiorni.setText("Non hai ancora selezionato i giorni");
 				else {
 					for(int j = 0; j < listGiorni.size(); j++) {
-						
-							if(j != listGiorni.size() - 1)
-								s = s + listGiorni.get(j) + ", ";
-							else 
-								s = s + listGiorni.get(j);
-						
+
+						if(j != listGiorni.size() - 1)
+							s = s + listGiorni.get(j) + ", ";
+						else 
+							s = s + listGiorni.get(j);
+
 					}
 					textViewRiepilogoGiorni.setText("Da assumere nei giorni di " + s);
 				}
-			
+
 			}
 		}
 	}
-	
+
 	private static String adjustTime(String string) {
 		if(string.length() == 1)
 			string = "0" + string;
@@ -467,5 +477,17 @@ public class ModificaPrescrizioneActivity extends Activity {
 		else
 			return "0" + string_mese;
 	}
+
+	@Override
+	public void onBackPressed() {
+		if(c != null)
+			c.close();
+		if(c2 != null)
+			c2.close();
+		db.close();
+		finish();
+	}
+
+
 
 }
