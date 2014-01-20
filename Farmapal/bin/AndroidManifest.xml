@@ -66,6 +66,10 @@
             android:name="com.farmapal.ModificaPrescrizioneActivity"
             android:label="@string/title_activity_modifica_prescrizione" >
         </activity>
+        <activity
+            android:name="com.farmapal.NuovoFarmacoActivity"
+            android:label="@string/title_activity_nuovo_farmaco" >
+        </activity>
     </application>
 
 </manifest>

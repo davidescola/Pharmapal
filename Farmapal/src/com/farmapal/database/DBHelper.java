@@ -168,6 +168,22 @@ public class DBHelper extends SQLiteOpenHelper{
 		return check;
 	}
 
+	public long insertFarmaco(int index, String nome, String principi_attivi, String peso, String tipo, String somministrazione, String indicazioni, String controindicazioni, String effetti_collaterali) {
+		ContentValues cvs = new ContentValues();
+		cvs.put("_id", index);
+		cvs.put("nome", nome);
+		cvs.put("principi_attivi", principi_attivi);
+		cvs.put("peso", peso);
+		cvs.put("tipo", tipo);
+		cvs.put("somministrazione", somministrazione);
+		cvs.put("indicazioni", indicazioni);
+		cvs.put("controindicazioni", controindicazioni);
+		cvs.put("effetti_indesiderati", effetti_collaterali);
+
+		long check = db.insert("farmaco", null, cvs);
+
+		return check;
+	}
 	public Cursor getAllFarmacie(){
 		Cursor c = db.rawQuery("SELECT * FROM farmacia", null);
 		return c;
@@ -203,10 +219,19 @@ public class DBHelper extends SQLiteOpenHelper{
 		return c;
 	}
 
+	public Cursor getMaxIDFarmaco() {
+		Cursor c = db.rawQuery("SELECT MAX(_id) FROM farmaco", null);
+		return c;
+	}
+	
 	public boolean deletePrescrizioneFromID(int id) {
 		return db.delete("prescrizione", "_id=" + id, null) > 0;
 	}
 
+	public boolean deleteFarmacoFromID(int id) {
+		return db.delete("farmaco", "_id=" + id, null) > 0;
+	}
+	
 	public long updatePrescrizioneFromID(int index, String data_inizio, String data_fine, int quantita, int[] flagGiorni, String[] razioni) {
 		ContentValues cvs = new ContentValues();
 		cvs.put("data_inizio", data_inizio);

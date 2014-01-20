@@ -1,10 +1,15 @@
 package com.farmapal;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farmapal.database.DBHelper;
 
@@ -17,6 +22,7 @@ public class DettaglioFarmacoActivity extends Activity {
 	private TextView textViewIndicazioni;
 	private TextView textViewControindicazioni;
 	private TextView textViewEffettiCollaterali;
+	private Button btnElimina;
 	private int id_farmaco;
 	private Cursor c;
 	@Override
@@ -26,6 +32,35 @@ public class DettaglioFarmacoActivity extends Activity {
 		db = DBHelper.getInstance(getApplicationContext());
 		initAttributes();
 		setDatiFarmaco(id_farmaco);
+		triggerBtnElimina();
+		addListeners();
+	}
+
+	private void triggerBtnElimina() {
+		Bundle b = new Bundle();
+		b = getIntent().getExtras();
+		boolean flag = b.getBoolean("flag_btnElimina");
+		if (flag)
+			btnElimina.setVisibility(View.VISIBLE);
+		
+	}
+
+	private void addListeners() {
+		btnElimina.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(db.deleteFarmacoFromID(id_farmaco)) {
+					Toast.makeText(getApplicationContext(), "farmaco eliminato", Toast.LENGTH_SHORT).show();
+					Intent returnIntent = new Intent();
+					setResult(RESULT_OK, returnIntent);
+					finish();
+					
+				}
+				
+			}
+		});
+		
 	}
 
 	private void setDatiFarmaco(int id_farmaco) {
@@ -53,6 +88,7 @@ public class DettaglioFarmacoActivity extends Activity {
 		textViewIndicazioni = (TextView) findViewById(R.id.DettaglioFarmacoIndicazioni);
 		textViewControindicazioni = (TextView) findViewById(R.id.DettaglioFarmacoControindicazioni);
 		textViewEffettiCollaterali = (TextView) findViewById(R.id.DettaglioFarmacoEffettiCollaterali);
+		btnElimina = (Button) findViewById(R.id.DettaglioFarmacobuttonElimina);
 
 		Bundle b = getIntent().getExtras();
 		id_farmaco = b.getInt("id_farmaco");

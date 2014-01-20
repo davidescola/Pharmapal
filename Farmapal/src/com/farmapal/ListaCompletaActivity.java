@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.farmapal.adapters.ListaFarmaciAdapter;
@@ -18,6 +20,7 @@ public class ListaCompletaActivity extends Activity {
 	private DBHelper db;
 	private Cursor cursor;
 	private ListaFarmaciAdapter adapter;
+	private Button btnAggiungiFarmaco;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +54,20 @@ public class ListaCompletaActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(), DettaglioFarmacoActivity.class);
 				Bundle b = new Bundle();
 				b.putInt("id_farmaco", (int) id);
+				b.putBoolean("flag_btnElimina", true);
 				intent.putExtras(b);
-				startActivity(intent);
+				startActivityForResult(intent, 8);
+				
+			}
+		});
+		
+		btnAggiungiFarmaco = (Button) findViewById(R.id.btnAggiungiFarmaco);
+		btnAggiungiFarmaco.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), NuovoFarmacoActivity.class);
+				startActivityForResult(intent, 7);
 				
 			}
 		});
@@ -72,5 +87,17 @@ public class ListaCompletaActivity extends Activity {
 			cursor.close();
 		finish();
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == 7 || requestCode == 8) {
+			if (resultCode == RESULT_OK) {
+				finish();
+				startActivity(getIntent());
+			}
+		}
+	}
+	
+	
 
 }

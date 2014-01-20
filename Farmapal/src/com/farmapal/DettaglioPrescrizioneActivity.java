@@ -89,6 +89,7 @@ public class DettaglioPrescrizioneActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(), DettaglioFarmacoActivity.class);
 				Bundle b = new Bundle();
 				b.putInt("id_farmaco", idFarmaco);
+				b.putBoolean("flag_btnElimina", false);
 				intent.putExtras(b);
 				startActivity(intent);
 			}

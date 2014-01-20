@@ -76,9 +76,21 @@
     <string name="riepilogo">Non hai ancora selezionato i giorni</string>
     <string name="seleziona_giorni">Selezione giorni</string>
     <string name="elimina_prescrizione">Elimina prescrizione</string>
+    <string name="elimina_farmaco">Elimina farmaco</string>
     <string name="modifica_prescrizione">Modifica prescrizione</string>
     <string name="dettagli_farmaco">Dettagli farmaco</string>
     <string name="title_activity_dettaglio_farmaco">DettaglioFarmacoActivity</string>
     <string name="title_activity_modifica_prescrizione">ModificaPrescrizioneActivity</string>
+    <string name="aggiungi_farmaco">Aggiungi farmaco</string>
+    <string name="title_activity_nuovo_farmaco">NuovoFarmacoActivity</string>
+    <string name="nome_farmaco">Nome farmaco</string>
+    <string name="principi_attivi">Principi attivi</string>
+    <string name="peso">Peso</string>
+    <string name="tipo">Tipo</string>
+    <string name="somministrazione">Somministrazione</string>
+    <string name="indicazioni">Indicazioni</string>
+    <string name="controindicazioni">Controindicazioni</string>
+    <string name="effetti_collaterali">Effetti collaterali</string>
+    
 
 </resources>
