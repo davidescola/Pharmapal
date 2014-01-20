@@ -108,4 +108,5 @@ public class ListaCompletaForResultActivity extends Activity{
 			cursor.close();
 		finish();
 	}
+	
 }
