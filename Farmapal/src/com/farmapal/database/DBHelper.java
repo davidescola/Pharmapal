@@ -232,6 +232,10 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.delete("farmaco", "_id=" + id, null) > 0;
 	}
 	
+	public boolean deletePrescrizioniFromIDFarmaco(int id) {
+		return db.delete("prescrizione", "id_farmaco=" + id, null) > 0;
+	}
+	
 	public long updatePrescrizioneFromID(int index, String data_inizio, String data_fine, int quantita, int[] flagGiorni, String[] razioni) {
 		ContentValues cvs = new ContentValues();
 		cvs.put("data_inizio", data_inizio);

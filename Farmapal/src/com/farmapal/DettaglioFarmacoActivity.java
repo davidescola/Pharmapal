@@ -1,6 +1,8 @@
 package com.farmapal;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -42,25 +44,51 @@ public class DettaglioFarmacoActivity extends Activity {
 		boolean flag = b.getBoolean("flag_btnElimina");
 		if (flag)
 			btnElimina.setVisibility(View.VISIBLE);
-		
+
 	}
 
 	private void addListeners() {
 		btnElimina.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				if(db.deleteFarmacoFromID(id_farmaco)) {
-					Toast.makeText(getApplicationContext(), "farmaco eliminato", Toast.LENGTH_SHORT).show();
-					Intent returnIntent = new Intent();
-					setResult(RESULT_OK, returnIntent);
-					finish();
-					
-				}
-				
+				AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+				alert.setTitle("Attenzione");
+				alert.setMessage("Il farmaco e le prescrizioni ad esso collegate verranno modificate definitivamente. Continuare?");
+				alert.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+				alert.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if(db.deleteFarmacoFromID(id_farmaco)) {
+							if(db.deletePrescrizioniFromIDFarmaco(id_farmaco)) {
+								Toast.makeText(getApplicationContext(), "farmaco eliminato", Toast.LENGTH_SHORT).show();
+								Intent returnIntent = new Intent();
+								setResult(RESULT_OK, returnIntent);
+								finish();
+							}
+							else
+								Toast.makeText(getApplicationContext(), "errore durante la cancellazione del farmaco", Toast.LENGTH_LONG).show();
+						}
+						else
+							Toast.makeText(getApplicationContext(), "errore durante la cancellazione del farmaco", Toast.LENGTH_LONG).show();
+
+					}
+				});
+
+				alert.show();
+
 			}
 		});
-		
+
 	}
 
 	private void setDatiFarmaco(int id_farmaco) {
@@ -69,9 +97,9 @@ public class DettaglioFarmacoActivity extends Activity {
 			textViewFarmaco.setText("Nome: " + c.getString(c.getColumnIndex("nome")));
 			String descrizione = 
 					c.getString(c.getColumnIndex("peso")) + " " + 
-					c.getString(c.getColumnIndex("tipo")) + " " +
-					c.getString(c.getColumnIndex("peso")) + " " +
-					"somministrazione " + c.getString(c.getColumnIndex("somministrazione"));
+							c.getString(c.getColumnIndex("tipo")) + " " +
+							c.getString(c.getColumnIndex("peso")) + " " +
+							"somministrazione " + c.getString(c.getColumnIndex("somministrazione"));
 			textViewDescrizione.setText(descrizione);
 			textViewPrincipiAttivi.setText("Principi attivi: " + c.getString(c.getColumnIndex("principi_attivi")));
 			textViewIndicazioni.setText("Indicazioni: " + c.getString(c.getColumnIndex("indicazioni")));
@@ -106,10 +134,10 @@ public class DettaglioFarmacoActivity extends Activity {
 	public void onBackPressed() {
 		if(c != null)
 			c.close();
-		
+
 		finish();
 	}
-	
-	
+
+
 
 }
