@@ -106,6 +106,41 @@ public class DBHelper extends SQLiteOpenHelper{
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione", null);
 		return c;
 	}
+	
+	public Cursor getLunPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE lunedi = 1", null);
+		return c;
+	}
+	
+	public Cursor getMarPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE martedi = 1", null);
+		return c;
+	}
+	
+	public Cursor getMerPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE mercoledi = 1", null);
+		return c;
+	}
+	
+	public Cursor getGioPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE giovedi = 1", null);
+		return c;
+	}
+
+	public Cursor getVenPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE venerdi = 1", null);
+		return c;
+	}
+	
+	public Cursor getSabPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE sabato = 1", null);
+		return c;
+	}
+	
+	public Cursor getDomPrescrizioni() {
+		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE domenica = 1", null);
+		return c;
+	}
 
 	public Cursor getFarmacoFromID(int id) {
 		Cursor c = db.rawQuery("SELECT * FROM farmaco WHERE _id = '" + id + "'", null);
@@ -263,6 +298,44 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 
 		return db.update("prescrizione", cvs, "_id = " + index, null);
+
+	}
+	
+	public int updatePrescrizioneStartPeriodNotification(int idPrescrizione, int prima_inizio) {
+		ContentValues cvs = new ContentValues();
+		cvs.put("prima_inizio", prima_inizio);
+
+		return db.update("prescrizione", cvs, "_id = " + idPrescrizione, null);
+
+	}
+	
+	public int updatePrescrizioneEndPeriodNotification(int idPrescrizione, int dopo_fine) {
+		ContentValues cvs = new ContentValues();
+		cvs.put("dopo_fine", dopo_fine);
+
+		return db.update("prescrizione", cvs, "_id = " + idPrescrizione, null);
+
+	}
+	
+	public int updateResetGiornalieroRazioni() {
+		ContentValues cvs = new ContentValues();
+		cvs.put("razione_presa1", 0);
+		cvs.put("razione_presa2", 0);
+		cvs.put("razione_presa3", 0);
+		cvs.put("razione_presa4", 0);
+		cvs.put("razione_presa5", 0);
+		cvs.put("razione_presa6", 0);
+
+		return db.update("prescrizione", cvs, "dopo_fine !=1", null);
+
+	}
+	
+	public int updateRazionePresa(int idPrescrizione, int indexRazionePresa) {
+		ContentValues cvs = new ContentValues();
+		int j=indexRazionePresa+1;
+		cvs.put("razione_presa"+j, 1);
+
+		return db.update("prescrizione", cvs, "_id = " + idPrescrizione, null);
 
 	}
 

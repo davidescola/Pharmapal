@@ -34,16 +34,6 @@ public class ListaCompletaActivity extends Activity {
 		cursor = db.getAllFarmaci();
 		adapter = new ListaFarmaciAdapter(getApplicationContext(), cursor, 0);
 		
-//		String[] from = new String[] {"nome", "tipo", "peso", "somministrazione"};
-//
-//		int[] to = new int[] {R.id.item_nome,R.id.item_tipo,R.id.item_peso,R.id.item_somministrazione };
-//
-//		SimpleCursorAdapter myCursorAdapter =
-//				new SimpleCursorAdapter(this,
-//						R.layout.item_list_farmaci,
-//						cursor,
-//						from, 
-//						to,0);
 		ListView myList = (ListView)findViewById(R.id.listFarmaci);
 		myList.setAdapter(adapter);
 		myList.setOnItemClickListener(new OnItemClickListener() {

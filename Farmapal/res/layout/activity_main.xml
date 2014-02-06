@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center"
+    android:background="@drawable/main_screen"
     tools:context=".MainActivity" >
 
     <Button
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:onClick="goMiePrescrizioni"
-        android:text="@string/mie_prescrizioni" />
+        android:text="@string/mie_prescrizioni"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnListaCompleta"
@@ -25,7 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:onClick="goListaCompleta"
-        android:text="@string/lista_completa" />
+        android:text="@string/lista_completa"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnCercaFarmacia"
@@ -33,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:onClick="goListaFarmacie"
-        android:text="@string/cerca_farmacia" />
+        android:text="@string/cerca_farmacia"
+        android:textStyle="bold" />
 
 </LinearLayout>

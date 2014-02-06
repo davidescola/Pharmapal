@@ -91,6 +91,7 @@
     <string name="indicazioni">Indicazioni</string>
     <string name="controindicazioni">Controindicazioni</string>
     <string name="effetti_collaterali">Effetti collaterali</string>
+    <string name="dettagli_farmacia">Dettagli Farmacia</string>
     
 
 </resources>

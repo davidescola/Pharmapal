@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.farmapal.database.DBHelper;
 
-public class DescrizioneFarmaciaDialog extends Activity {
+public class DescrizioneFarmaciaActivity extends Activity {
 
 	private static final int defaultValue = 0;
 	private static final String tag = "DescrizioneFarmacia";
@@ -42,7 +42,7 @@ public class DescrizioneFarmaciaDialog extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_descrizione_farmacia_dialog);
+		setContentView(R.layout.activity_descrizione_farmacia);
 		
 		caricaViews();
 		ottieniDati();

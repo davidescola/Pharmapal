@@ -30,9 +30,9 @@ public class ListaFarmacie extends Activity {
 
 		startManagingCursor(cursor);
 
-		String[] from = new String[] {"nome"};
+		String[] from = new String[] {"nome", "citta"};
 
-		int[] to = new int[] {R.id.nome_farmacia };
+		int[] to = new int[] {R.id.nome_farmacia, R.id.dettagli_farmacia };
 
 		SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(this,	R.layout.item_list_farmacie , cursor, from, to);
 
@@ -49,7 +49,7 @@ public class ListaFarmacie extends Activity {
 				TextView tx_nome_farmacia =(TextView)view.findViewById(R.id.nome_farmacia);
 	            String keyword = tx_nome_farmacia.getText().toString();
 	            Log.v("View Cliccata", keyword + " Posizione Lista: " + position + " Id del DB: "+ id);
-	            Intent i = new Intent(getBaseContext(),DescrizioneFarmaciaDialog.class);
+	            Intent i = new Intent(getBaseContext(),DescrizioneFarmaciaActivity.class);
 	            i.putExtra("id", (int)id);
 	            startActivity(i);
 			}

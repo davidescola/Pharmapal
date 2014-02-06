@@ -43,12 +43,12 @@
             android:label="@string/title_activity_lista_farmacie" >
         </activity>
         <activity
-            android:name="com.farmapal.DescrizioneFarmaciaDialog"
+            android:name="com.farmapal.DescrizioneFarmaciaActivity"
             android:label="@string/title_activity_descrizione_farmacia_dialog" >
         </activity>
         <activity
             android:name="com.farmapal.service.ConfermaAssunzioneDialog"
-            android:label="@string/title_activity_conferma_assunzione_dialog" >
+            android:label="@string/title_activity_conferma_assunzione_dialog" android:theme="@android:style/Theme.Dialog">
         </activity>
         <activity
             android:name="com.farmapal.DettaglioPrescrizioneActivity"
@@ -70,6 +70,7 @@
             android:name="com.farmapal.NuovoFarmacoActivity"
             android:label="@string/title_activity_nuovo_farmaco" >
         </activity>
+        <service android:name=".service.NotificaAssunzione"></service>
     </application>
 
 </manifest>

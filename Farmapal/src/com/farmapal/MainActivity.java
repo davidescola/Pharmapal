@@ -3,14 +3,22 @@ package com.farmapal;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import com.farmapal.service.NotificaAssunzione;
+
 public class MainActivity extends Activity {
+
+	private static final String tag = "MainActivity";
+	private Intent serviceIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		serviceIntent = new Intent(this, NotificaAssunzione.class);
+		startService(serviceIntent);
 		setContentView(R.layout.activity_main);
 	}
 	
@@ -38,6 +46,9 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
+		stopService(serviceIntent);
+		//For Debug
+		Log.i(tag, "Service Stopped, App Closed");
 		finish();
 	}
 
