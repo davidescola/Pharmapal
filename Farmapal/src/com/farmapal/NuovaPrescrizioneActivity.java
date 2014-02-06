@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,6 +69,8 @@ public class NuovaPrescrizioneActivity extends Activity {
 	private Cursor cursorIDPaziente;
 	private Cursor cursorMaxIDPrescrizioni;
 	private boolean dateCorrette = true;
+	private int prima_inizio_flag = -1;
+	private int dopo_fine_flag = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -351,16 +355,33 @@ public class NuovaPrescrizioneActivity extends Activity {
 		}
 
 		else{
+			Date date = new Date();
 			String stringDataInizio = "" + pickerDal.getDayOfMonth() + "-" + adjustMonth(pickerDal.getMonth()) + "-" + pickerDal.getYear();
 			String stringDataFine = "" + pickerAl.getDayOfMonth() + "-" + adjustMonth(pickerAl.getMonth()) + "-" + pickerAl.getYear();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			try {
 				long dataInizio = formatter.parse(stringDataInizio).getTime();
 				long dataFine = formatter.parse(stringDataFine).getTime();
+				long oggi = formatter.parse(formatter.format(date)).getTime();
 				if(dataInizio > dataFine)
 					dateCorrette = false;
-				else
+				else {
+					//setto prima_inizio a 1 se datainizio <= oggi
+					//setto prima_inizio a 1 e dopo_fine a 1 se datainizio <= oggi e datafine < oggi
+					//le flag saranno -1, e nel db vengono inseriti due null, in tutti gli altri casi
 					dateCorrette = true;
+					if(dataInizio <= oggi && dataFine >= oggi) {
+						prima_inizio_flag = 1;
+						dopo_fine_flag = 0;
+					}
+					else if(dataInizio <= oggi && dataFine < oggi) {
+						prima_inizio_flag = 1;
+						dopo_fine_flag = 1;
+					}
+					
+					//Toast.makeText(getApplicationContext(), "setto prima a " + prima_inizio_flag + "e dopo a " + dopo_fine_flag, Toast.LENGTH_SHORT).show();
+					
+				}
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -451,7 +472,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					minute1 = NuovaPrescrizioneActivity.adjustTime(tp1.getCurrentMinute().toString());
 					razione1 = hour1 + ":" + minute1 + ":00.000";
 					checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1});
+							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, prima_inizio_flag, dopo_fine_flag,idFarmaco, idPaziente, new String [] {razione1});
 					if (checkPrescrizioni == -1)
 						Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 					else
@@ -465,7 +486,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					minute2 = NuovaPrescrizioneActivity.adjustTime(tp2.getCurrentMinute().toString());
 					razione2 = hour2 + ":" + minute2 + ":00.000";
 					checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2});
+							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, prima_inizio_flag, dopo_fine_flag, idFarmaco, idPaziente, new String [] {razione1, razione2});
 					if (checkPrescrizioni == -1)
 						Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 					else
@@ -482,7 +503,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					minute3 = NuovaPrescrizioneActivity.adjustTime(tp3.getCurrentMinute().toString());
 					razione3 = hour3 + ":" + minute3 + ":00.000";
 					checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3});
+							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, prima_inizio_flag, dopo_fine_flag, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3});
 					if (checkPrescrizioni == -1)
 						Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 					else
@@ -502,7 +523,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					minute4 = NuovaPrescrizioneActivity.adjustTime(tp4.getCurrentMinute().toString());
 					razione4 = hour4 + ":" + minute4 + ":00.000";
 					checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4});
+							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, prima_inizio_flag, dopo_fine_flag, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4});
 					if (checkPrescrizioni == -1)
 						Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 					else
@@ -525,7 +546,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					minute5 = NuovaPrescrizioneActivity.adjustTime(tp5.getCurrentMinute().toString());
 					razione5 = hour5 + ":" + minute5 + ":00.000";
 					checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5});
+							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, prima_inizio_flag, dopo_fine_flag, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5});
 					if (checkPrescrizioni == -1)
 						Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 					else
@@ -551,7 +572,7 @@ public class NuovaPrescrizioneActivity extends Activity {
 					minute6 = NuovaPrescrizioneActivity.adjustTime(tp6.getCurrentMinute().toString());
 					razione6 = hour6 + ":" + minute6 + ":00.000";
 					checkPrescrizioni = db.insertPrescrizione(++countPrescrizioni, 
-							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
+							nomeMedico, stringDataInizio, stringDataFine, qta, flagGiorni, prima_inizio_flag, dopo_fine_flag, idFarmaco, idPaziente, new String [] {razione1, razione2, razione3, razione4, razione5, razione6});
 					if (checkPrescrizioni == -1)
 						Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
 					else

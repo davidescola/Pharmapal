@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		super(context, DB_NAME, null, 1);
 		this.context = context.getApplicationContext();
 		DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
-//		DB_PATH = context.getFilesDir().getPath() + context.getPackageName() + "/" + "databases/";
+		//		DB_PATH = context.getFilesDir().getPath() + context.getPackageName() + "/" + "databases/";
 		try {
 			createDatabase();
 		} catch (IOException e) {
@@ -106,22 +106,22 @@ public class DBHelper extends SQLiteOpenHelper{
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione", null);
 		return c;
 	}
-	
+
 	public Cursor getLunPrescrizioni() {
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE lunedi = 1", null);
 		return c;
 	}
-	
+
 	public Cursor getMarPrescrizioni() {
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE martedi = 1", null);
 		return c;
 	}
-	
+
 	public Cursor getMerPrescrizioni() {
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE mercoledi = 1", null);
 		return c;
 	}
-	
+
 	public Cursor getGioPrescrizioni() {
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE giovedi = 1", null);
 		return c;
@@ -131,12 +131,12 @@ public class DBHelper extends SQLiteOpenHelper{
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE venerdi = 1", null);
 		return c;
 	}
-	
+
 	public Cursor getSabPrescrizioni() {
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE sabato = 1", null);
 		return c;
 	}
-	
+
 	public Cursor getDomPrescrizioni() {
 		Cursor c = db.rawQuery("SELECT * FROM prescrizione WHERE domenica = 1", null);
 		return c;
@@ -174,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 
-	public long insertPrescrizione(int index, String medico, String data_inizio, String data_fine, int quantita, int[] flagGiorni, int id_farmaco, int id_paziente, String[] razioni) {
+	public long insertPrescrizione(int index, String medico, String data_inizio, String data_fine, int quantita, int[] flagGiorni, int flag_prima_inizio, int flag_dopo_fine, int id_farmaco, int id_paziente, String[] razioni) {
 		ContentValues cvs = new ContentValues();
 		cvs.put("_id", index);
 		cvs.put("medico", medico);
@@ -190,6 +190,16 @@ public class DBHelper extends SQLiteOpenHelper{
 		cvs.put("domenica", flagGiorni[6]);
 		cvs.put("id_farmaco", id_farmaco);
 		cvs.put("id_paziente", id_paziente);
+
+		if(flag_prima_inizio != -1)
+			cvs.put("prima_inizio", flag_prima_inizio);
+		else
+			cvs.putNull("prima_inizio");
+
+		if(flag_dopo_fine != -1)
+			cvs.put("dopo_fine", flag_dopo_fine);
+		else
+			cvs.putNull("dopo_fine");
 
 		if(razioni.length > 6)
 			return -1;
@@ -258,7 +268,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		Cursor c = db.rawQuery("SELECT MAX(_id) FROM farmaco", null);
 		return c;
 	}
-	
+
 	public boolean deletePrescrizioneFromID(int id) {
 		return db.delete("prescrizione", "_id=" + id, null) > 0;
 	}
@@ -266,11 +276,11 @@ public class DBHelper extends SQLiteOpenHelper{
 	public boolean deleteFarmacoFromID(int id) {
 		return db.delete("farmaco", "_id=" + id, null) > 0;
 	}
-	
+
 	public boolean deletePrescrizioniFromIDFarmaco(int id) {
 		return db.delete("prescrizione", "id_farmaco=" + id, null) > 0;
 	}
-	
+
 	public long updatePrescrizioneFromID(int index, String data_inizio, String data_fine, int quantita, int[] flagGiorni, String[] razioni) {
 		ContentValues cvs = new ContentValues();
 		cvs.put("data_inizio", data_inizio);
@@ -300,7 +310,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.update("prescrizione", cvs, "_id = " + index, null);
 
 	}
-	
+
 	public int updatePrescrizioneStartPeriodNotification(int idPrescrizione, int prima_inizio) {
 		ContentValues cvs = new ContentValues();
 		cvs.put("prima_inizio", prima_inizio);
@@ -308,7 +318,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.update("prescrizione", cvs, "_id = " + idPrescrizione, null);
 
 	}
-	
+
 	public int updatePrescrizioneEndPeriodNotification(int idPrescrizione, int dopo_fine) {
 		ContentValues cvs = new ContentValues();
 		cvs.put("dopo_fine", dopo_fine);
@@ -316,7 +326,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.update("prescrizione", cvs, "_id = " + idPrescrizione, null);
 
 	}
-	
+
 	public int updateResetGiornalieroRazioni() {
 		ContentValues cvs = new ContentValues();
 		cvs.put("razione_presa1", 0);
@@ -329,7 +339,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.update("prescrizione", cvs, "dopo_fine !=1", null);
 
 	}
-	
+
 	public int updateRazionePresa(int idPrescrizione, int indexRazionePresa) {
 		ContentValues cvs = new ContentValues();
 		int j=indexRazionePresa+1;
