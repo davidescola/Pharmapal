@@ -334,7 +334,7 @@ public class NotificaAssunzione extends Service {
 
 		public boolean running= true;
 		//Attesa di Refresh in Millisecondi
-		private int delay=15000;
+		private int delay=60000;
 		private String TAG="BackgroundThread";
 
 		// ********************************************************		

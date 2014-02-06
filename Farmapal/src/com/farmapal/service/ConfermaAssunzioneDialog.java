@@ -8,13 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmapal.DettaglioPrescrizioneActivity;
 import com.farmapal.R;
 import com.farmapal.database.DBHelper;
-import com.farmapal.service.NotificaAssunzione.BackgroundThread;
 
 public class ConfermaAssunzioneDialog extends Activity {
 
@@ -29,7 +27,6 @@ public class ConfermaAssunzioneDialog extends Activity {
 	private String orario_razione;
 	private boolean ultimaRazione;
 	private int dopo_fine=0;
-	private TextView dettaglioAssunzione;
 	private CharSequence message;
 	private String notificationTag;
 	private NotificationManager notificationManager;
@@ -134,8 +131,8 @@ public class ConfermaAssunzioneDialog extends Activity {
 			int checkPrescrizioni = db.updatePrescrizioneEndPeriodNotification(idPrescrizione, dopo_fine);
 			if (checkPrescrizioni == -1)
 				Toast.makeText(this, "errore durante il salvataggio della prescrizione", Toast.LENGTH_LONG).show();
-			else
-				Toast.makeText(this, "prescrizione modificata", Toast.LENGTH_LONG).show();
+//			else
+//				Toast.makeText(this, "prescrizione modificata", Toast.LENGTH_LONG).show();
 		}
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancel(notificationTag, idNotifica);

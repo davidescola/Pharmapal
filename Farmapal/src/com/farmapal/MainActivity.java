@@ -46,9 +46,9 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
-		stopService(serviceIntent);
+//		stopService(serviceIntent);
 		//For Debug
-		Log.i(tag, "Service Stopped, App Closed");
+//		Log.i(tag, "Service Stopped, App Closed");
 		finish();
 	}
 
