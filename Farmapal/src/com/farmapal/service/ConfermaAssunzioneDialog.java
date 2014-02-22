@@ -2,12 +2,14 @@ package com.farmapal.service;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.farmapal.DettaglioPrescrizioneActivity;
@@ -30,6 +32,7 @@ public class ConfermaAssunzioneDialog extends Activity {
 	private CharSequence message;
 	private String notificationTag;
 	private NotificationManager notificationManager;
+	private AlertDialog alert;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,6 +101,7 @@ public class ConfermaAssunzioneDialog extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						ConfermaAssunzione();
+						dialog.dismiss();
 					}
 
 				});
@@ -113,13 +117,15 @@ public class ConfermaAssunzioneDialog extends Activity {
 						bundle.putString("id", id_presc);
 						intent.putExtras(bundle);
 						startActivity(intent);
+						dialog.dismiss();
 						finish();
 					}
 
 				});
 		
-		AlertDialog alert = builder.create();
-		alert.show();
+		alert = builder.create();
+		alert.setCanceledOnTouchOutside(true);
+		alert.show();	
 		
 	}
 	
@@ -140,3 +146,4 @@ public class ConfermaAssunzioneDialog extends Activity {
 	}
 
 }
+

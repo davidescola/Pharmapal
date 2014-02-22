@@ -205,9 +205,9 @@ public class NotificaAssunzione extends Service {
 									milliSecond[i]= Integer.parseInt(temp[1]);
 									
 									//Controllo orario
-									if(hour[i] - hourCorrente ==0 ){
-										if(Math.abs(minute[i] - minuteCorrente) <= 25 /*minutePref se voglio fare dei Setting con le Shared Preferences*/){
-											
+									if((hour[i] - hourCorrente ==1) || (hour[i] - hourCorrente ==0)){
+										/*minutePref se voglio fare dei Setting con le Shared Preferences*/
+										if((((60 - minuteCorrente)+minute[i])<=20) || ((Math.abs(minute[i] - minuteCorrente) <= 20))){
 											//ID Paziente
 											int idPaziente = cursorCurrentDayPrescrizioni.getInt(cursorCurrentDayPrescrizioni.getColumnIndex("id_paziente"));
 											//ID Farmaco
