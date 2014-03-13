@@ -1,162 +1,168 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context=".DescrizioneFarmaciaActivity" >
 
-    <TextView
-        android:id="@+id/textViewFarmacia"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="@string/text_view_farmacia" />
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/textViewInfoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewFarmacia"
-        android:layout_alignBottom="@+id/textViewFarmacia"
-        android:layout_toRightOf="@+id/textViewFarmacia" />
+        <TextView
+            android:id="@+id/textViewFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/text_view_farmacia" />
 
-    <TextView
-        android:id="@+id/textViewIndirizzoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewFarmacia"
-        android:layout_below="@+id/textViewFarmacia"
-        android:layout_marginTop="20dp"
-        android:text="@string/text_view_indirizzo_farmacia" />
+        <TextView
+            android:id="@+id/textViewInfoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFarmacia"
+            android:layout_alignBottom="@+id/textViewFarmacia"
+            android:layout_toRightOf="@+id/textViewFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewInfoIndirizzoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewIndirizzoFarmacia"
-        android:layout_alignLeft="@+id/textViewInfoFarmacia" />
+        <TextView
+            android:id="@+id/textViewIndirizzoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewFarmacia"
+            android:layout_below="@+id/textViewFarmacia"
+            android:layout_marginTop="20dp"
+            android:text="@string/text_view_indirizzo_farmacia" />
 
-    <TextView
-        android:id="@+id/textViewCittaFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewIndirizzoFarmacia"
-        android:layout_below="@+id/textViewIndirizzoFarmacia"
-        android:layout_marginTop="20dp"
-        android:text="Città: " />
+        <TextView
+            android:id="@+id/textViewInfoIndirizzoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewIndirizzoFarmacia"
+            android:layout_alignLeft="@+id/textViewInfoFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewInfoCittaFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewCittaFarmacia"
-        android:layout_alignBottom="@+id/textViewCittaFarmacia"
-        android:layout_toRightOf="@+id/textViewCittaFarmacia" />
+        <TextView
+            android:id="@+id/textViewCittaFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewIndirizzoFarmacia"
+            android:layout_below="@+id/textViewIndirizzoFarmacia"
+            android:layout_marginTop="20dp"
+            android:text="Città: " />
 
-    <TextView
-        android:id="@+id/textViewInfoProvinciaFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewProvinciaFarmacia"
-        android:layout_alignBottom="@+id/textViewProvinciaFarmacia"
-        android:layout_toRightOf="@+id/textViewProvinciaFarmacia" />
+        <TextView
+            android:id="@+id/textViewInfoCittaFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewCittaFarmacia"
+            android:layout_alignBottom="@+id/textViewCittaFarmacia"
+            android:layout_toRightOf="@+id/textViewCittaFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewTelefonoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewCittaFarmacia"
-        android:layout_below="@+id/textViewInfoCittaFarmacia"
-        android:layout_marginTop="20dp"
-        android:text="Telefono: " />
+        <TextView
+            android:id="@+id/textViewInfoProvinciaFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewProvinciaFarmacia"
+            android:layout_alignBottom="@+id/textViewProvinciaFarmacia"
+            android:layout_toRightOf="@+id/textViewProvinciaFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewInfoTelefonoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewTelefonoFarmacia"
-        android:layout_alignBottom="@+id/textViewTelefonoFarmacia"
-        android:layout_toRightOf="@+id/textViewTelefonoFarmacia" />
+        <TextView
+            android:id="@+id/textViewTelefonoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewCittaFarmacia"
+            android:layout_below="@+id/textViewInfoCittaFarmacia"
+            android:layout_marginTop="20dp"
+            android:text="Telefono: " />
 
-    <TextView
-        android:id="@+id/textViewSitoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewTelefonoFarmacia"
-        android:layout_below="@+id/textViewTelefonoFarmacia"
-        android:layout_marginTop="20dp"
-        android:text="Sito Web: " />
+        <TextView
+            android:id="@+id/textViewInfoTelefonoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewTelefonoFarmacia"
+            android:layout_alignBottom="@+id/textViewTelefonoFarmacia"
+            android:layout_toRightOf="@+id/textViewTelefonoFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewInfoSitoFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewSitoFarmacia"
-        android:layout_alignBottom="@+id/textViewSitoFarmacia"
-        android:layout_toRightOf="@+id/textViewSitoFarmacia" />
+        <TextView
+            android:id="@+id/textViewSitoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewTelefonoFarmacia"
+            android:layout_below="@+id/textViewTelefonoFarmacia"
+            android:layout_marginTop="20dp"
+            android:text="Sito Web: " />
 
-    <TextView
-        android:id="@+id/textViewEmailFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewSitoFarmacia"
-        android:layout_below="@+id/textViewSitoFarmacia"
-        android:layout_marginTop="20dp"
-        android:text="E-Mail: " />
+        <TextView
+            android:id="@+id/textViewInfoSitoFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewSitoFarmacia"
+            android:layout_alignBottom="@+id/textViewSitoFarmacia"
+            android:layout_toRightOf="@+id/textViewSitoFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewInfoEmailFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewEmailFarmacia"
-        android:layout_alignBottom="@+id/textViewEmailFarmacia"
-        android:layout_toRightOf="@+id/textViewEmailFarmacia" />
+        <TextView
+            android:id="@+id/textViewEmailFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewSitoFarmacia"
+            android:layout_below="@+id/textViewSitoFarmacia"
+            android:layout_marginTop="20dp"
+            android:text="E-Mail: " />
 
-    <Button
-        android:id="@+id/buttonNavigazioneMaps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewEmailFarmacia"
-        android:layout_below="@+id/textViewInfoEmailFarmacia"
-        android:layout_marginTop="20dp"
-        android:text="Raggiungici" />
+        <TextView
+            android:id="@+id/textViewInfoEmailFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewEmailFarmacia"
+            android:layout_alignBottom="@+id/textViewEmailFarmacia"
+            android:layout_toRightOf="@+id/textViewEmailFarmacia" />
 
-    <TextView
-        android:id="@+id/textViewCapFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewIndirizzoFarmacia"
-        android:layout_alignBottom="@+id/textViewIndirizzoFarmacia"
-        android:layout_toRightOf="@+id/textViewInfoIndirizzoFarmacia"
-        android:paddingLeft="20dp"
-        android:text="CAP: " />
+        <Button
+            android:id="@+id/buttonNavigazioneMaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewEmailFarmacia"
+            android:layout_below="@+id/textViewInfoEmailFarmacia"
+            android:layout_marginTop="20dp"
+            android:text="Raggiungici" />
 
-    <TextView
-        android:id="@+id/textViewProvinciaFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewInfoCittaFarmacia"
-        android:layout_alignBottom="@+id/textViewInfoCittaFarmacia"
-        android:layout_toRightOf="@+id/textViewInfoCittaFarmacia"
-        android:paddingLeft="20dp"
-        android:text="Provincia: " />
+        <TextView
+            android:id="@+id/textViewCapFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewIndirizzoFarmacia"
+            android:layout_alignBottom="@+id/textViewIndirizzoFarmacia"
+            android:layout_toRightOf="@+id/textViewInfoIndirizzoFarmacia"
+            android:paddingLeft="20dp"
+            android:text="CAP: " />
 
-    <TextView
-        android:id="@+id/textViewInfoCapFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewCapFarmacia"
-        android:layout_toRightOf="@+id/textViewCapFarmacia" />
+        <TextView
+            android:id="@+id/textViewProvinciaFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewInfoCittaFarmacia"
+            android:layout_alignBottom="@+id/textViewInfoCittaFarmacia"
+            android:layout_toRightOf="@+id/textViewInfoCittaFarmacia"
+            android:paddingLeft="20dp"
+            android:text="Provincia: " />
 
-    <Button
-        android:id="@+id/buttonCondividiFarmacia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Condividi" />
+        <TextView
+            android:id="@+id/textViewInfoCapFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewCapFarmacia"
+            android:layout_toRightOf="@+id/textViewCapFarmacia" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/buttonCondividiFarmacia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Condividi" />
+    </RelativeLayout>
+
+</ScrollView>

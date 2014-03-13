@@ -29,6 +29,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
         public static final int icon=0x7f020001;
         public static final int main_screen=0x7f020002;
+        public static final int main_screen_landscape=0x7f020003;
     }
     public static final class id {
         public static final int DettaglioFarmacoControindicazioni=0x7f090017;
@@ -221,15 +222,16 @@ public final class R {
         public static final int activity_lista_completa_for_result=0x7f030005;
         public static final int activity_lista_farmacie=0x7f030006;
         public static final int activity_main=0x7f030007;
-        public static final int activity_mie_prescrizioni=0x7f030008;
-        public static final int activity_modifica_prescrizione=0x7f030009;
-        public static final int activity_nuova_prescrizione=0x7f03000a;
-        public static final int activity_nuovo_farmaco=0x7f03000b;
-        public static final int activity_selezione_giorni=0x7f03000c;
-        public static final int item_list_farmaci=0x7f03000d;
-        public static final int item_list_farmaci_for_result=0x7f03000e;
-        public static final int item_list_farmacie=0x7f03000f;
-        public static final int item_list_prescrizioni=0x7f030010;
+        public static final int activity_main_landscape=0x7f030008;
+        public static final int activity_mie_prescrizioni=0x7f030009;
+        public static final int activity_modifica_prescrizione=0x7f03000a;
+        public static final int activity_nuova_prescrizione=0x7f03000b;
+        public static final int activity_nuovo_farmaco=0x7f03000c;
+        public static final int activity_selezione_giorni=0x7f03000d;
+        public static final int item_list_farmaci=0x7f03000e;
+        public static final int item_list_farmaci_for_result=0x7f03000f;
+        public static final int item_list_farmacie=0x7f030010;
+        public static final int item_list_prescrizioni=0x7f030011;
     }
     public static final class menu {
         public static final int conferma_assunzione_dialog=0x7f080000;
