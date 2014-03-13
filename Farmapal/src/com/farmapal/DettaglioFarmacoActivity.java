@@ -54,7 +54,7 @@ public class DettaglioFarmacoActivity extends Activity {
 			public void onClick(View v) {
 				AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 				alert.setTitle("Attenzione");
-				alert.setMessage("Il farmaco e le prescrizioni ad esso collegate verranno modificate definitivamente. Continuare?");
+				alert.setMessage("Il farmaco e le prescrizioni ad esso collegate verranno eliminate definitivamente. Continuare?");
 				alert.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
 
 					@Override
